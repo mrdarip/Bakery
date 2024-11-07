@@ -1,39 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" minWidth="400.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mrdarip.bakery.EjemploController">
    <top>
-      <HBox prefHeight="60.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+      <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="0.0" spacing="16.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <ComboBox fx:id="orderCombo" promptText="Order by" />
+                  <ToggleButton fx:id="orderToggle" mnemonicParsing="false" onAction="#onOrderToggleChange" text="↑" />
+               </children>
+            </HBox>
+            <TextField fx:id="queryPlateTF" promptText="Search" HBox.hgrow="ALWAYS" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+         </padding></HBox>
    </top>
    <center>
-       <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
-           <content>
-               <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" hgap="16.0" prefHeight="300.0" rowValignment="BOTTOM" vgap="16.0">
-                   <children>
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                  <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
-                       <!-- Más Panes aquí -->
-                   </children>
-               <padding>
-                  <Insets bottom="10.0" left="16.0" right="16.0" top="10.0" />
-               </padding>
-               </FlowPane>
-           </content>
-       </ScrollPane>
+      <StackPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+         <children>
+             <ScrollPane fx:id="flowPaneScroll" fitToWidth="true" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
+                 <content>
+                     <FlowPane fx:id="platesFlowPane" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="16.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" rowValignment="BOTTOM" vgap="16.0">
+                         <children>
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                        <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 180%, burlywood, derive(burlywood, -30%), derive(burlywood, 30%));" />
+                             <!-- Más Panes aquí -->
+                         </children>
+                     <padding>
+                        <Insets bottom="10.0" left="16.0" right="16.0" top="10.0" />
+                     </padding>
+                     </FlowPane>
+                 </content>
+             </ScrollPane>
+            <Button mnemonicParsing="false" onAction="#navigateToTop" text="↑" StackPane.alignment="BOTTOM_RIGHT">
+               <StackPane.margin>
+                  <Insets bottom="15.0" left="15.0" right="30.0" top="30.0" />
+               </StackPane.margin>
+            </Button>
+         </children>
+      </StackPane>
    </center>
 </BorderPane>
