@@ -37,13 +37,15 @@ public class Plate {
         this.id = id;
     }
 
-    public void setRequiredPlate(Plate requiredPlate){
-        if(!requiredPlate.isRegistered()){
+    public void setRequiredPlate(Plate newRPlateequiredPlate){
+        if(newRPlateequiredPlate == null || newRPlateequiredPlate.isRegistered()){
+            
+            this.requiredPlate = newRPlateequiredPlate;
+        }
+        else{
             //this won't happen in a real scenario by user, still, source code can add plates to the database without registering them
             throw new IllegalArgumentException("The required plate must be registered first");
         }
-
-        this.requiredPlate = requiredPlate;
     }
 
     public boolean hasChildren(){
@@ -59,7 +61,7 @@ public class Plate {
     }
 
     public boolean isRegistered(){
-        return this.id != -1;
+        return this == null || this.id != -1;
     }
 
     public Pane getAsCard() {
