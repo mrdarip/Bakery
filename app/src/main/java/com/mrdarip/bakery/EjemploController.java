@@ -1,7 +1,11 @@
 package com.mrdarip.bakery;
 
+import com.mrdarip.bakery.data.DAO.PlateDao;
+import com.mrdarip.bakery.data.DAO.RAMPlateDao;
+import com.mrdarip.bakery.data.entity.Plate;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +21,8 @@ import javafx.scene.layout.FlowPane;
  * @author mrdarip
  */
 public class EjemploController implements Initializable {
+    
+    PlateDao dao = new RAMPlateDao();
 
     @FXML
     private ComboBox<String> orderCombo;
@@ -55,7 +61,6 @@ public class EjemploController implements Initializable {
     protected void initializeOrderCombo() {
         orderCombo.getItems().removeAll(orderCombo.getItems());
         orderCombo.getItems().addAll("Stars", "Name", "Duration", "Difficulty");
-        orderCombo.getSelectionModel().select(0);
     }
     
     private void updateOrderToggleIcon(){
@@ -69,6 +74,12 @@ public class EjemploController implements Initializable {
     private void updatePlatesFlowPane() {
         //platesFlowPane.getChildren().clear();
         
+        platesFlowPane.getChildren().addAll(
+            dao.getPlatesPage(0, 0).
+                stream().
+                map(Plate::getAsCard).
+                collect(Collectors.toList())
+        );
         
     }
 }
