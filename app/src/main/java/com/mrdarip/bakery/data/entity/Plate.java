@@ -12,12 +12,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class Plate {
+
     private int id;
     private String name;
     private int valoration;
     private Plate requiredPlate;
     private String previewURI;
-
 
     protected Plate(int id, String name, int valoration, Plate requiredPlate, String previewURI) {
         this.id = id;
@@ -71,18 +71,19 @@ public class Plate {
 
     public Pane getAsCard() {
         int cardWidth = 100;
-        int cardHeight = 101;
+        int cardHeight = 100;
 
-        int TextBoxHeight = 1;
+        int TextBoxHeight = 25;
         int textBoxWidth = cardWidth;
 
         int previewHeight = cardHeight - TextBoxHeight;
         int previewWidth = cardWidth;
-        
+
         ImageView preview = this.getPreviewImageViewCovering(previewWidth, previewHeight);
 
         Pane card = new Pane();
         card.setPrefSize(cardWidth, cardHeight);
+        card.setStyle("-fx-background-color: #c7BEFA;");
 
         Label nameLbl = new Label(name);
         Label valorationLbl = new Label(this.valoration + " ★");
@@ -97,18 +98,16 @@ public class Plate {
 
         return card;
     }
-    
-    public ImageView getPreviewImageViewCovering(int previewWidth, int previewHeight){
-        Image image = new Image(previewURI); //For obtaining the image width and height later
 
+    public ImageView getPreviewImageViewCovering(double previewWidth, double previewHeight) {
+        Image image = new Image(previewURI);
+        
         ImageView preview = new ImageView(image);
-        preview.setPreserveRatio(true);  // Mantener las proporciones de la imagen
+        preview.setPreserveRatio(true);
 
         Rectangle2D centerViewport;
 
         if (image.getWidth() / image.getHeight() > previewWidth / previewHeight) {
-            preview.setFitHeight(previewHeight);
-
             double imgpxPerfxpx = (previewWidth / previewHeight);
             centerViewport = new Rectangle2D(
                     image.getWidth() / 2 - (double) (image.getHeight() * imgpxPerfxpx) / 2,
@@ -117,8 +116,6 @@ public class Plate {
                     image.getHeight()
             );
         } else {
-            preview.setFitWidth(previewWidth);
-
             double imgpxPerfxpx = (previewHeight / previewWidth);
             centerViewport = new Rectangle2D(
                     0,
@@ -128,9 +125,12 @@ public class Plate {
             );
         }
 
+        preview.setFitWidth(previewWidth);
+        preview.setFitHeight(previewHeight);
+
         preview.setViewport(centerViewport);
-        
+
         return preview;
-        
+
     }
 }
