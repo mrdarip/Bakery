@@ -23,7 +23,7 @@ javafx {
 }
 
 dependencies {
-    //No es necesario incluir las dependencias porque ya lo hace el plugin por nosotros
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
 }
 
 mainClassName = 'com.mrdarip.bakery.Main'

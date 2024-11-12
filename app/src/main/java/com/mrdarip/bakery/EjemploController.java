@@ -1,5 +1,6 @@
 package com.mrdarip.bakery;
 
+import com.mrdarip.bakery.data.DAO.MySqlPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.DAO.RAMPlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
@@ -22,7 +23,7 @@ import javafx.scene.layout.FlowPane;
  */
 public class EjemploController implements Initializable {
     
-    PlateDao dao = new RAMPlateDao();
+    PlateDao dao = new MySqlPlateDAO();
 
     @FXML
     private ComboBox<String> orderCombo;
