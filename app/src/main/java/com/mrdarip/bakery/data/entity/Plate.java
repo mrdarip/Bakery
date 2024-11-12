@@ -89,28 +89,28 @@ public class Plate {
 
         ImageView preview = new ImageView(image);
         preview.setPreserveRatio(true);  // Mantener las proporciones de la imagen
-
+        
         Rectangle2D centerViewport;
 
-
-        if (image.getWidth() / image.getHeight() > 1) {
-
-            int imgpxPerfxpx = (int) (image.getHeight() / previewHeight);
+        if (image.getWidth() / image.getHeight() > previewWidth/previewHeight) {
+            preview.setFitHeight(previewHeight);
+            
+            double imgpxPerfxpx = (previewWidth / previewHeight);
             centerViewport = new Rectangle2D(
-                image.getWidth() / 2 - (double) (imgpxPerfxpx * previewWidth) / 2,
+                image.getWidth() / 2 - (double) (image.getHeight() * imgpxPerfxpx) / 2,
                 0,
-                imgpxPerfxpx * previewWidth,
+                image.getHeight() * imgpxPerfxpx,
                 image.getHeight()
             );
         } else {
             preview.setFitWidth(previewWidth);
 
-            int imgpxPerfxpx = (int) (image.getWidth() / previewWidth);
+            double imgpxPerfxpx = (previewHeight / previewWidth);
             centerViewport = new Rectangle2D(
                 0,
-                image.getHeight() / 2 - (double) (imgpxPerfxpx * previewHeight) / 2,
+                image.getHeight() / 2 - (double) (image.getWidth() * imgpxPerfxpx) / 2,
                 image.getWidth(),
-                previewHeight * imgpxPerfxpx
+                image.getWidth() * imgpxPerfxpx
             );
         }
 
