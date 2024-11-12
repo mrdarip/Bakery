@@ -19,7 +19,7 @@ public class Plate {
     private Plate requiredPlate;
     private String previewURI;
 
-    protected Plate(int id, String name, int valoration, Plate requiredPlate, String previewURI) {
+    public Plate(int id, String name, int valoration, Plate requiredPlate, String previewURI) {
         this.id = id;
         this.name = name;
         this.valoration = valoration;
