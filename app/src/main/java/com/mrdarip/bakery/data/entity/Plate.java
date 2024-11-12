@@ -78,43 +78,11 @@ public class Plate {
 
         int previewHeight = cardHeight - TextBoxHeight;
         int previewWidth = cardWidth;
-
+        
+        ImageView preview = this.getPreviewImageViewCovering(previewWidth, previewHeight);
 
         Pane card = new Pane();
         card.setPrefSize(cardWidth, cardHeight);
-
-        card.setStyle("-fx-background-color: #f00;");
-
-        Image image = new Image(previewURI); //For obtaining the image width and height later
-
-        ImageView preview = new ImageView(image);
-        preview.setPreserveRatio(true);  // Mantener las proporciones de la imagen
-        
-        Rectangle2D centerViewport;
-
-        if (image.getWidth() / image.getHeight() > previewWidth/previewHeight) {
-            preview.setFitHeight(previewHeight);
-            
-            double imgpxPerfxpx = (previewWidth / previewHeight);
-            centerViewport = new Rectangle2D(
-                image.getWidth() / 2 - (double) (image.getHeight() * imgpxPerfxpx) / 2,
-                0,
-                image.getHeight() * imgpxPerfxpx,
-                image.getHeight()
-            );
-        } else {
-            preview.setFitWidth(previewWidth);
-
-            double imgpxPerfxpx = (previewHeight / previewWidth);
-            centerViewport = new Rectangle2D(
-                0,
-                image.getHeight() / 2 - (double) (image.getWidth() * imgpxPerfxpx) / 2,
-                image.getWidth(),
-                image.getWidth() * imgpxPerfxpx
-            );
-        }
-
-        preview.setViewport(centerViewport);
 
         Label nameLbl = new Label(name);
         Label valorationLbl = new Label(this.valoration + " ★");
@@ -128,5 +96,41 @@ public class Plate {
         card.getChildren().addAll(cardBox);
 
         return card;
+    }
+    
+    public ImageView getPreviewImageViewCovering(int previewWidth, int previewHeight){
+        Image image = new Image(previewURI); //For obtaining the image width and height later
+
+        ImageView preview = new ImageView(image);
+        preview.setPreserveRatio(true);  // Mantener las proporciones de la imagen
+
+        Rectangle2D centerViewport;
+
+        if (image.getWidth() / image.getHeight() > previewWidth / previewHeight) {
+            preview.setFitHeight(previewHeight);
+
+            double imgpxPerfxpx = (previewWidth / previewHeight);
+            centerViewport = new Rectangle2D(
+                    image.getWidth() / 2 - (double) (image.getHeight() * imgpxPerfxpx) / 2,
+                    0,
+                    image.getHeight() * imgpxPerfxpx,
+                    image.getHeight()
+            );
+        } else {
+            preview.setFitWidth(previewWidth);
+
+            double imgpxPerfxpx = (previewHeight / previewWidth);
+            centerViewport = new Rectangle2D(
+                    0,
+                    image.getHeight() / 2 - (double) (image.getWidth() * imgpxPerfxpx) / 2,
+                    image.getWidth(),
+                    image.getWidth() * imgpxPerfxpx
+            );
+        }
+
+        preview.setViewport(centerViewport);
+        
+        return preview;
+        
     }
 }
