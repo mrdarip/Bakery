@@ -14,7 +14,7 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mrdarip.bakery.EjemploController">
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="0.0" spacing="16.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="0.0" spacing="16.0" BorderPane.alignment="CENTER">
          <children>
             <HBox>
                <children>
