@@ -1,6 +1,6 @@
 package com.mrdarip.bakery;
 
-import com.mrdarip.bakery.data.DAO.MySqlPlateDAO;
+import com.mrdarip.bakery.data.DAO.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
 import javafx.event.ActionEvent;
@@ -14,7 +14,6 @@ import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * FXML Controller class
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class EjemploController implements Initializable {
 
-    PlateDao dao = new MySqlPlateDAO();
+    PlateDao dao = new MariaDBPlateDAO();
 
     @FXML
     private ComboBox<String> orderCombo;
