@@ -13,10 +13,10 @@ import javafx.scene.layout.VBox;
 public class Plate {
 
     private int id;
-    private String name;
-    private int valoration;
+    private final String name;
+    private final int valoration;
     private Plate requiredPlate;
-    private String previewURI;
+    private final String previewURI;
 
     public Plate(int id, String name, int valoration, Plate requiredPlate, String previewURI) {
         this.id = id;
@@ -94,9 +94,7 @@ public class Plate {
 
         card.getChildren().addAll(cardBox);
 
-        card.setOnMouseClicked(e -> {
-            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this);
-        });
+        card.setOnMouseClicked(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this));
 
         return card;
     }
