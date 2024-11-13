@@ -1,4 +1,4 @@
-package com.mrdarip.bakery;
+package com.mrdarip.bakery.model;
 
 import com.mrdarip.bakery.data.DAO.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;

@@ -95,7 +95,7 @@ public class Plate {
         card.getChildren().addAll(cardBox);
 
         card.setOnMouseClicked(e -> {
-            NavController.navigateTo("/com/mrdarip/bakery/ManagePlate.fxml", this);
+            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this);
         });
 
         return card;

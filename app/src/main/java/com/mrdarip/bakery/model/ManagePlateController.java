@@ -1,16 +1,14 @@
 
-package com.mrdarip.bakery;
+package com.mrdarip.bakery.model;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.mrdarip.bakery.data.entity.Plate;
-import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.PlateDependantDestiny;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.image.ImageView;
