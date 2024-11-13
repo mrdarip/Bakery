@@ -3,6 +3,7 @@ package com.mrdarip.bakery;
 import com.mrdarip.bakery.data.DAO.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
+import com.mrdarip.bakery.navigation.Navigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
  *
  * @author mrdarip
  */
-public class MainScreenController implements Initializable {
+public class MainScreenController implements Initializable, Navigable {
 
     PlateDao dao = new MariaDBPlateDAO();
 
@@ -72,5 +73,20 @@ public class MainScreenController implements Initializable {
     private void updatePlatesFlowPane() {
         //platesFlowPane.getChildren().clear();
         platesFlowPane.getChildren().addAll(dao.getPlatesPage(0, 0).stream().map(Plate::getAsCard).toList());
+    }
+
+    @Override
+    public String getScreenTitle() {
+        return "Bakery";
+    }
+
+    @Override
+    public int getMinWidth() {
+        return 400;
+    }
+
+    @Override
+    public int getMinHeight() {
+        return 300;
     }
 }

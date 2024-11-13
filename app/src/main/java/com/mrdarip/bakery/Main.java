@@ -1,5 +1,6 @@
 package com.mrdarip.bakery;
 
+import com.mrdarip.bakery.navigation.NavController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,14 +15,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primeraEscena) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-
-        Scene scene = new Scene(root);
-
-        primeraEscena.setMinHeight(300.);
-        primeraEscena.setMinWidth(400.);
-        primeraEscena.setScene(scene);
-        primeraEscena.setTitle("Bakery");
-        primeraEscena.show();
+        NavController.navigateTo("/com/mrdarip/bakery/MainScreen.fxml", null);
     }
 }

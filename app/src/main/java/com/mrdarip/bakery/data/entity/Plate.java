@@ -1,5 +1,6 @@
 package com.mrdarip.bakery.data.entity;
 
+import com.mrdarip.bakery.navigation.NavController;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
@@ -93,6 +94,10 @@ public class Plate {
 
         card.getChildren().addAll(cardBox);
 
+        card.setOnMouseClicked(e -> {
+            NavController.navigateTo("/com/mrdarip/bakery/ManagePlate.fxml", this);
+        });
+
         return card;
     }
 
@@ -118,5 +123,13 @@ public class Plate {
         preview.setViewport(centerViewport);
 
         return preview;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPreviewURI() {
+        return previewURI;
     }
 }

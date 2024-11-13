@@ -19,14 +19,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mrdarip.bakery.ManagePlateController">
    <top>
-      <StackPane alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
+      <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" text="Button">
                <StackPane.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </StackPane.margin>
             </Button>
-            <ImageView pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="previewIV" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
    </top>
@@ -60,7 +60,7 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <TreeTableView prefHeight="128.0">
+                  <TreeTableView fx:id="instructionTTV" prefHeight="128.0">
                     <columns>
                       <TreeTableColumn maxWidth="-1.0" minWidth="20.0" prefWidth="-1.0" text="C1" />
                       <TreeTableColumn minWidth="20.0" prefWidth="-1.0" text="C2" />

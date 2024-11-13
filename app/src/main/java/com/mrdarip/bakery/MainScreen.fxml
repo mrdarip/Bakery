@@ -34,7 +34,7 @@
    <center>
       <StackPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <children>
-             <ScrollPane fx:id="flowPaneScroll" fitToWidth="true" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
+             <ScrollPane fx:id="flowPaneScroll" fitToWidth="true" hbarPolicy="NEVER" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
                  <content>
                      <FlowPane fx:id="platesFlowPane" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="16.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" rowValignment="BOTTOM" vgap="16.0">
                          <children>
