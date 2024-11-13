@@ -17,7 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("ejemplo.fxml"));
 
         Scene scene = new Scene(root);
-        
+
         primeraEscena.setMinHeight(300.);
         primeraEscena.setMinWidth(400.);
         primeraEscena.setScene(scene);

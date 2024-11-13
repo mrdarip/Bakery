@@ -1,21 +1,18 @@
 package com.mrdarip.bakery.data.DAO;
 
 import com.mrdarip.bakery.data.entity.Plate;
+import javafx.scene.control.Alert;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import static java.lang.System.exit;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javafx.scene.control.Alert;
+
+import static java.lang.System.exit;
 
 public class MySqlPlateDAO extends PlateDao {
 
@@ -32,12 +29,13 @@ public class MySqlPlateDAO extends PlateDao {
                 this.st = conexion.createStatement();
             }
         } catch (IOException | SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
     @Override
     public Plate getPlate(int id) {
-        if (conexion != null && id!=0) {
+        if (conexion != null && id != 0) {
             String query = "SELECT * FROM Plate WHERE idPlate = ?";
             try {
                 Plate plate = null;
@@ -45,14 +43,8 @@ public class MySqlPlateDAO extends PlateDao {
                 preparedStatement.setInt(1, id);
 
                 rs = preparedStatement.executeQuery();
-¡
-                    plate = new Plate(
-                            rs.getInt("idPlate"),
-                            rs.getString("plateName"),
-                            rs.getInt("valoration"),
-                            this.getPlate(rs.getInt("idRequiredPlate")),
-                            rs.getString("uri_preview"));
-                
+
+                plate = new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
 
                 return plate;
             } catch (SQLException e) {
@@ -77,11 +69,7 @@ public class MySqlPlateDAO extends PlateDao {
                 rs = preparedStatement.executeQuery();
                 Plate plate;
                 while (rs.next()) {
-                    plate = new Plate(rs.getInt("idPlate"),
-                            rs.getString("plateName"),
-                            rs.getInt("valoration"),
-                            this.getPlate(rs.getInt("idRequiredPlate")),
-                            rs.getString("uri_preview"));
+                    plate = new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
                     output.add(plate);
                 }
             } catch (SQLException e) {

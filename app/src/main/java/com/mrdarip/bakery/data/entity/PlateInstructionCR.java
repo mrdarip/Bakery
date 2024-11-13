@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.data.entity;
+
 /**
- * 
  * @author mrdarip
  */
 public class PlateInstructionCR {

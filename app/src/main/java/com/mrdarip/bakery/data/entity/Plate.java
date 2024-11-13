@@ -1,6 +1,5 @@
 package com.mrdarip.bakery.data.entity;
 
-import com.mrdarip.bakery.data.DAO.PlateDao;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
@@ -8,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class Plate {
@@ -35,22 +33,21 @@ public class Plate {
         return this.requiredPlate;
     }
 
+    public void setRequiredPlate(Plate newRPlateequiredPlate) {
+        if (newRPlateequiredPlate == null || newRPlateequiredPlate.isRegistered()) {
+            this.requiredPlate = newRPlateequiredPlate;
+        } else {
+            //this won't happen in a real scenario by user, still, source code can add plates to the database without registering them
+            throw new IllegalArgumentException("The required plate must be registered first");
+        }
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setRequiredPlate(Plate newRPlateequiredPlate) {
-        if (newRPlateequiredPlate == null || newRPlateequiredPlate.isRegistered()) {
-
-            this.requiredPlate = newRPlateequiredPlate;
-        } else {
-            //this won't happen in a real scenario by user, still, source code can add plates to the database without registering them
-            throw new IllegalArgumentException("The required plate must be registered first");
-        }
     }
 
     public boolean hasChildren() {
@@ -101,7 +98,7 @@ public class Plate {
 
     public ImageView getPreviewImageViewCovering(double previewWidth, double previewHeight) {
         Image image = new Image(previewURI);
-        
+
         ImageView preview = new ImageView(image);
         preview.setPreserveRatio(true);
 
@@ -109,20 +106,10 @@ public class Plate {
 
         if (image.getWidth() / image.getHeight() > previewWidth / previewHeight) {
             double imgpxPerfxpx = (previewWidth / previewHeight);
-            centerViewport = new Rectangle2D(
-                    image.getWidth() / 2 - (double) (image.getHeight() * imgpxPerfxpx) / 2,
-                    0,
-                    image.getHeight() * imgpxPerfxpx,
-                    image.getHeight()
-            );
+            centerViewport = new Rectangle2D(image.getWidth() / 2 - (image.getHeight() * imgpxPerfxpx) / 2, 0, image.getHeight() * imgpxPerfxpx, image.getHeight());
         } else {
             double imgpxPerfxpx = (previewHeight / previewWidth);
-            centerViewport = new Rectangle2D(
-                    0,
-                    image.getHeight() / 2 - (double) (image.getWidth() * imgpxPerfxpx) / 2,
-                    image.getWidth(),
-                    image.getWidth() * imgpxPerfxpx
-            );
+            centerViewport = new Rectangle2D(0, image.getHeight() / 2 - (image.getWidth() * imgpxPerfxpx) / 2, image.getWidth(), image.getWidth() * imgpxPerfxpx);
         }
 
         preview.setFitWidth(previewWidth);
@@ -131,6 +118,5 @@ public class Plate {
         preview.setViewport(centerViewport);
 
         return preview;
-
     }
 }
