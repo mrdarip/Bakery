@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  *
  * @author mrdarip
  */
-public class EjemploController implements Initializable {
+public class MainScreenController implements Initializable {
 
     PlateDao dao = new MariaDBPlateDAO();
 
