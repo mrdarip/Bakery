@@ -34,7 +34,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
 
                 rs = preparedStatement.executeQuery();
                 while (rs.next()) {
-                    instruction = new Instruction(rs.getInt("idInstruction"), getInstructionById(rs.getInt("idSharperInstruction")), rs.getInt("difficulty"), rs.getInt("duration"), rs.getString("instructionText"));
+                    instruction = instructionFromResultSet(rs);
                 }
                 return instruction;
             } catch (SQLException e) {
@@ -65,7 +65,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
 
                 rs = preparedStatement.executeQuery();
                 while (rs.next()) {
-                    instruction = new Instruction(rs.getInt("idInstruction"), getInstructionById(rs.getInt("idSharperInstruction")), rs.getInt("difficulty"), rs.getInt("duration"), rs.getString("instructionText"));
+                    instruction = instructionFromResultSet(rs);
                     output.add(instruction);
                 }
                 return output;
@@ -74,5 +74,9 @@ public class MariaDBInstructionDAO extends InstructionDao {
             }
         }
         return null;
+    }
+
+    private Instruction instructionFromResultSet(ResultSet rs) throws SQLException {
+        return new Instruction(rs.getInt("idInstruction"), getInstructionById(rs.getInt("idSharperInstruction")), rs.getInt("difficulty"), rs.getInt("duration"), rs.getString("instructionText"));
     }
 }

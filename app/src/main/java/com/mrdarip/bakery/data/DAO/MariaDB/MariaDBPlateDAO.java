@@ -33,7 +33,7 @@ public class MariaDBPlateDAO extends PlateDao {
 
                 rs = preparedStatement.executeQuery();
                 while (rs.next()) {
-                    plate = new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
+                    plate = plateFromResultSet(rs);
                 }
                 return plate;
             } catch (SQLException e) {
@@ -47,7 +47,7 @@ public class MariaDBPlateDAO extends PlateDao {
     @Override
     public List<Plate> getPlatesPage(int page, int orderBy) {
         ResultSet rs;
-        List<Plate> output = new ArrayList();
+        List<Plate> output = new ArrayList<>();
         int pageSize = 4;
         if (connection != null) {
             String query = "SELECT * FROM Plate LIMIT ? OFFSET ?";
@@ -57,17 +57,15 @@ public class MariaDBPlateDAO extends PlateDao {
                 preparedStatement.setInt(2, pageSize * page);
 
                 rs = preparedStatement.executeQuery();
-                Plate plate;
                 while (rs.next()) {
-                    plate = new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
-                    output.add(plate);
+                    output.add(plateFromResultSet(rs));
                 }
             } catch (SQLException e) {
                 System.out.println("SQL exception when trying to getPlatesPage: " + e.getMessage());
             }
             return output;
         }
-        return null;
+        return null; //could be replaced to return output, so it will return empty list or list with plates
     }
 
     @Override
@@ -75,5 +73,8 @@ public class MariaDBPlateDAO extends PlateDao {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    private Plate plateFromResultSet(ResultSet rs) throws SQLException {
+        return new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
+    }
 
 }
