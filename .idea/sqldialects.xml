@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/SQL/generateDataBase.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mrdarip/bakery/data/DAO/MariaDBPlateDAO.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/mrdarip/bakery/data/DAO/MariaDB/MariaDBPlateDAO.java" dialect="GenericSQL" />
     <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

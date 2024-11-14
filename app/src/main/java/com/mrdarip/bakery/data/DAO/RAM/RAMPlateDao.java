@@ -1,5 +1,6 @@
-package com.mrdarip.bakery.data.DAO;
+package com.mrdarip.bakery.data.DAO.RAM;
 
+import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
 
 import java.util.ArrayList;

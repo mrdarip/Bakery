@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.model;
 
-import com.mrdarip.bakery.data.DAO.MariaDBPlateDAO;
+import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.Navigable;

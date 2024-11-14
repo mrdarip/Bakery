@@ -1,5 +1,6 @@
-package com.mrdarip.bakery.data.DAO;
+package com.mrdarip.bakery.data.DAO.MariaDB;
 
+import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.Database.MariaDBConnector;
 import com.mrdarip.bakery.data.entity.Instruction;
 
