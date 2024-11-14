@@ -48,7 +48,7 @@ public class MariaDBPlateDAO extends PlateDao {
     public List<Plate> getPlatesPage(int page, int orderBy) {
         ResultSet rs;
         List<Plate> output = new ArrayList<>();
-        int pageSize = 4;
+        int pageSize = 25;
         if (connection != null) {
             String query = "SELECT * FROM Plate LIMIT ? OFFSET ?";
             try {

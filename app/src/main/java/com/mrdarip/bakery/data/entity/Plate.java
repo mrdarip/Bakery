@@ -68,10 +68,10 @@ public class Plate {
     }
 
     public Pane getAsCard() {
-        int cardWidth = 100;
-        int cardHeight = 100;
+        int cardWidth = 200;
+        int cardHeight = 150;
 
-        int TextBoxHeight = 25;
+        int TextBoxHeight = 50;
         int textBoxWidth = cardWidth;
 
         int previewHeight = cardHeight - TextBoxHeight;
@@ -84,9 +84,11 @@ public class Plate {
         card.setStyle("-fx-background-color: #c7BEFA;");
 
         Label nameLbl = new Label(name);
-        Label valorationLbl = new Label(this.valoration + " ★");
+        Label valorationLbl = new Label(this.valoration + "★");
 
         HBox textBox = new HBox(nameLbl, valorationLbl);
+        textBox.setSpacing(8);
+
         textBox.setPadding(new Insets(0, 0, 0, 5));
         textBox.setMaxSize(textBoxWidth, TextBoxHeight);
 
