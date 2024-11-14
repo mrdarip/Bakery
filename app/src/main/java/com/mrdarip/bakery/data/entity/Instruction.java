@@ -14,4 +14,12 @@ public class Instruction {
         this.duration = duration;
         this.instructionText = instructionText;
     }
+
+    public String getInstructionText() {
+        return instructionText;
+    }
+
+    public Instruction getSharperInstruction() {
+        return sharperInstruction;
+    }
 }
