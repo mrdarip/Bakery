@@ -32,7 +32,7 @@ CREATE TABLE `PlateTableCR`
 );
 
 
-ALTER TABLE `PlateTableCR`
+ALTER TABLE PlateInstructionCR
     ADD FOREIGN KEY (`idInstruction`) REFERENCES `Instruction` (`idInstruction`)
         ON UPDATE NO ACTION ON DELETE CASCADE;
 
@@ -40,6 +40,6 @@ ALTER TABLE `Plate`
     ADD FOREIGN KEY (`idRequiredPlate`) REFERENCES `Plate` (`idPlate`)
         ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-ALTER TABLE `PlateTableCR`
+ALTER TABLE PlateInstructionCR
     ADD FOREIGN KEY (`idPlate`) REFERENCES `Plate` (`idPlate`)
         ON UPDATE NO ACTION ON DELETE CASCADE;
