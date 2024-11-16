@@ -22,4 +22,20 @@ public class Instruction {
     public Instruction getSharperInstruction() {
         return sharperInstruction;
     }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public int getIdInstruction() {
+        return idInstruction;
+    }
+
+    public boolean hasSharperInstruction() {
+        return this.sharperInstruction != null;
+    }
 }

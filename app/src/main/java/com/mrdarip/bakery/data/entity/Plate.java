@@ -132,4 +132,8 @@ public class Plate {
     public String getPreviewURI() {
         return previewURI;
     }
+
+    public int getValoration() {
+        return valoration;
+    }
 }

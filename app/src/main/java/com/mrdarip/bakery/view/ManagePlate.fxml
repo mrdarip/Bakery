@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mrdarip.bakery.model.ManagePlateController">
    <top>
       <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
@@ -51,21 +39,16 @@
                               <Button fx:id="requiredPlateButton" mnemonicParsing="false" onAction="#NavigateToRequiredPlate" text="Required Plate" />
                            </children>
                         </FlowPane>
-                        <TextField />
+                         <TextField fx:id="plateNameTF"/>
                         <Button mnemonicParsing="false" onAction="#DeleteThisPlate" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="⭐⭐⭐⭐" GridPane.columnIndex="1">
+                         <Label fx:id="starsLbl" text="⭐⭐⭐⭐" GridPane.columnIndex="1">
                            <font>
                               <Font size="32.0" />
                            </font>
                         </Label>
                      </children>
                   </GridPane>
-                  <TreeTableView fx:id="instructionTTV" prefHeight="128.0">
-                    <columns>
-                      <TreeTableColumn maxWidth="-1.0" minWidth="20.0" prefWidth="-1.0" text="C1" />
-                      <TreeTableColumn minWidth="20.0" prefWidth="-1.0" text="C2" />
-                    </columns>
-                  </TreeTableView>
+                   <TreeTableView fx:id="instructionTTV" prefHeight="128.0"/>
                </children>
             </VBox>
          </content>

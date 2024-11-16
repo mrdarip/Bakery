@@ -10,10 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -38,6 +35,12 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
 
     @FXML
     private ImageView previewIV;
+
+    @FXML
+    private TextField plateNameTF;
+
+    @FXML
+    private Label starsLbl;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,7 +78,21 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
 
 
             fillTable();
+
+            fillPlateInfo();
         }
+    }
+
+    private void fillPlateInfo() {
+        //fill stars
+        String n = "";
+        for (int i = 0; i < plateContext.getValoration(); i++) {
+            n += "★";
+        }
+        starsLbl.setText(n);
+
+        //fill name
+        plateNameTF.setText(plateContext.getName());
     }
 
     private void fillTable() {
@@ -87,21 +104,34 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
             root.getChildren().add(item);
         }
 
-        TreeTableColumn<Instruction, String> instructionColumn = new TreeTableColumn<>("Instruction");
-        instructionColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
+        TreeTableColumn<Instruction, String> instructionTitleColumn = new TreeTableColumn<>("Instruction");
+        instructionTitleColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
+
+        TreeTableColumn<Instruction, Integer> instructionDurationColumn = new TreeTableColumn<>("Duration");
+        instructionDurationColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("duration"));
+
+        TreeTableColumn<Instruction, Integer> instructionDifficultyColumn = new TreeTableColumn<>("Difficulty");
+        instructionDifficultyColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("difficulty"));
+
+
 
         instructionTTV.getColumns().clear();
-        instructionTTV.getColumns().add(instructionColumn);
+        instructionTTV.getColumns().addAll(instructionTitleColumn, instructionDurationColumn, instructionDifficultyColumn);
         instructionTTV.setRoot(root);
         instructionTTV.setShowRoot(false);
     }
 
     private TreeItem<Instruction> createTreeItem(Instruction instruction) {
-        TreeItem<Instruction> item = new TreeItem<>(instruction);
-        if (instruction.getSharperInstruction() != null) {
-            item.getChildren().add(createTreeItem(instruction.getSharperInstruction()));
+        TreeItem<Instruction> parentTI = new TreeItem<>(instruction);
+        Instruction currentInstruction = instruction;
+        while (currentInstruction.hasSharperInstruction()) {
+            currentInstruction = currentInstruction.getSharperInstruction();
+            TreeItem<Instruction> childTI = new TreeItem<>(currentInstruction);
+
+            parentTI.getChildren().add(childTI);
+
         }
-        return item;
+        return parentTI;
     }
 
     @Override
