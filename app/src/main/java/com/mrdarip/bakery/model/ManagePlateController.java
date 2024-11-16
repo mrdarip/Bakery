@@ -9,6 +9,7 @@ import com.mrdarip.bakery.navigation.PlateDependantDestiny;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -64,7 +65,11 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
                 });
             }
             ImageView previewIV = new ImageView(plateContext.getPreviewURI());
-
+            previewStackPane.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+                previewIV.setViewport(new Rectangle2D(0, 0, newWidth.doubleValue(), 200));
+                previewIV.setFitWidth(newWidth.doubleValue());
+                System.out.println("Width: " + newWidth);
+            });
 
             previewStackPane.getChildren().addFirst(previewIV);
 
