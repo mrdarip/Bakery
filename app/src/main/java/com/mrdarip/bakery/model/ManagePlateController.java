@@ -1,10 +1,10 @@
-
 package com.mrdarip.bakery.model;
 
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
+import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.PlateDependantDestiny;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-    }    
+    }
 
     @FXML
     private void NavigateToRequiredPlate(ActionEvent event) {
@@ -56,36 +56,39 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
         this.plateContext = plateContext;
 
         if (plateContext != null) {
-            if(plateContext.getRequiredPlate() != null) {
+            if (plateContext.getRequiredPlate() != null) {
                 requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
+
+                requiredPlateButton.setOnAction((event) -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
+                });
             }
             ImageView previewIV = new ImageView(plateContext.getPreviewURI());
 
 
             previewStackPane.getChildren().addFirst(previewIV);
-        }
 
-        fillTable();
+
+            fillTable();
+        }
     }
 
     private void fillTable() {
-        if (plateContext != null) {
-            List<Instruction> plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
+        List<Instruction> plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
 
-            TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
-            for (Instruction instruction : plateInstructions) {
-                TreeItem<Instruction> item = createTreeItem(instruction);
-                root.getChildren().add(item);
-            }
-
-            TreeTableColumn<Instruction, String> instructionColumn = new TreeTableColumn<>("Instruction");
-            instructionColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
-
-            instructionTTV.getColumns().clear();
-            instructionTTV.getColumns().add(instructionColumn);
-            instructionTTV.setRoot(root);
-            instructionTTV.setShowRoot(false);
+        TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
+        for (Instruction instruction : plateInstructions) {
+            TreeItem<Instruction> item = createTreeItem(instruction);
+            root.getChildren().add(item);
         }
+
+        TreeTableColumn<Instruction, String> instructionColumn = new TreeTableColumn<>("Instruction");
+        instructionColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
+
+        instructionTTV.getColumns().clear();
+        instructionTTV.getColumns().add(instructionColumn);
+        instructionTTV.setRoot(root);
+        instructionTTV.setShowRoot(false);
     }
 
     private TreeItem<Instruction> createTreeItem(Instruction instruction) {
@@ -98,7 +101,7 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
 
     @Override
     public String getScreenTitle() {
-        if(plateContext == null) {
+        if (plateContext == null) {
             return "New Plate";
         } else {
             return "Plate " + plateContext.getName();
