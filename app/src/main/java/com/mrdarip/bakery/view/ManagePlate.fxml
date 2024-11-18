@@ -9,7 +9,7 @@
    <top>
       <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Button">
+             <Button mnemonicParsing="false" text="Edit Image">
                <StackPane.margin>
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </StackPane.margin>
@@ -40,7 +40,8 @@
                            </children>
                         </FlowPane>
                          <TextField fx:id="plateNameTF"/>
-                        <Button mnemonicParsing="false" onAction="#DeleteThisPlate" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <Button mnemonicParsing="false" onAction="#DeleteThisPlate" text="Delete" textFill="RED"
+                                 GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                          <Label fx:id="starsLbl" text="⭐⭐⭐⭐" GridPane.columnIndex="1">
                            <font>
                               <Font size="32.0" />
