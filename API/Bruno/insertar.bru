@@ -1,0 +1,19 @@
+meta {
+  name: insertar
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost/APIRest_BBDDActores/crud/insertar.php
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nombre": "darioooo",
+    "edad": 99,
+    "activo": 1
+  }
+}

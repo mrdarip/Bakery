@@ -1,0 +1,20 @@
+meta {
+  name: actualizar
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost/APIRest_BBDDActores/crud/actualizar.php
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id",
+    "nombre": "dario",
+    "edad": 99,
+    "activo": 1
+  }
+}

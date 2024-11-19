@@ -4,8 +4,8 @@ class DBconnector
 {
     private $host = 'localhost';
     private $user = 'admin';
-    private $password = "vAVAOLcH68gL";
-    private $database = "bakery";
+    private $password = "omZZXTrp4ryo";
+    private $database = "Bakery";
 
     public function dameConexion()
     {
