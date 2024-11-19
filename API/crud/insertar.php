@@ -17,12 +17,13 @@ $updatingPlate = new Plate($conex);
 $datos = json_decode(file_get_contents("php://input"));
 
 //C) Se comprueba que le pasamos las variables correctamente
-if (isset($datos->plateName) && isset($datos->valoration) && isset($datos->idRequiredPlate)) {
+if (isset($datos->plateName) && isset($datos->valoration) && isset($datos->idRequiredPlate) && isset($datos->uri_preview)) {
 
     //D) Se rellena el objeto actor con datos salvo el id
     $updatingPlate->plateName = $datos->plateName;
     $updatingPlate->valoration = $datos->valoration;
     $updatingPlate->idRequiredPlate = $datos->idRequiredPlate;
+    $updatingPlate->uri_preview = $datos->uri_preview;
 
     //DEBUG: echo "Nombres es.".$act->plateName;
 

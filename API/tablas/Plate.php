@@ -49,6 +49,7 @@ class Plate
         $this->plateName = strip_tags($this->plateName);
         $this->valoration = strip_tags($this->valoration);
         $this->idRequiredPlate = strip_tags($this->idRequiredPlate);
+        $this->uri_preview = strip_tags($this->uri_preview);
 
         $stmt->bind_param("siis", $this->plateName, $this->valoration, $this->idRequiredPlate, $this->uri_preview);
         if ($stmt->execute()) {
