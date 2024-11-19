@@ -7,6 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -96,12 +97,12 @@ public class Plate {
         textBox.setMaxSize(textBoxWidth, TextBoxHeight);
 
 
-        Button playLbl = new Button("Play");
-        playLbl.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this));
-        Button editLbl = new Button("Edit");
-        editLbl.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this));
+        Button viewBtn = new Button("View");
+        viewBtn.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this));
+        Button editBtn = new Button("Edit");
+        editBtn.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this));
 
-        HBox actionsBox = new HBox(playLbl, editLbl);
+        HBox actionsBox = new HBox(viewBtn, editBtn);
 
         VBox detailsBox = new VBox(textBox, actionsBox);
 
@@ -150,8 +151,9 @@ public class Plate {
         return valoration;
     }
 
-    public Node getAsArticle(InstructionDao instructionDao) {
+    public Node getAsScrollableArticle(InstructionDao instructionDao) {
         VBox article = new VBox();
+        article.setPrefWidth(600);
         article.setSpacing(8);
 
         ImageView preview = this.getPreviewImageViewCovering(400, 200);
@@ -166,6 +168,11 @@ public class Plate {
             article.getChildren().add(new Label(instruction.getInstructionText()));
         });
 
-        return article;
+        ScrollPane scrollPane = new ScrollPane(article);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setPrefWidth(600);
+        scrollPane.setFitToHeight(true);
+        return scrollPane;
     }
 }

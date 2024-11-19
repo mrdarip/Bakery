@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainScrollPane" prefHeight="200.0" prefWidth="200.0"
-            xmlns="http://javafx.com/javafx/23" fx:controller="com.mrdarip.bakery.model.PreviewPlateController">
+            vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/23"
+            fx:controller="com.mrdarip.bakery.model.PreviewPlateController">
     <content>
         <HBox fx:id="mainScrollPaneHBox" prefHeight="100.0" prefWidth="200.0"/>
     </content>

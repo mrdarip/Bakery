@@ -42,7 +42,7 @@ public class PreviewPlateController implements Initializable, PlateDependantDest
 
         Plate requiredPlateToAdd = plateContext;
         do {
-            mainScrollPaneHBox.getChildren().addFirst(requiredPlateToAdd.getAsArticle(instructionDao));
+            mainScrollPaneHBox.getChildren().addFirst(requiredPlateToAdd.getAsScrollableArticle(instructionDao));
 
             requiredPlateToAdd = requiredPlateToAdd.getRequiredPlate();
         } while (requiredPlateToAdd != null);
