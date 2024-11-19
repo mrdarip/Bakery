@@ -1,4 +1,4 @@
-package com.mrdarip.bakery.data.Database;
+package com.mrdarip.bakery.data.database;
 
 import javafx.scene.control.Alert;
 
@@ -6,7 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import static java.lang.System.exit;

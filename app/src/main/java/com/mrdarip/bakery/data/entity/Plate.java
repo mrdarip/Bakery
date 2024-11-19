@@ -153,26 +153,24 @@ public class Plate {
 
     public Node getAsScrollableArticle(InstructionDao instructionDao) {
         VBox article = new VBox();
-        article.setPrefWidth(600);
+        article.setPrefWidth(VBox.USE_COMPUTED_SIZE);
         article.setSpacing(8);
 
         ImageView preview = this.getPreviewImageViewCovering(400, 200);
         article.getChildren().add(preview);
-        //name
         article.getChildren().add(new Label(this.name));
-        //valoration
         article.getChildren().add(new Label("Valoration: " + this.valoration + "★"));
-        //instructions
         article.getChildren().add(new Label("Instructions:"));
         instructionDao.getInstructionsByPlateId(this.id).forEach(instruction -> {
-            article.getChildren().add(new Label(instruction.getInstructionText()));
+            article.getChildren().add(new Label("- " + instruction.getInstructionText()));
+            //TODO: add sharper instructions as subInstructions
+            //TODO: implement TreeView
         });
 
         ScrollPane scrollPane = new ScrollPane(article);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setPrefWidth(600);
-        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
         return scrollPane;
     }
 }
