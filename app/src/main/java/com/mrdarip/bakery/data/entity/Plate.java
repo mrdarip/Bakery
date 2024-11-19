@@ -1,8 +1,11 @@
 package com.mrdarip.bakery.data.entity;
 
+import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.navigation.NavController;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -92,7 +95,17 @@ public class Plate {
         textBox.setPadding(new Insets(0, 0, 0, 5));
         textBox.setMaxSize(textBoxWidth, TextBoxHeight);
 
-        VBox cardBox = new VBox(preview, textBox);
+
+        Button playLbl = new Button("Play");
+        playLbl.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this));
+        Button editLbl = new Button("Edit");
+        editLbl.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this));
+
+        HBox actionsBox = new HBox(playLbl, editLbl);
+
+        VBox detailsBox = new VBox(textBox, actionsBox);
+
+        VBox cardBox = new VBox(preview, detailsBox);
 
         card.getChildren().addAll(cardBox);
 
@@ -135,5 +148,24 @@ public class Plate {
 
     public int getValoration() {
         return valoration;
+    }
+
+    public Node getAsArticle(InstructionDao instructionDao) {
+        VBox article = new VBox();
+        article.setSpacing(8);
+
+        ImageView preview = this.getPreviewImageViewCovering(400, 200);
+        article.getChildren().add(preview);
+        //name
+        article.getChildren().add(new Label(this.name));
+        //valoration
+        article.getChildren().add(new Label("Valoration: " + this.valoration + "★"));
+        //instructions
+        article.getChildren().add(new Label("Instructions:"));
+        instructionDao.getInstructionsByPlateId(this.id).forEach(instruction -> {
+            article.getChildren().add(new Label(instruction.getInstructionText()));
+        });
+
+        return article;
     }
 }
