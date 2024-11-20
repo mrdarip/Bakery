@@ -9,10 +9,10 @@ import com.mrdarip.bakery.navigation.PlateDependantDestiny;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
@@ -42,6 +42,9 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
     @FXML
     private Label starsLbl;
 
+    @FXML
+    private BorderPane borderPane;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -67,12 +70,10 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
                     NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
                 });
             }
-            ImageView previewIV = new ImageView(plateContext.getPreviewURI());
-            previewStackPane.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-                previewIV.setViewport(new Rectangle2D(0, 0, newWidth.doubleValue(), 200));
-                previewIV.setFitWidth(newWidth.doubleValue());
-                System.out.println("Width: " + newWidth);
-            });
+
+            //borderpane width x 100
+            previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), previewStackPane.heightProperty());
+
 
             previewStackPane.getChildren().addFirst(previewIV);
 
@@ -145,7 +146,7 @@ public class ManagePlateController implements Initializable, PlateDependantDesti
 
     @Override
     public int getMinWidth() {
-        return 500;
+        return 0;
     }
 
     @Override

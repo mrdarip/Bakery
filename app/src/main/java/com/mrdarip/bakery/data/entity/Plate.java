@@ -2,6 +2,8 @@ package com.mrdarip.bakery.data.entity;
 
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.navigation.NavController;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -121,6 +123,37 @@ public class Plate {
         ImageView preview = new ImageView(image);
         preview.setPreserveRatio(true);
 
+        Rectangle2D centerViewport = GetCenteredViewport(image, previewWidth, previewHeight);
+
+        preview.setFitWidth(previewWidth);
+        preview.setFitHeight(previewHeight);
+
+        preview.setViewport(centerViewport);
+
+        return preview;
+    }
+
+    public ImageView getPreviewImageViewCovering(ReadOnlyDoubleProperty width, ReadOnlyDoubleProperty height) {
+        Image image = new Image(previewURI);
+        ImageView preview = new ImageView(image);
+        preview.setPreserveRatio(true);
+
+        ChangeListener<Number> listener = (obs, oldVal, newVal) -> {
+            double previewWidth = width.getValue();
+            double previewHeight = height.getValue();
+            Rectangle2D centerViewport = GetCenteredViewport(image, previewWidth, previewHeight);
+
+            preview.setViewport(centerViewport);
+            preview.setFitWidth(previewWidth);
+        };
+
+        width.addListener(listener);
+        height.addListener(listener);
+
+        return preview;
+    }
+
+    private Rectangle2D GetCenteredViewport(Image image, double previewWidth, double previewHeight) {
         Rectangle2D centerViewport;
 
         if (image.getWidth() / image.getHeight() > previewWidth / previewHeight) {
@@ -130,14 +163,9 @@ public class Plate {
             double imgpxPerfxpx = (previewHeight / previewWidth);
             centerViewport = new Rectangle2D(0, image.getHeight() / 2 - (image.getWidth() * imgpxPerfxpx) / 2, image.getWidth(), image.getWidth() * imgpxPerfxpx);
         }
-
-        preview.setFitWidth(previewWidth);
-        preview.setFitHeight(previewHeight);
-
-        preview.setViewport(centerViewport);
-
-        return preview;
+        return centerViewport;
     }
+
 
     public String getName() {
         return name;

@@ -5,7 +5,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mrdarip.bakery.model.ManagePlateController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane" xmlns="http://javafx.com/javafx/23"
+            fx:controller="com.mrdarip.bakery.model.ManagePlateController">
    <top>
       <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
          <children>
