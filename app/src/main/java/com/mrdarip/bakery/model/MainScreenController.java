@@ -1,8 +1,10 @@
 package com.mrdarip.bakery.model;
 
+import com.mrdarip.bakery.composables.Card;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
+import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.Navigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
@@ -72,6 +76,9 @@ public class MainScreenController implements Initializable, Navigable {
 
     private void updatePlatesFlowPane() {
         //platesFlowPane.getChildren().clear();
+        platesFlowPane.getChildren().add(Card.simpleCard(new ImageView(new Image("/img/icon/plus.png")), "Test", "Test", ev -> {
+            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null);
+        }));
         platesFlowPane.getChildren().addAll(dao.getPlatesPage(0, 0).stream().map(Plate::getAsCard).toList());
     }
 

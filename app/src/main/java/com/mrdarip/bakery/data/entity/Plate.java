@@ -1,5 +1,6 @@
 package com.mrdarip.bakery.data.entity;
 
+import com.mrdarip.bakery.composables.Card;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.navigation.NavController;
 import javafx.beans.property.ReadOnlyDoubleProperty;
@@ -74,8 +75,8 @@ public class Plate {
     }
 
     public Pane getAsCard() {
-        int cardWidth = 200;
-        int cardHeight = 150;
+        int cardWidth = Card.cardWidth;
+        int cardHeight = Card.cardHeight;
 
         int TextBoxHeight = 50;
         int textBoxWidth = cardWidth;
