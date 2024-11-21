@@ -10,40 +10,27 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class NavController {
+    private static Navigable controller;
+    private static Parent root;
 
     public static void navigateTo(String route, Plate plateContext) {
-        System.out.println("Navigating to " + route);
-
-        Parent root = null;
-        FXMLLoader loader = new FXMLLoader(NavController.class.getResource(route));
-        try {
-            root = loader.load();
-        } catch (IOException ex) {
-            System.out.println("Error loading the FXML file " + route + ", is the route correct?");
-        }
-
-        Navigable controller = loader.getController();
+        loadFXML(route);
 
         if (plateContext != null && controller instanceof PlateDependantDestiny plateDependantDestiny) {
             plateDependantDestiny.setPlateContext(plateContext);
         }
 
-        Scene newScene = new Scene(root);
-        Stage newStage = new Stage();
-        newStage.initModality(Modality.WINDOW_MODAL); //MODAL!!
-        newStage.setScene(newScene);
-        newStage.setTitle(controller.getScreenTitle());
-        newStage.setMinWidth(controller.getMinWidth());
-        newStage.setMinHeight(controller.getMinHeight());
-
-        newStage.show();
+        CreateScene(controller, root);
     }
 
-
     public static void navigateTo(String route) {
+        loadFXML(route);
+        CreateScene(controller, root);
+    }
+
+    private static void loadFXML(String route) {
         System.out.println("Navigating to " + route);
 
-        Parent root = null;
         FXMLLoader loader = new FXMLLoader(NavController.class.getResource(route));
         try {
             root = loader.load();
@@ -51,11 +38,13 @@ public class NavController {
             System.out.println("Error loading the FXML file " + route + ", is the route correct?");
         }
 
-        Navigable controller = loader.getController();
+        controller = loader.getController();
+    }
 
+    private static void CreateScene(Navigable controller, Parent root) {
         Scene newScene = new Scene(root);
         Stage newStage = new Stage();
-        newStage.initModality(Modality.WINDOW_MODAL); //MODAL!!
+        newStage.initModality(Modality.WINDOW_MODAL);
         newStage.setScene(newScene);
         newStage.setTitle(controller.getScreenTitle());
         newStage.setMinWidth(controller.getMinWidth());
@@ -63,5 +52,4 @@ public class NavController {
 
         newStage.show();
     }
-
 }
