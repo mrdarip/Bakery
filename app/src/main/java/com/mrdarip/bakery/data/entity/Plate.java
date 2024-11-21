@@ -75,8 +75,8 @@ public class Plate {
     }
 
     public Pane getAsCard() {
-        int cardWidth = Card.cardWidth;
-        int cardHeight = Card.cardHeight;
+        int cardWidth = Card.CARD_WIDTH;
+        int cardHeight = Card.CARD_HEIGHT;
 
         int TextBoxHeight = 50;
         int textBoxWidth = cardWidth;

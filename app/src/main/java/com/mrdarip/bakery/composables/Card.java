@@ -6,15 +6,20 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class Card {
-    public static final int cardWidth = 200;
-    public static final int cardHeight = 150;
+public class Card extends StackPane {
+    public static final int CARD_WIDTH = 200;
+    public static final int CARD_HEIGHT = 150;
+    private static final String CARD_STYLE = "-fx-background-color: gray;";
 
-    public static Pane simpleCard(ImageView icon, String title, String description, EventHandler<MouseEvent> eventHandler) {
+    public Card(ImageView icon, String title, String description, EventHandler<MouseEvent> eventHandler) {
+        super();
+        if (icon == null || title == null || description == null || eventHandler == null) {
+            throw new IllegalArgumentException("Parameters cannot be null");
+        }
+
         HBox cardContent = new HBox();
         cardContent.setAlignment(Pos.CENTER);
         cardContent.setSpacing(16);
@@ -25,14 +30,13 @@ public class Card {
 
         VBox cardText = new VBox(new Label(title), new Label(description));
         cardText.setAlignment(Pos.CENTER);
-        cardContent.getChildren().addAll(cardText);
+        cardContent.getChildren().add(cardText);
 
 
-        StackPane outputPane = new StackPane(cardContent);
-        outputPane.setPrefWidth(cardWidth);
-        outputPane.setPrefHeight(cardHeight);
-        outputPane.setStyle("-fx-background-color: gray;");
-        outputPane.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-        return outputPane;
+        setPrefWidth(CARD_WIDTH);
+        setPrefHeight(CARD_HEIGHT);
+        setStyle(CARD_STYLE);
+        addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+        getChildren().add(cardContent);
     }
 }
