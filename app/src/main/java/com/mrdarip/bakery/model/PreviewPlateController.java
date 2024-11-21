@@ -7,7 +7,7 @@ package com.mrdarip.bakery.model;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.entity.Plate;
-import com.mrdarip.bakery.navigation.PlateDependantDestiny;
+import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  *
  * @author mrdarip
  */
-public class PreviewPlateController implements Initializable, PlateDependantDestiny {
+public class PreviewPlateController implements Initializable, PlateDependantNavigable {
     InstructionDao instructionDao = new MariaDBInstructionDAO();
 
     @FXML

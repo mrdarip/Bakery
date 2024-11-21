@@ -7,16 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class NavController {
-    private static Navigable controller;
-    private static Parent root;
 
     public static void navigateTo(String route, Plate plateContext) {
-        loadFXML(route);
+        FXMLLoader loader = loadFXML(route);
+        Parent root = loadLoader(loader, route);
+        Navigable controller = loader.getController();
 
-        if (plateContext != null && controller instanceof PlateDependantDestiny plateDependantDestiny) {
+        if (plateContext != null && controller instanceof PlateDependantNavigable plateDependantDestiny) {
             plateDependantDestiny.setPlateContext(plateContext);
         }
 
@@ -24,21 +22,26 @@ public class NavController {
     }
 
     public static void navigateTo(String route) {
-        loadFXML(route);
+        FXMLLoader loader = loadFXML(route);
+        Parent root = loadLoader(loader, route);
+        Navigable controller = loader.getController();
         CreateScene(controller, root);
     }
 
-    private static void loadFXML(String route) {
+    private static FXMLLoader loadFXML(String route) {
         System.out.println("Navigating to " + route);
 
-        FXMLLoader loader = new FXMLLoader(NavController.class.getResource(route));
+        return new FXMLLoader(NavController.class.getResource(route));
+    }
+
+    private static Parent loadLoader(FXMLLoader loader, String route) {
+        Parent root = null;
         try {
             root = loader.load();
-        } catch (IOException ex) {
-            System.out.println("Error loading the FXML file " + route + ", is the route correct?");
+        } catch (Exception e) {
+            System.out.println("Error loading the FXML file " + route + " Is the route correct?");
         }
-
-        controller = loader.getController();
+        return root;
     }
 
     private static void CreateScene(Navigable controller, Parent root) {
