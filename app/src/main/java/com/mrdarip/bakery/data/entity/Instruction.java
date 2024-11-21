@@ -3,9 +3,9 @@ package com.mrdarip.bakery.data.entity;
 public class Instruction {
     private final int idInstruction;
     private final Instruction sharperInstruction;
-    private final int difficulty;
-    private final int duration;
-    private final String instructionText;
+    private int difficulty;
+    private int duration;
+    private String instructionText;
 
     public Instruction(int idInstruction, Instruction sharperInstruction, int difficulty, int duration, String instructionText) {
         this.idInstruction = idInstruction;
@@ -41,5 +41,17 @@ public class Instruction {
 
     public int getId() {
         return idInstruction;
+    }
+
+    public void setInstructionText(String newValue) {
+        this.instructionText = newValue;
+    }
+
+    public void setDuration(int newValue) {
+        this.duration = newValue;
+    }
+
+    public void setDifficulty(int newValue) {
+        this.difficulty = newValue;
     }
 }

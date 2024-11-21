@@ -10,10 +10,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.util.List;
@@ -107,19 +109,30 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
         TreeTableColumn<Instruction, String> instructionTitleColumn = new TreeTableColumn<>("Instruction");
         instructionTitleColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
+        instructionTitleColumn.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
+        instructionTitleColumn.setOnEditCommit(event -> {
+            event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setInstructionText(event.getNewValue());
+        });
 
         TreeTableColumn<Instruction, Integer> instructionDurationColumn = new TreeTableColumn<>("Duration");
         instructionDurationColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("duration"));
+        instructionDurationColumn.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn(new IntegerStringConverter()));
+        instructionDurationColumn.setOnEditCommit(event -> {
+            event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setDuration(event.getNewValue());
+        });
 
         TreeTableColumn<Instruction, Integer> instructionDifficultyColumn = new TreeTableColumn<>("Difficulty");
         instructionDifficultyColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("difficulty"));
-
-
+        instructionDifficultyColumn.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn(new IntegerStringConverter()));
+        instructionDifficultyColumn.setOnEditCommit(event -> {
+            event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setDifficulty(event.getNewValue());
+        });
 
         instructionTTV.getColumns().clear();
         instructionTTV.getColumns().addAll(instructionTitleColumn, instructionDurationColumn, instructionDifficultyColumn);
         instructionTTV.setRoot(root);
         instructionTTV.setShowRoot(false);
+        instructionTTV.setEditable(true);
 
         instructionTTV.setOnMouseClicked((event) -> {
             System.out.println(event);
