@@ -1,5 +1,6 @@
 package com.mrdarip.bakery.navigation;
 
+import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,8 +15,20 @@ public class NavController {
         Parent root = loadLoader(loader, route);
         Navigable controller = loader.getController();
 
-        if (plateContext != null && controller instanceof PlateDependantNavigable plateDependantDestiny) {
-            plateDependantDestiny.setPlateContext(plateContext);
+        if (plateContext != null && controller instanceof PlateDependantNavigable plateDependantNavigable) {
+            plateDependantNavigable.setPlateContext(plateContext);
+        }
+
+        CreateScene(controller, root);
+    }
+
+    public static void navigateTo(String route, Instruction instructionContext) {
+        FXMLLoader loader = loadFXML(route);
+        Parent root = loadLoader(loader, route);
+        Navigable controller = loader.getController();
+
+        if (instructionContext != null && controller instanceof InstructionDependantNavigable instructionDependantNavigable) {
+            instructionDependantNavigable.setInstructionContext(instructionContext);
         }
 
         CreateScene(controller, root);

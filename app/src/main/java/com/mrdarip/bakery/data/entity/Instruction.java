@@ -38,4 +38,8 @@ public class Instruction {
     public boolean hasSharperInstruction() {
         return this.sharperInstruction != null;
     }
+
+    public int getId() {
+        return idInstruction;
+    }
 }

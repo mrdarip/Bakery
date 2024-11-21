@@ -101,7 +101,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
         TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
         for (Instruction instruction : plateInstructions) {
-            TreeItem<Instruction> item = createTreeItem(instruction);
+            TreeItem<Instruction> item = createTreeBranch(instruction);
             root.getChildren().add(item);
         }
 
@@ -120,9 +120,22 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         instructionTTV.getColumns().addAll(instructionTitleColumn, instructionDurationColumn, instructionDifficultyColumn);
         instructionTTV.setRoot(root);
         instructionTTV.setShowRoot(false);
+
+        instructionTTV.setOnMouseClicked((event) -> {
+            System.out.println(event);
+            if (event.getClickCount() == 2) {
+
+                TreeItem<Instruction> selectedItem = instructionTTV.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    Instruction instruction = selectedItem.getValue();
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ManageInstruction.fxml", instruction);
+                }
+            }
+            event.consume(); //fixme this is not consuming the double click event, if clicked a parent it unfolds
+        });
     }
 
-    private TreeItem<Instruction> createTreeItem(Instruction instruction) {
+    private TreeItem<Instruction> createTreeBranch(Instruction instruction) {
         TreeItem<Instruction> parentTI = new TreeItem<>(instruction);
         Instruction currentInstruction = instruction;
         while (currentInstruction.hasSharperInstruction()) {
@@ -132,6 +145,11 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             parentTI.getChildren().add(childTI);
 
         }
+
+        Instruction addInstruction = new Instruction(-1, null, -1, -1, "Add");
+        TreeItem<Instruction> addTI = new TreeItem<>(addInstruction);
+        parentTI.getChildren().add(addTI);
+
         return parentTI;
     }
 

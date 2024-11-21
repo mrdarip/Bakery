@@ -12,6 +12,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primeraEscena) {
-        NavController.navigateTo("/com/mrdarip/bakery/view/MainScreen.fxml", null);
+        NavController.navigateTo("/com/mrdarip/bakery/view/MainScreen.fxml");
     }
 }
