@@ -74,7 +74,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             }
 
             //borderpane width x 100
-            previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), previewStackPane.heightProperty());
+            previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
 
 
             previewStackPane.getChildren().addFirst(previewIV);
@@ -133,19 +133,6 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         instructionTTV.setRoot(root);
         instructionTTV.setShowRoot(false);
         instructionTTV.setEditable(true);
-
-        instructionTTV.setOnMouseClicked((event) -> {
-            System.out.println(event);
-            if (event.getClickCount() == 2) {
-
-                TreeItem<Instruction> selectedItem = instructionTTV.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    Instruction instruction = selectedItem.getValue();
-                    NavController.navigateTo("/com/mrdarip/bakery/view/ManageInstruction.fxml", instruction);
-                }
-            }
-            event.consume(); //fixme this is not consuming the double click event, if clicked a parent it unfolds
-        });
     }
 
     private TreeItem<Instruction> createTreeBranch(Instruction instruction) {
@@ -177,11 +164,11 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @Override
     public int getMinWidth() {
-        return 0;
+        return 450;
     }
 
     @Override
     public int getMinHeight() {
-        return 100;
+        return 300;
     }
 }

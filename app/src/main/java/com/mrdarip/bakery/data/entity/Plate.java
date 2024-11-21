@@ -3,6 +3,7 @@ package com.mrdarip.bakery.data.entity;
 import com.mrdarip.bakery.composables.Card;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.navigation.NavController;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -152,6 +153,45 @@ public class Plate {
         height.addListener(listener);
 
         return preview;
+    }
+
+    public ImageView getPreviewImageViewCovering(ReadOnlyDoubleProperty width, double height) {
+        return getPreviewImageViewCovering(width, new ReadOnlyDoubleProperty() {
+            @Override
+            public Object getBean() {
+                return null;
+            }
+
+            @Override
+            public String getName() {
+                return "";
+            }
+
+            @Override
+            public double get() {
+                return height;
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super Number> changeListener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super Number> changeListener) {
+
+            }
+
+            @Override
+            public void addListener(InvalidationListener invalidationListener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener invalidationListener) {
+
+            }
+        });
     }
 
     private Rectangle2D GetCenteredViewport(Image image, double previewWidth, double previewHeight) {
