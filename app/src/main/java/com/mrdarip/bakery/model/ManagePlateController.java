@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 public class ManagePlateController implements Initializable, PlateDependantNavigable {
     Plate plateContext;
     InstructionDao instructionDao = new MariaDBInstructionDAO();
+    List<Instruction> plateInstructions;
 
     @FXML
     private Button requiredPlateButton;
@@ -99,7 +100,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     }
 
     private void fillTable() {
-        List<Instruction> plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
+        plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
 
         TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
         for (Instruction instruction : plateInstructions) {
@@ -170,5 +171,15 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     @Override
     public int getMinHeight() {
         return 300;
+    }
+
+    public void OnSave(ActionEvent actionEvent) {
+        //sout each instruction
+        instructionTTV.getRoot().getChildren().forEach((instructionTreeItem) -> {
+            instructionDao.upsert(instructionTreeItem.getValue());
+        });
+    }
+
+    public void OnExit(ActionEvent actionEvent) {
     }
 }

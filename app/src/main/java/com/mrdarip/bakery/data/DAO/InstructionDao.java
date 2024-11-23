@@ -8,6 +8,14 @@ import java.util.List;
 public abstract class InstructionDao {
     public abstract Instruction getInstructionById(int id);
 
+    public abstract void delete(Instruction instruction);
+
+    public abstract void deleteById(int id);
+
+    public abstract Instruction insert(Instruction instruction);
+
+    public abstract Instruction update(Instruction instruction);
+
     public abstract Instruction upsert(Instruction instruction);
 
     public abstract List<Instruction> getInstructionsByPlateId(int plateId);

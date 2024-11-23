@@ -54,4 +54,13 @@ public class Instruction {
     public void setDifficulty(int newValue) {
         this.difficulty = newValue;
     }
+
+    public void setIdInstruction(int anInt) {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Instruction: " + instructionText + " with duration: " + duration + " and difficulty: " + difficulty;
+    }
 }
