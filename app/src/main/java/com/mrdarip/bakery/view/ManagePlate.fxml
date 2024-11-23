@@ -7,67 +7,64 @@
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane" prefHeight="450.0" prefWidth="700.0"
             xmlns="http://javafx.com/javafx/23" fx:controller="com.mrdarip.bakery.model.ManagePlateController">
-   <top>
-       <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
-         <children>
-             <Button mnemonicParsing="false" text="Edit Image">
-               <StackPane.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </StackPane.margin>
-            </Button>
-            <ImageView fx:id="previewIV" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </StackPane>
-   </top>
-   <center>
-       <StackPane BorderPane.alignment="CENTER">
-           <children>
-               <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                   <content>
-                       <VBox spacing="16.0">
-                           <children>
-                               <GridPane hgap="8.0" vgap="8.0">
-                                   <columnConstraints>
-                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                   </columnConstraints>
-                                   <rowConstraints>
-                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                   </rowConstraints>
-                                   <children>
-                                       <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                                           <children>
-                                               <Label text="Required:"/>
-                                               <Button fx:id="requiredPlateButton" mnemonicParsing="false"
-                                                       onAction="#NavigateToRequiredPlate" text="Required Plate"/>
-                                           </children>
-                                       </FlowPane>
-                                       <TextField fx:id="plateNameTF"/>
-                                       <Button mnemonicParsing="false" onAction="#DeleteThisPlate" text="Delete"
-                                               textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                       <Label fx:id="starsLbl" text="⭐⭐⭐⭐" GridPane.columnIndex="1">
-                                           <font>
-                                               <Font size="32.0"/>
-                                           </font>
-                                       </Label>
-                                   </children>
-                               </GridPane>
-                               <TreeTableView fx:id="instructionTTV" prefHeight="128.0"/>
-                           </children>
-                       </VBox>
-                   </content>
-               </ScrollPane>
-               <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="8.0">
-                   <children>
-                       <Button mnemonicParsing="false" text="Exit"/>
-                       <Button mnemonicParsing="false" text="Save"/>
-                   </children>
-                   <StackPane.margin>
-                       <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                   </StackPane.margin>
-               </HBox>
-           </children>
-       </StackPane>
-   </center>
+    <top>
+        <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" text="Edit Image">
+                    <StackPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </StackPane.margin>
+                </Button>
+                <ImageView fx:id="previewIV" pickOnBounds="true" preserveRatio="true"/>
+            </children>
+        </StackPane>
+    </top>
+    <center>
+        <StackPane BorderPane.alignment="CENTER">
+            <children>
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                    <content>
+                        <VBox spacing="16.0">
+                            <children>
+                                <GridPane hgap="8.0" vgap="8.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Required:"/>
+                                                <Button fx:id="requiredPlateButton" mnemonicParsing="false"
+                                                        onAction="#NavigateToRequiredPlate" text="Required Plate"/>
+                                            </children>
+                                        </FlowPane>
+                                        <TextField fx:id="plateNameTF"/>
+                                        <Button mnemonicParsing="false" onAction="#DeleteThisPlate" text="Delete"
+                                                textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <Label fx:id="starsLbl" text="⭐⭐⭐⭐" GridPane.columnIndex="1">
+                                            <font>
+                                                <Font size="20.0"/>
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </GridPane>
+                                <TreeTableView fx:id="instructionTTV"/>
+                                <HBox alignment="BOTTOM_RIGHT" depthTest="DISABLE" fillHeight="false" spacing="8.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#OnExit" text="Exit"/>
+                                        <Button mnemonicParsing="false" onAction="#OnSave" text="Save"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </StackPane>
+    </center>
 </BorderPane>
