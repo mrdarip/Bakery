@@ -64,15 +64,17 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @Override
     public void setPlateContext(Plate plateContext) {
-        System.out.println("Setting plate context to " + plateContext);
+        System.out.println("Setting plate context to " + plateContext.toString());
         this.plateContext = plateContext;
 
-        if (plateContext != null && plateContext.getRequiredPlate() != null) {
-            requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
+        if (plateContext != null) {
+            if (plateContext.getRequiredPlate() != null) {
+                requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
-            requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
-            });
+                requiredPlateButton.setOnAction((event) -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
+                });
+            }
 
 
 

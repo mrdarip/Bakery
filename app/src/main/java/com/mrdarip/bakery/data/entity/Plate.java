@@ -242,4 +242,15 @@ public class Plate {
         scrollPane.setFitToWidth(true);
         return scrollPane;
     }
+
+    @Override
+    public String toString() {
+        return "Plate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", valoration=" + valoration +
+                ", requiredPlate=" + requiredPlate +
+                ", previewURI=..." +
+                '}';
+    }
 }

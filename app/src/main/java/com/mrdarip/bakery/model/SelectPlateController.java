@@ -40,7 +40,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     public void setPlateContext(Plate plateContext) {
         this.plateContext = plateContext;
 
-        plateDao.getPlatesPage(0, 9).forEach(plate -> {
+        plateDao.getPlatesPage(0, 99999).forEach(plate -> {
             PlatesListVBox.getChildren().add(plate.getAsCard());
         });
     }
