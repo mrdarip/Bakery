@@ -68,7 +68,6 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         this.plateContext = plateContext;
 
         if (plateContext != null && plateContext.getRequiredPlate() != null) {
-            System.out.println("Required plate is not null");
             requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
             requiredPlateButton.setOnAction((event) -> {
@@ -82,7 +81,6 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             previewStackPane.getChildren().addFirst(previewIV);
 
         } else {
-            System.out.println("Required plate is null");
             requiredPlateButton.setText("Set Required Plate");
 
             requiredPlateButton.setOnAction((event) -> {
@@ -186,12 +184,19 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        //sout each instruction
         instructionTTV.getRoot().getChildren().forEach((instructionTreeItem) -> {
             instructionDao.upsert(instructionTreeItem.getValue());
         });
     }
 
     public void OnExit(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Not implemented");
+        alert.showAndWait();
+    }
+
+    @FXML
+    void OnClickEditRequirePlate(ActionEvent event) {
+        NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", plateContext);
     }
 }

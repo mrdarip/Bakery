@@ -41,6 +41,8 @@
                                                 <Label text="Required:"/>
                                                 <Button fx:id="requiredPlateButton" mnemonicParsing="false"
                                                         onAction="#NavigateToRequiredPlate" text="Required Plate"/>
+                                                <Button mnemonicParsing="false" onAction="#OnClickEditRequirePlate"
+                                                        text="✎"/>
                                             </children>
                                         </FlowPane>
                                         <TextField fx:id="plateNameTF"/>
