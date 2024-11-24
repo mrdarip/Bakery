@@ -11,11 +11,12 @@ import javafx.stage.Stage;
 public class NavController {
 
     public static void navigateTo(String route, Plate plateContext) {
+        System.out.println("Navigating to " + route + " with plate context " + plateContext);
         FXMLLoader loader = loadFXML(route);
         Parent root = loadLoader(loader, route);
         Navigable controller = loader.getController();
 
-        if (plateContext != null && controller instanceof PlateDependantNavigable plateDependantNavigable) {
+        if (controller instanceof PlateDependantNavigable plateDependantNavigable) {
             plateDependantNavigable.setPlateContext(plateContext);
         }
 
@@ -23,6 +24,7 @@ public class NavController {
     }
 
     public static void navigateTo(String route, Instruction instructionContext) {
+        System.out.println("Navigating to " + route + " with instruction context " + instructionContext);
         FXMLLoader loader = loadFXML(route);
         Parent root = loadLoader(loader, route);
         Navigable controller = loader.getController();
@@ -35,6 +37,7 @@ public class NavController {
     }
 
     public static void navigateTo(String route) {
+        System.out.println("Navigating to " + route + " without context");
         FXMLLoader loader = loadFXML(route);
         Parent root = loadLoader(loader, route);
         Navigable controller = loader.getController();
@@ -42,8 +45,6 @@ public class NavController {
     }
 
     private static FXMLLoader loadFXML(String route) {
-        System.out.println("Navigating to " + route);
-
         return new FXMLLoader(NavController.class.getResource(route));
     }
 

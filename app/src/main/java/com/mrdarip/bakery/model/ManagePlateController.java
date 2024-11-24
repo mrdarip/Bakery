@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 public class ManagePlateController implements Initializable, PlateDependantNavigable {
     Plate plateContext;
     InstructionDao instructionDao = new MariaDBInstructionDAO();
-    List<Instruction> plateInstructions;
+    List<Instruction> plateInstructions = new ArrayList<>();
 
     @FXML
     private Button requiredPlateButton;
@@ -63,45 +64,56 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @Override
     public void setPlateContext(Plate plateContext) {
+        System.out.println("Setting plate context to " + plateContext);
         this.plateContext = plateContext;
 
-        if (plateContext != null) {
-            if (plateContext.getRequiredPlate() != null) {
-                requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
+        if (plateContext != null && plateContext.getRequiredPlate() != null) {
+            System.out.println("Required plate is not null");
+            requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
-                requiredPlateButton.setOnAction((event) -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
-                });
-            }
+            requiredPlateButton.setOnAction((event) -> {
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
+            });
+
+
 
             //borderpane width x 100
             previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
-
-
             previewStackPane.getChildren().addFirst(previewIV);
 
+        } else {
+            System.out.println("Required plate is null");
+            requiredPlateButton.setText("Set Required Plate");
 
-            fillTable();
-
-            fillPlateInfo();
+            requiredPlateButton.setOnAction((event) -> {
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", (Plate) null);
+            });
         }
+
+
+        fillTable();
+
+        fillPlateInfo();
     }
 
     private void fillPlateInfo() {
         //fill stars
-        String n = "";
-        for (int i = 0; i < plateContext.getValoration(); i++) {
-            n += "★";
-        }
-        starsLbl.setText(n);
+        if (plateContext != null) {
+            String n = "";
+            for (int i = 0; i < plateContext.getValoration(); i++) {
+                n += "★";
+            }
+            starsLbl.setText(n);
 
-        //fill name
-        plateNameTF.setText(plateContext.getName());
+            //fill name
+            plateNameTF.setText(plateContext.getName());
+        }
     }
 
     private void fillTable() {
-        plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
-
+        if (plateContext != null) {
+            plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
+        }
         TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
         for (Instruction instruction : plateInstructions) {
             TreeItem<Instruction> item = createTreeBranch(instruction);
