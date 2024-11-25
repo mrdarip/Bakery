@@ -31,10 +31,6 @@ public class Instruction {
         return difficulty;
     }
 
-    public int getIdInstruction() {
-        return idInstruction;
-    }
-
     public boolean hasSharperInstruction() {
         return this.sharperInstruction != null;
     }

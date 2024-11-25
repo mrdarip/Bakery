@@ -47,7 +47,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
 
     @Override
     public void delete(Instruction instruction) {
-        deleteById(instruction.getIdInstruction());
+        deleteById(instruction.getId());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
             String query = "INSERT INTO Instruction (idSharperInstruction, difficulty, duration, instructionText) VALUES (?, ?, ?, ?)";
             try {
                 PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-                preparedStatement.setInt(1, instruction.getSharperInstruction().getIdInstruction());
+                preparedStatement.setInt(1, instruction.getSharperInstruction().getId());
                 preparedStatement.setInt(2, instruction.getDifficulty());
                 preparedStatement.setInt(3, instruction.getDuration());
                 preparedStatement.setString(4, instruction.getInstructionText());
@@ -88,11 +88,16 @@ public class MariaDBInstructionDAO extends InstructionDao {
         String query = "UPDATE Instruction SET idSharperInstruction = ?, difficulty = ?, duration = ?, instructionText = ? WHERE idInstruction = ?";
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setInt(1, instruction.getSharperInstruction() == null ? 0 : instruction.getSharperInstruction().getIdInstruction());
+
+            if (instruction.getSharperInstruction() != null) {
+                preparedStatement.setInt(1, instruction.getSharperInstruction().getId());
+            } else {
+                preparedStatement.setNull(1, java.sql.Types.INTEGER);
+            }
             preparedStatement.setInt(2, instruction.getDifficulty());
             preparedStatement.setInt(3, instruction.getDuration());
             preparedStatement.setString(4, instruction.getInstructionText());
-            preparedStatement.setInt(5, instruction.getIdInstruction());
+            preparedStatement.setInt(5, instruction.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("SQL exception when trying to update instruction: " + e.getMessage());
@@ -102,9 +107,41 @@ public class MariaDBInstructionDAO extends InstructionDao {
 
     @Override
     public Instruction upsert(Instruction instruction) {
-        return instruction.getIdInstruction() == 0 ?
-                insert(instruction) :
-                update(instruction);
+        System.out.println("upserting instruction: " + instruction);
+        ResultSet rs;
+        if (connection != null) {
+            String query = """
+                    INSERT INTO Instruction (idInstruction, idSharperInstruction, difficulty, duration, instructionText)
+                    VALUES (?, ?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE
+                        idSharperInstruction = VALUES(idSharperInstruction),
+                        difficulty = VALUES(difficulty),
+                        duration = VALUES(duration),
+                        instructionText = VALUES(instructionText);
+                    """;
+            try {
+                PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+                preparedStatement.setInt(1, instruction.getId());
+                if (instruction.getSharperInstruction() != null) {
+                    preparedStatement.setInt(2, instruction.getSharperInstruction().getId());
+                } else {
+                    preparedStatement.setNull(2, java.sql.Types.INTEGER);
+                }
+                preparedStatement.setInt(3, instruction.getDifficulty());
+                preparedStatement.setInt(4, instruction.getDuration());
+                preparedStatement.setString(5, instruction.getInstructionText());
+
+                preparedStatement.executeUpdate();
+
+                rs = preparedStatement.getGeneratedKeys();
+                if (rs.next()) {
+                    instruction = instructionFromResultSet(rs);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL exception when trying to upsert instruction: " + e.getMessage());
+            }
+        }
+        return instruction;
     }
 
     @Override
