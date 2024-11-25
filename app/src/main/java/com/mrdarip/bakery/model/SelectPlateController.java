@@ -8,10 +8,13 @@ import com.mrdarip.bakery.composables.Card;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
+import com.mrdarip.bakery.navigation.NavController;
+import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -26,6 +29,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
 
     private final PlateDao plateDao = new MariaDBPlateDAO();
     private Plate plateContext;
+    private Navigable origin;
     @FXML
     private VBox PlatesListVBox;
 
@@ -40,14 +44,24 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     @Override
     public void setPlateContext(Plate plateContext) {
         this.plateContext = plateContext;
+        PlatesListVBox.getChildren().add(
 
-        plateDao.getPlatesPage(0, 99999).forEach(plate -> {
+                new Card(new ImageView(new Image("/img/icon/plus.png")), "Test", "Test", ev -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
+                })
+
+        );
+
+        plateDao.getPlatesPage(0, 99999).forEach(plate -> { //TODO: set custom query to remove cycles and itself
             PlatesListVBox.getChildren().add(
                     new Card(
                             new Image(plate.getPreviewURI()),
                             plate.getName(),
                             ev -> {
-                                System.out.println("Selected plate: " + plate.getName());
+                                if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
+                                    plateContext.setRequiredPlate(plate);
+                                    plateDependantNavigable.setPlateContext(plateContext);
+                                }
                             }
                     )
             );
@@ -67,5 +81,10 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     @Override
     public int getMinHeight() {
         return 500;
+    }
+
+    @Override
+    public void setOrigin(Navigable origin) {
+        this.origin = origin;
     }
 }

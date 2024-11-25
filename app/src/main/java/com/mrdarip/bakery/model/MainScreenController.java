@@ -77,7 +77,7 @@ public class MainScreenController implements Initializable, Navigable {
     private void updatePlatesFlowPane() {
         //platesFlowPane.getChildren().clear();
         platesFlowPane.getChildren().add(new Card(new ImageView(new Image("/img/icon/plus.png")), "Test", "Test", ev -> {
-            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", (Plate) null);
+            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
         }));
         platesFlowPane.getChildren().addAll(dao.getPlatesPage(0, 0).stream().map(Plate::getAsCard).toList());
     }
@@ -95,5 +95,10 @@ public class MainScreenController implements Initializable, Navigable {
     @Override
     public int getMinHeight() {
         return 300;
+    }
+
+    @Override
+    public void setOrigin(Navigable origin) {
+
     }
 }

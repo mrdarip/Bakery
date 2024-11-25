@@ -5,6 +5,7 @@ import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.NavController;
+import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,7 +74,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
                 requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
                 requiredPlateButton.setOnAction((event) -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate(), this);
                 });
             }
 
@@ -85,7 +86,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             requiredPlateButton.setText("Set Required Plate");
 
             requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", (Plate) null);
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
             });
         }
 
@@ -184,6 +185,11 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         return 300;
     }
 
+    @Override
+    public void setOrigin(Navigable origin) {
+
+    }
+
     public void OnSave(ActionEvent actionEvent) {
         instructionTTV.getRoot().getChildren().forEach((instructionTreeItem) -> {
             instructionDao.upsert(instructionTreeItem.getValue());
@@ -198,6 +204,6 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @FXML
     void OnClickEditRequirePlate(ActionEvent event) {
-        NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", plateContext);
+        NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", plateContext, this);
     }
 }

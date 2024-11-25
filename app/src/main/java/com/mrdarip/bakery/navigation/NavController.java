@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class NavController {
 
-    public static void navigateTo(String route, Plate plateContext) {
+    public static void navigateTo(String route, Plate plateContext, Navigable origin) {
         System.out.println("Navigating to " + route + " with plate context " + plateContext);
         FXMLLoader loader = loadFXML(route);
         Parent root = loadLoader(loader, route);
@@ -18,6 +18,7 @@ public class NavController {
 
         if (controller instanceof PlateDependantNavigable plateDependantNavigable) {
             plateDependantNavigable.setPlateContext(plateContext);
+            plateDependantNavigable.setOrigin(origin);
         }
 
         CreateScene(controller, root);
