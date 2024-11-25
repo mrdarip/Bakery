@@ -70,7 +70,43 @@ public class MariaDBPlateDAO extends PlateDao {
 
     @Override
     public Plate upsert(Plate plate) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("upserting plate: " + plate);
+        ResultSet rs;
+        if (connection != null) {
+            String query = """
+                    INSERT INTO Plate (idPlate, plateName, valoration, idRequiredPlate, uri_preview)
+                    VALUES (?, ?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE
+                        plateName = VALUES(plateName),
+                        valoration = VALUES(valoration),
+                        idRequiredPlate = VALUES(idRequiredPlate),
+                        uri_preview = VALUES(uri_preview);
+                    """;
+            try {
+                PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+                preparedStatement.setInt(1, plate.getId());
+                preparedStatement.setString(2, plate.getName());
+                preparedStatement.setInt(3, plate.getValoration());
+                if (plate.getRequiredPlate() != null) {
+                    preparedStatement.setInt(4, plate.getRequiredPlate().getId());
+                } else {
+                    preparedStatement.setNull(4, java.sql.Types.INTEGER);
+                }
+                preparedStatement.setString(5, plate.getPreviewURI());
+
+
+                rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    plate = plateFromResultSet(rs);
+                }
+
+
+                System.out.println("upserted plate: " + plate);
+            } catch (SQLException e) {
+                System.out.println("SQL exception when trying to upsert plate: " + e.getMessage());
+            }
+        }
+        return plate;
     }
 
     private Plate plateFromResultSet(ResultSet rs) throws SQLException {

@@ -60,12 +60,17 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
                             ev -> {
                                 if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
                                     plateContext.setRequiredPlate(plate);
-                                    plateDependantNavigable.setPlateContext(plateContext);
+                                    plateDependantNavigable.setSecondaryPlateContext(plateContext);
                                 }
                             }
                     )
             );
         });
+    }
+
+    @Override
+    public void setSecondaryPlateContext(Plate plateContext) {
+
     }
 
     @Override

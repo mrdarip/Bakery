@@ -88,7 +88,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
         String query = "UPDATE Instruction SET idSharperInstruction = ?, difficulty = ?, duration = ?, instructionText = ? WHERE idInstruction = ?";
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setInt(1, instruction.getSharperInstruction().getIdInstruction());
+            preparedStatement.setInt(1, instruction.getSharperInstruction() == null ? 0 : instruction.getSharperInstruction().getIdInstruction());
             preparedStatement.setInt(2, instruction.getDifficulty());
             preparedStatement.setInt(3, instruction.getDuration());
             preparedStatement.setString(4, instruction.getInstructionText());

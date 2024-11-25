@@ -2,6 +2,8 @@ package com.mrdarip.bakery.model;
 
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
+import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
+import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.NavController;
@@ -27,6 +29,7 @@ import java.util.ResourceBundle;
 public class ManagePlateController implements Initializable, PlateDependantNavigable {
     Plate plateContext;
     InstructionDao instructionDao = new MariaDBInstructionDAO();
+    PlateDao plateDao = new MariaDBPlateDAO();
     List<Instruction> plateInstructions = new ArrayList<>();
 
     @FXML
@@ -52,7 +55,12 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        //on text change, update plateContext.
+        plateNameTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (plateContext != null) {
+                plateContext.setName(newValue);
+            }
+        });
     }
 
     @FXML
@@ -71,11 +79,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             System.out.println("Setting plate context: " + plateContext);
 
             if (plateContext.getRequiredPlate() != null) {
-                requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
-
-                requiredPlateButton.setOnAction((event) -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate(), this);
-                });
+                updateRequiredPlateButton();
             }
 
             //borderpane width x 100
@@ -96,14 +100,25 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         fillPlateInfo();
     }
 
+    private void updateRequiredPlateButton() {
+        requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
+
+        requiredPlateButton.setOnAction((event) -> {
+            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate(), this);
+        });
+    }
+
+    @Override
+    public void setSecondaryPlateContext(Plate plateContext) {
+        this.plateContext = plateContext;
+
+        updateRequiredPlateButton();
+    }
+
     private void fillPlateInfo() {
         //fill stars
         if (plateContext != null) {
-            String n = "";
-            for (int i = 0; i < plateContext.getValoration(); i++) {
-                n += "★";
-            }
-            starsLbl.setText(n);
+            starsLbl.setText("★".repeat(Math.max(0, plateContext.getValoration())));
 
             //fill name
             plateNameTF.setText(plateContext.getName());
@@ -191,9 +206,16 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        instructionTTV.getRoot().getChildren().forEach((instructionTreeItem) -> {
-            instructionDao.upsert(instructionTreeItem.getValue());
+        instructionTTV.getRoot().getChildren().forEach((rootInstruction) -> {
+            instructionDao.upsert(rootInstruction.getValue());
+
+            //for each except last
+            rootInstruction.getChildren().subList(0, rootInstruction.getChildren().size() - 1).forEach((leafInstruction) -> {
+                instructionDao.upsert(leafInstruction.getValue());
+            });
         });
+
+        plateDao.upsert(plateContext);
     }
 
     public void OnExit(ActionEvent actionEvent) {

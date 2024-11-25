@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 public class Plate {
 
     private int id;
-    private final String name;
+    private String name;
     private final int valoration;
     private Plate requiredPlate;
     private final String previewURI;
@@ -198,5 +198,9 @@ public class Plate {
                 ", requiredPlate=" + requiredPlate +
                 ", previewURI=..." +
                 '}';
+    }
+
+    public void setName(String newValue) {
+        this.name = newValue;
     }
 }

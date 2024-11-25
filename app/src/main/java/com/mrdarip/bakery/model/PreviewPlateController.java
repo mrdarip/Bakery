@@ -50,6 +50,11 @@ public class PreviewPlateController implements Initializable, PlateDependantNavi
     }
 
     @Override
+    public void setSecondaryPlateContext(Plate plateContext) {
+
+    }
+
+    @Override
     public String getScreenTitle() {
         return plateContext.getName() + " recipe preview";
     }
