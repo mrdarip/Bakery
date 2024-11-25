@@ -6,15 +6,12 @@ import com.mrdarip.bakery.navigation.NavController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -76,64 +73,24 @@ public class Plate {
     }
 
     public Pane getAsCard() {
-        int cardWidth = Card.CARD_WIDTH;
-        int cardHeight = Card.CARD_HEIGHT;
 
-        int TextBoxHeight = 50;
-        int textBoxWidth = cardWidth;
-
-        int previewHeight = cardHeight - TextBoxHeight;
-        int previewWidth = cardWidth;
-
-        ImageView preview = this.getPreviewImageViewCovering(previewWidth, previewHeight);
-
-        Pane card = new Pane();
-        card.setPrefSize(cardWidth, cardHeight);
-        card.setStyle("-fx-background-color: #c7BEFA;");
-
-        Label nameLbl = new Label(name);
-        Label valorationLbl = new Label(this.valoration + "★");
-
-        HBox textBox = new HBox(nameLbl, valorationLbl);
-        textBox.setSpacing(8);
-
-        textBox.setPadding(new Insets(0, 0, 0, 5));
-        textBox.setMaxSize(textBoxWidth, TextBoxHeight);
-
-
-        Button viewBtn = new Button("View");
-        viewBtn.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this));
-        Button editBtn = new Button("Edit");
-        editBtn.setOnAction(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this));
-
-        HBox actionsBox = new HBox(viewBtn, editBtn);
-
-        VBox detailsBox = new VBox(textBox, actionsBox);
-
-        VBox cardBox = new VBox(preview, detailsBox);
-
-        card.getChildren().addAll(cardBox);
-
-        card.setOnMouseClicked(_ -> NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this));
-
-        return card;
+        return new Card(
+                new Image(this.getPreviewURI()),
+                this.name,
+                "Valoration: " + this.valoration + "★",
+                "Edit",
+                "View",
+                ev -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this);
+                },
+                ev -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/ViewPlate.fxml", this);
+                },
+                ev -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", this);
+                });
     }
 
-    public ImageView getPreviewImageViewCovering(double previewWidth, double previewHeight) {
-        Image image = new Image(previewURI);
-
-        ImageView preview = new ImageView(image);
-        preview.setPreserveRatio(true);
-
-        Rectangle2D centerViewport = GetCenteredViewport(image, previewWidth, previewHeight);
-
-        preview.setFitWidth(previewWidth);
-        preview.setFitHeight(previewHeight);
-
-        preview.setViewport(centerViewport);
-
-        return preview;
-    }
 
     public ImageView getPreviewImageViewCovering(ReadOnlyDoubleProperty width, ReadOnlyDoubleProperty height) {
         Image image = new Image(previewURI);
@@ -143,7 +100,7 @@ public class Plate {
         ChangeListener<Number> listener = (obs, oldVal, newVal) -> {
             double previewWidth = width.getValue();
             double previewHeight = height.getValue();
-            Rectangle2D centerViewport = GetCenteredViewport(image, previewWidth, previewHeight);
+            Rectangle2D centerViewport = Card.GetCenteredViewport(image, previewWidth, previewHeight);
 
             preview.setViewport(centerViewport);
             preview.setFitWidth(previewWidth);
@@ -194,18 +151,7 @@ public class Plate {
         });
     }
 
-    private Rectangle2D GetCenteredViewport(Image image, double previewWidth, double previewHeight) {
-        Rectangle2D centerViewport;
 
-        if (image.getWidth() / image.getHeight() > previewWidth / previewHeight) {
-            double imgpxPerfxpx = (previewWidth / previewHeight);
-            centerViewport = new Rectangle2D(image.getWidth() / 2 - (image.getHeight() * imgpxPerfxpx) / 2, 0, image.getHeight() * imgpxPerfxpx, image.getHeight());
-        } else {
-            double imgpxPerfxpx = (previewHeight / previewWidth);
-            centerViewport = new Rectangle2D(0, image.getHeight() / 2 - (image.getWidth() * imgpxPerfxpx) / 2, image.getWidth(), image.getWidth() * imgpxPerfxpx);
-        }
-        return centerViewport;
-    }
 
 
     public String getName() {
@@ -225,7 +171,7 @@ public class Plate {
         article.setPrefWidth(VBox.USE_COMPUTED_SIZE);
         article.setSpacing(8);
 
-        ImageView preview = this.getPreviewImageViewCovering(400, 200);
+        ImageView preview = Card.getImageViewCovering(new Image(this.previewURI), 300, 200);
         article.getChildren().add(preview);
         article.getChildren().add(new Label(this.name));
         article.getChildren().add(new Label("Valoration: " + this.valoration + "★"));

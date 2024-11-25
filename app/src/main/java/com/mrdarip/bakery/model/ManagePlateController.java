@@ -64,10 +64,11 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @Override
     public void setPlateContext(Plate plateContext) {
-        System.out.println("Setting plate context to " + plateContext.toString());
         this.plateContext = plateContext;
 
         if (plateContext != null) {
+            System.out.println("Setting plate context: " + plateContext);
+
             if (plateContext.getRequiredPlate() != null) {
                 requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
@@ -75,8 +76,6 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
                     NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate());
                 });
             }
-
-
 
             //borderpane width x 100
             previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);

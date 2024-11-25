@@ -4,12 +4,14 @@
  */
 package com.mrdarip.bakery.model;
 
+import com.mrdarip.bakery.composables.Card;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -22,9 +24,8 @@ import java.util.ResourceBundle;
  */
 public class SelectPlateController implements Initializable, PlateDependantNavigable {
 
-    private Plate plateContext;
     private final PlateDao plateDao = new MariaDBPlateDAO();
-
+    private Plate plateContext;
     @FXML
     private VBox PlatesListVBox;
 
@@ -41,7 +42,15 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
         this.plateContext = plateContext;
 
         plateDao.getPlatesPage(0, 99999).forEach(plate -> {
-            PlatesListVBox.getChildren().add(plate.getAsCard());
+            PlatesListVBox.getChildren().add(
+                    new Card(
+                            new Image(plate.getPreviewURI()),
+                            plate.getName(),
+                            ev -> {
+                                System.out.println("Selected plate: " + plate.getName());
+                            }
+                    )
+            );
         });
     }
 
