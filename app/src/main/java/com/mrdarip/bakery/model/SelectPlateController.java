@@ -44,12 +44,17 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     @Override
     public void setPlateContext(Plate plateContext) {
         this.plateContext = plateContext;
-        PlatesListVBox.getChildren().add(
-
-                new Card(new ImageView(new Image("/img/icon/plus.png")), "Test", "Test", ev -> {
+        PlatesListVBox.getChildren().addAll(
+                new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Plate", ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
-                })
+                }),
 
+                new Card(new ImageView(new Image("/img/icon/cross.png")), "No", "Plate", ev -> {
+                    if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
+                        plateContext.setRequiredPlate(null);
+                        plateDependantNavigable.setSecondaryPlateContext(plateContext);
+                    }
+                })
         );
 
         plateDao.getPlatesPage(0, 99999).forEach(plate -> { //TODO: set custom query to remove cycles and itself

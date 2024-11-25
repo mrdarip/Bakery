@@ -78,20 +78,14 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         if (plateContext != null) {
             System.out.println("Setting plate context: " + plateContext);
 
-            if (plateContext.getRequiredPlate() != null) {
-                updateRequiredPlateButton();
-            }
+
+            updateRequiredPlateButton();
+
 
             //borderpane width x 100
             previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
             previewStackPane.getChildren().addFirst(previewIV);
 
-        } else {
-            requiredPlateButton.setText("Set Required Plate");
-
-            requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
-            });
         }
 
 
@@ -101,11 +95,19 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     }
 
     private void updateRequiredPlateButton() {
-        requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
+        if (plateContext != null && plateContext.getRequiredPlate() != null) {
+            requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
-        requiredPlateButton.setOnAction((event) -> {
-            NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate(), this);
-        });
+            requiredPlateButton.setOnAction((event) -> {
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate(), this);
+            });
+        } else {
+            requiredPlateButton.setText("Set Required Plate");
+
+            requiredPlateButton.setOnAction((event) -> {
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
+            });
+        }
     }
 
     @Override
