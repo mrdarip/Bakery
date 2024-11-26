@@ -105,7 +105,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             requiredPlateButton.setText("Set Required Plate");
 
             requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", null, this);
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.EMPTY_PLATE, this);
             });
         }
     }
@@ -217,7 +217,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             });
         });
 
-        plateDao.upsert(plateContext);
+        this.plateContext = plateDao.upsert(plateContext);
     }
 
     public void OnExit(ActionEvent actionEvent) {

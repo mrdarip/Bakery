@@ -203,4 +203,6 @@ public class Plate {
     public void setName(String newValue) {
         this.name = newValue;
     }
+
+    public static Plate EMPTY_PLATE = new Plate(-1, "new Plate", 0, null, "/img/icon/plus.png");
 }

@@ -4,10 +4,7 @@ import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.database.MariaDBConnector;
 import com.mrdarip.bakery.data.entity.Plate;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,8 +80,12 @@ public class MariaDBPlateDAO extends PlateDao {
                         uri_preview = VALUES(uri_preview);
                     """;
             try {
-                PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-                preparedStatement.setInt(1, plate.getId());
+                PreparedStatement preparedStatement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                if (plate.getId() == -1) {
+                    preparedStatement.setNull(1, java.sql.Types.INTEGER);
+                } else {
+                    preparedStatement.setInt(1, plate.getId());
+                }
                 preparedStatement.setString(2, plate.getName());
                 preparedStatement.setInt(3, plate.getValoration());
                 if (plate.getRequiredPlate() != null) {
@@ -96,10 +97,13 @@ public class MariaDBPlateDAO extends PlateDao {
 
 
                 rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    plate = plateFromResultSet(rs);
-                }
 
+
+                ResultSet a = preparedStatement.getGeneratedKeys();
+
+                while (a.next()) {
+                    plate.setId(a.getInt(1));
+                }
 
                 System.out.println("upserted plate: " + plate);
             } catch (SQLException e) {
@@ -110,6 +114,7 @@ public class MariaDBPlateDAO extends PlateDao {
     }
 
     private Plate plateFromResultSet(ResultSet rs) throws SQLException {
+        System.out.println(rs.getString("plateName") + rs.getInt("idPlate"));
         return new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
     }
 
