@@ -204,5 +204,7 @@ public class Plate {
         this.name = newValue;
     }
 
-    public static Plate EMPTY_PLATE = new Plate(-1, "new Plate", 0, null, "/img/icon/plus.png");
+    public static Plate getEmptyPlate() {
+        return new Plate(-1, "new Plate", 0, null, "/img/icon/plus.png");
+    }
 }

@@ -105,7 +105,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             requiredPlateButton.setText("Set Required Plate");
 
             requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.EMPTY_PLATE, this);
+                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.getEmptyPlate(), this);
             });
         }
     }
