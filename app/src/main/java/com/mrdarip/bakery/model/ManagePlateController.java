@@ -133,10 +133,14 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
         }
         TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
+
+        //database instructions
         for (Instruction instruction : plateInstructions) {
             TreeItem<Instruction> item = createTreeBranch(instruction);
             root.getChildren().add(item);
         }
+        TreeItem<Instruction> insertNewTI = new TreeItem<>(new Instruction(-2, null, -1, -1, "Add"));
+        root.getChildren().add(insertNewTI);
 
         TreeTableColumn<Instruction, String> instructionTitleColumn = new TreeTableColumn<>("Instruction");
         instructionTitleColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
