@@ -20,7 +20,7 @@
         </StackPane>
     </top>
     <center>
-        <StackPane BorderPane.alignment="CENTER">
+        <StackPane BorderPane.alignment="BOTTOM_RIGHT">
             <children>
                 <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                     <content>
@@ -56,16 +56,24 @@
                                     </children>
                                 </GridPane>
                                 <TreeTableView fx:id="instructionTTV"/>
-                                <HBox alignment="BOTTOM_RIGHT" depthTest="DISABLE" fillHeight="false" spacing="8.0">
-                                    <children>
-                                        <Button mnemonicParsing="false" onAction="#OnExit" text="Exit"/>
-                                        <Button mnemonicParsing="false" onAction="#OnSave" text="Save"/>
-                                    </children>
-                                </HBox>
                             </children>
                         </VBox>
                     </content>
                 </ScrollPane>
+                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                      StackPane.alignment="BOTTOM_RIGHT">
+                    <children>
+                        <HBox alignment="BOTTOM_RIGHT" depthTest="DISABLE" fillHeight="false" spacing="8.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#OnExit" text="Exit"/>
+                                <Button mnemonicParsing="false" onAction="#OnSave" text="Save"/>
+                            </children>
+                        </HBox>
+                    </children>
+                    <StackPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="24.0" top="8.0"/>
+                    </StackPane.margin>
+                </Pane>
             </children>
         </StackPane>
     </center>
