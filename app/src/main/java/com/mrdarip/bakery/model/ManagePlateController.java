@@ -31,6 +31,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     InstructionDao instructionDao = new MariaDBInstructionDAO();
     PlateDao plateDao = new MariaDBPlateDAO();
     List<Instruction> plateInstructions = new ArrayList<>();
+    Navigable origin;
 
     @FXML
     private Button requiredPlateButton;
@@ -94,6 +95,13 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         fillPlateInfo();
     }
 
+    @Override
+    public void setPlateRequiredPlate(Plate requiredPlate) {
+        this.plateContext.setRequiredPlate(requiredPlate);
+
+        updateRequiredPlateButton();
+    }
+
     private void updateRequiredPlateButton() {
         if (plateContext != null && plateContext.getRequiredPlate() != null) {
             requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
@@ -108,13 +116,6 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
                 NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.getEmptyPlate(), this);
             });
         }
-    }
-
-    @Override
-    public void setSecondaryPlateContext(Plate plateContext) {
-        this.plateContext = plateContext;
-
-        updateRequiredPlateButton();
     }
 
     private void fillPlateInfo() {
@@ -204,7 +205,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @Override
     public void setOrigin(Navigable origin) {
-
+        this.origin = origin;
     }
 
     public void OnSave(ActionEvent actionEvent) {
@@ -218,6 +219,10 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         });
 
         this.plateContext = plateDao.upsert(plateContext);
+
+        if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
+            plateDependantNavigable.setPlateRequiredPlate(this.plateContext);
+        }
     }
 
     public void OnExit(ActionEvent actionEvent) {

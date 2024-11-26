@@ -51,8 +51,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
 
                 new Card(new ImageView(new Image("/img/icon/cross.png")), "No", "Plate", ev -> {
                     if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
-                        plateContext.setRequiredPlate(null);
-                        plateDependantNavigable.setSecondaryPlateContext(plateContext);
+                        plateDependantNavigable.setPlateRequiredPlate(null);
                     }
                 })
         );
@@ -64,8 +63,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
                             plate.getName(),
                             ev -> {
                                 if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
-                                    plateContext.setRequiredPlate(plate);
-                                    plateDependantNavigable.setSecondaryPlateContext(plateContext);
+                                    plateDependantNavigable.setPlateRequiredPlate(plate);
                                 }
                             }
                     )
@@ -74,7 +72,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     }
 
     @Override
-    public void setSecondaryPlateContext(Plate plateContext) {
+    public void setPlateRequiredPlate(Plate requiredPlate) {
 
     }
 

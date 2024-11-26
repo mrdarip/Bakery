@@ -50,7 +50,7 @@ public class PreviewPlateController implements Initializable, PlateDependantNavi
     }
 
     @Override
-    public void setSecondaryPlateContext(Plate plateContext) {
+    public void setPlateRequiredPlate(Plate requiredPlate) {
 
     }
 
