@@ -227,7 +227,12 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             instructionDao.upsert(rootInstruction.getValue());
 
             //for each except last
-            rootInstruction.getChildren().subList(0, rootInstruction.getChildren().size() - 1).forEach((leafInstruction) -> {
+            rootInstruction.getChildren().subList(
+                    0,
+                    rootInstruction.getChildren() != null ?
+                            Math.max(rootInstruction.getChildren().size() - 1, 0) :
+                            0
+            ).forEach((leafInstruction) -> {
                 instructionDao.upsert(leafInstruction.getValue());
             });
         });
