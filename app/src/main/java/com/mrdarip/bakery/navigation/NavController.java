@@ -63,7 +63,7 @@ public class NavController {
         Scene newScene = new Scene(root);
         Stage newStage = new Stage();
 
-        controller.setScene(newStage);
+        controller.setStage(newStage);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.setScene(newScene);
         newStage.setTitle(controller.getScreenTitle());

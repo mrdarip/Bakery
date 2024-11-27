@@ -9,6 +9,6 @@ public interface Navigable {
 
     void setOrigin(Navigable origin);
 
-    void setScene(Stage stage);
+    void setStage(Stage stage);
 
 }

@@ -102,7 +102,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     }
 
     @Override
-    public void setScene(Stage stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 

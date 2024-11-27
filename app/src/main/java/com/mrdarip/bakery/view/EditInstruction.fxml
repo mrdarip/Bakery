@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23"
+            fx:controller="com.mrdarip.bakery.model.EditInstructionController">
+    <center>
+        <StackPane BorderPane.alignment="CENTER">
+            <children>
+                <ScrollPane>
+                    <content>
+                        <VBox fx:id="container"/>
+                    </content>
+                </ScrollPane>
+                <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" spacing="8.0"
+                      StackPane.alignment="BOTTOM_RIGHT">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#OnExit" text="Exit"/>
+                        <Button mnemonicParsing="false" onAction="#OnSave" text="Save"/>
+                    </children>
+                    <StackPane.margin>
+                        <Insets bottom="16.0" left="16.0" right="24.0" top="16.0"/>
+                    </StackPane.margin>
+                </HBox>
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>

@@ -181,7 +181,7 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Instruction data = getTreeTableView().getTreeItem(getIndex()).getValue();
-                            System.out.println("selectedData: " + data);
+                            NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", data);
                         });
                     }
 
@@ -254,7 +254,7 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
     }
 
     @Override
-    public void setScene(Stage stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 

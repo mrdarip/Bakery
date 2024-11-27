@@ -105,7 +105,7 @@ public class MainScreenController implements Initializable, Navigable {
     }
 
     @Override
-    public void setScene(Stage stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 }
