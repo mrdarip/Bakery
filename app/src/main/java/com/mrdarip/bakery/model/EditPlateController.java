@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class ManagePlateController implements Initializable, PlateDependantNavigable {
+public class EditPlateController implements Initializable, PlateDependantNavigable {
     private Plate plateContext;
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
@@ -112,13 +112,13 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
             requiredPlateButton.setText(plateContext.getRequiredPlate().getName());
 
             requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", plateContext.getRequiredPlate(), this);
+                NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", plateContext.getRequiredPlate(), this);
             });
         } else {
             requiredPlateButton.setText("Set Required Plate");
 
             requiredPlateButton.setOnAction((event) -> {
-                NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.getEmptyPlate(), this);
+                NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", Plate.getEmptyPlate(), this);
             });
         }
     }

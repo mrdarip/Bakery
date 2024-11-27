@@ -81,10 +81,10 @@ public class Plate {
                 "Edit",
                 "View",
                 ev -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", this, null);
+                    NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", this, null);
                 },
                 ev -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/ViewPlate.fxml", this, null);
+                    NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this, null);
                 },
                 ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", this, null);

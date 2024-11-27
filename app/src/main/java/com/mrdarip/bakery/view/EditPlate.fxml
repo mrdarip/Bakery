@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane" prefHeight="450.0" prefWidth="700.0"
-            xmlns="http://javafx.com/javafx/23" fx:controller="com.mrdarip.bakery.model.ManagePlateController">
+            xmlns="http://javafx.com/javafx/23" fx:controller="com.mrdarip.bakery.model.EditPlateController">
     <top>
         <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
             <children>
