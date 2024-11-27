@@ -67,7 +67,6 @@ public class MariaDBPlateDAO extends PlateDao {
 
     @Override
     public Plate upsert(Plate plate) {
-        System.out.println("upserting plate: " + plate);
         ResultSet rs;
         if (connection != null) {
             String query = """
@@ -111,6 +110,23 @@ public class MariaDBPlateDAO extends PlateDao {
             }
         }
         return plate;
+    }
+
+    @Override
+    public void delete(Plate plate) {
+        if (connection != null) {
+            String query = "DELETE FROM Plate WHERE idPlate = ?";
+            try {
+                PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+                preparedStatement.setInt(1, plate.getId());
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("SQL exception when trying to upsert plate: " + e.getMessage());
+            }
+        }
+
+        plate.setId(-1);
     }
 
     private Plate plateFromResultSet(ResultSet rs) throws SQLException {

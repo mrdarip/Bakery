@@ -13,4 +13,6 @@ public abstract class PlateDao {
     public abstract List<Plate> getPlatesPage(int page, int orderBy);
 
     public abstract Plate upsert(Plate plate);
+
+    public abstract void delete(Plate plate);
 }

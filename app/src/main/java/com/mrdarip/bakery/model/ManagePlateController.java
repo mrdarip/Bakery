@@ -70,6 +70,7 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
 
     @FXML
     private void DeleteThisPlate(ActionEvent event) {
+        plateDao.delete(plateContext);
     }
 
     @Override
