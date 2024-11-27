@@ -78,7 +78,7 @@ public class MainScreenController implements Initializable, Navigable {
 
     private void updatePlatesFlowPane() {
         //platesFlowPane.getChildren().clear();
-        platesFlowPane.getChildren().add(new Card(new ImageView(new Image("/img/icon/plus.png")), "Test", "Test", ev -> {
+        platesFlowPane.getChildren().add(new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Plate", ev -> {
             NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.getEmptyPlate(), this);
         }));
         platesFlowPane.getChildren().addAll(dao.getPlatesPage(0, 0).stream().map(Plate::getAsCard).toList());
