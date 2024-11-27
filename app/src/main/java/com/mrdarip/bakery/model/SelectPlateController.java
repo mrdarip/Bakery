@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +33,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     private Navigable origin;
     @FXML
     private VBox PlatesListVBox;
+    private Stage stage;
 
     /**
      * Initializes the controller class.
@@ -47,11 +49,13 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
         PlatesListVBox.getChildren().addAll(
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Plate", ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/ManagePlate.fxml", Plate.getEmptyPlate(), this);
+                    endSelection();
                 }),
 
                 new Card(new ImageView(new Image("/img/icon/cross.png")), "No", "Plate", ev -> {
                     if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
                         plateDependantNavigable.setPlateRequiredPlate(null);
+                        endSelection();
                     }
                 })
         );
@@ -64,6 +68,7 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
                             ev -> {
                                 if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
                                     plateDependantNavigable.setPlateRequiredPlate(plate);
+                                    endSelection();
                                 }
                             }
                     )
@@ -94,5 +99,14 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
     @Override
     public void setOrigin(Navigable origin) {
         this.origin = origin;
+    }
+
+    @Override
+    public void setScene(Stage stage) {
+        this.stage = stage;
+    }
+
+    private void endSelection() {
+        stage.close();
     }
 }

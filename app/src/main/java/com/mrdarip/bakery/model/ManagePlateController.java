@@ -18,6 +18,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
@@ -27,11 +28,12 @@ import java.util.ResourceBundle;
 
 
 public class ManagePlateController implements Initializable, PlateDependantNavigable {
-    Plate plateContext;
-    InstructionDao instructionDao = new MariaDBInstructionDAO();
-    PlateDao plateDao = new MariaDBPlateDAO();
-    List<Instruction> plateInstructions = new ArrayList<>();
-    Navigable origin;
+    private Plate plateContext;
+    private final InstructionDao instructionDao = new MariaDBInstructionDAO();
+    private final PlateDao plateDao = new MariaDBPlateDAO();
+    private List<Instruction> plateInstructions = new ArrayList<>();
+    private Navigable origin;
+    private Stage stage;
 
     @FXML
     private Button requiredPlateButton;
@@ -71,6 +73,8 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
     @FXML
     private void DeleteThisPlate(ActionEvent event) {
         plateDao.delete(plateContext);
+
+        this.stage.close();
     }
 
     @Override
@@ -213,6 +217,11 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         this.origin = origin;
     }
 
+    @Override
+    public void setScene(Stage stage) {
+        this.stage = stage;
+    }
+
     public void OnSave(ActionEvent actionEvent) {
         instructionTTV.getRoot().getChildren().forEach((rootInstruction) -> {
             instructionDao.upsert(rootInstruction.getValue());
@@ -228,6 +237,8 @@ public class ManagePlateController implements Initializable, PlateDependantNavig
         if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
             plateDependantNavigable.setPlateRequiredPlate(this.plateContext);
         }
+
+        this.stage.close();
     }
 
     public void OnExit(ActionEvent actionEvent) {

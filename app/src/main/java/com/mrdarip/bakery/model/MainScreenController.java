@@ -16,6 +16,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,6 +40,7 @@ public class MainScreenController implements Initializable, Navigable {
     private ToggleButton orderToggle;
     @FXML
     private ScrollPane flowPaneScroll;
+    private Stage stage;
 
     @FXML
     void onOrderToggleChange(ActionEvent event) {
@@ -100,5 +102,10 @@ public class MainScreenController implements Initializable, Navigable {
     @Override
     public void setOrigin(Navigable origin) {
 
+    }
+
+    @Override
+    public void setScene(Stage stage) {
+        this.stage = stage;
     }
 }

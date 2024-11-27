@@ -62,6 +62,8 @@ public class NavController {
     private static void CreateScene(Navigable controller, Parent root) {
         Scene newScene = new Scene(root);
         Stage newStage = new Stage();
+
+        controller.setScene(newStage);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.setScene(newScene);
         newStage.setTitle(controller.getScreenTitle());
