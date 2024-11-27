@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
@@ -168,8 +169,43 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
             event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setDifficulty(event.getNewValue());
         });
 
+        TreeTableColumn<Instruction, Void> colBtn = new TreeTableColumn<>("Button Column");
+
+        Callback<TreeTableColumn<Instruction, Void>, TreeTableCell<Instruction, Void>> cellFactory = new Callback<TreeTableColumn<Instruction, Void>, TreeTableCell<Instruction, Void>>() {
+            @Override
+            public TreeTableCell<Instruction, Void> call(final TreeTableColumn<Instruction, Void> param) {
+                final TreeTableCell<Instruction, Void> cell = new TreeTableCell<Instruction, Void>() {
+
+                    private final Button btn = new Button("Action");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Instruction data = getTreeTableView().getTreeItem(getIndex()).getValue();
+                            System.out.println("selectedData: " + data);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+
+
+
         instructionTTV.getColumns().clear();
-        instructionTTV.getColumns().addAll(instructionTitleColumn, instructionDurationColumn, instructionDifficultyColumn);
+        instructionTTV.getColumns().addAll(instructionTitleColumn, instructionDurationColumn, instructionDifficultyColumn, colBtn);
         instructionTTV.setRoot(root);
         instructionTTV.setShowRoot(false);
         instructionTTV.setEditable(true);
