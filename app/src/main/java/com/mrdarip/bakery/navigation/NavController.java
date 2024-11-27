@@ -24,7 +24,7 @@ public class NavController {
         CreateScene(controller, root);
     }
 
-    public static void navigateTo(String route, Instruction instructionContext) {
+    public static void navigateTo(String route, Instruction instructionContext, Navigable origin) {
         System.out.println("Navigating to " + route + " with instruction context " + instructionContext);
         FXMLLoader loader = loadFXML(route);
         Parent root = loadLoader(loader, route);
@@ -32,16 +32,18 @@ public class NavController {
 
         if (instructionContext != null && controller instanceof InstructionDependantNavigable instructionDependantNavigable) {
             instructionDependantNavigable.setInstructionContext(instructionContext);
+            instructionDependantNavigable.setOrigin(origin);
         }
 
         CreateScene(controller, root);
     }
 
-    public static void navigateTo(String route) {
+    public static void navigateTo(String route, Navigable origin) {
         System.out.println("Navigating to " + route + " without context");
         FXMLLoader loader = loadFXML(route);
         Parent root = loadLoader(loader, route);
         Navigable controller = loader.getController();
+        controller.setOrigin(origin);
         CreateScene(controller, root);
     }
 

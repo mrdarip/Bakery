@@ -87,7 +87,7 @@ public class Plate {
                     NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this, null);
                 },
                 ev -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", this, null);
+                    NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", this, null);
                 });
     }
 

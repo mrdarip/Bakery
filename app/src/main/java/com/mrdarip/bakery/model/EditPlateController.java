@@ -176,12 +176,12 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
             public TreeTableCell<Instruction, Void> call(final TreeTableColumn<Instruction, Void> param) {
                 final TreeTableCell<Instruction, Void> cell = new TreeTableCell<Instruction, Void>() {
 
-                    private final Button btn = new Button("Action");
+                    private final Button btn = new Button("+");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Instruction data = getTreeTableView().getTreeItem(getIndex()).getValue();
-                            NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", data);
+                            NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", data, EditPlateController.this);
                         });
                     }
 
@@ -290,6 +290,6 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
 
     @FXML
     void OnClickEditRequirePlate(ActionEvent event) {
-        NavController.navigateTo("/com/mrdarip/bakery/view/SelectPlate.fxml", plateContext, this);
+        NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", plateContext, this);
     }
 }

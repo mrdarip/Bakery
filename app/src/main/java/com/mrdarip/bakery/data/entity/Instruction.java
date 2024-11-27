@@ -15,6 +15,10 @@ public class Instruction {
         this.instructionText = instructionText;
     }
 
+    public static Instruction getEmptyInstruction() {
+        return new Instruction(-1, null, 0, 0, "New Instruction");
+    }
+
     public String getInstructionText() {
         return instructionText;
     }

@@ -5,9 +5,13 @@
 package com.mrdarip.bakery.model;
 
 import com.mrdarip.bakery.composables.Card;
+import com.mrdarip.bakery.data.DAO.InstructionDao;
+import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
+import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
+import com.mrdarip.bakery.navigation.InstructionDependantNavigable;
 import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
@@ -26,18 +30,20 @@ import java.util.ResourceBundle;
  *
  * @author mrdarip
  */
-public class SelectPlateController implements Initializable, PlateDependantNavigable {
+public class SelectElementController implements Initializable, PlateDependantNavigable, InstructionDependantNavigable {
 
     private final PlateDao plateDao = new MariaDBPlateDAO();
+    private final InstructionDao instructionDao = new MariaDBInstructionDAO();
+
     private Plate plateContext;
+    private Instruction instructionContext;
+
     private Navigable origin;
-    @FXML
-    private VBox PlatesListVBox;
     private Stage stage;
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private VBox PlatesListVBox;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -83,7 +89,16 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
 
     @Override
     public String getScreenTitle() {
-        return "Select Plate for " + plateContext.getName();
+        String title = "Select Element screen";
+        if (plateContext != null) {
+            title = "Select Plate for " + plateContext.getName();
+        }
+
+        if (instructionContext != null) {
+            title = "Select Instruction for " + instructionContext.getInstructionText();
+        }
+
+        return title;
     }
 
     @Override
@@ -108,5 +123,34 @@ public class SelectPlateController implements Initializable, PlateDependantNavig
 
     private void endSelection() {
         stage.close();
+    }
+
+    @Override
+    public void setInstructionContext(Instruction instructionContext) {
+        this.instructionContext = instructionContext;
+
+        PlatesListVBox.getChildren().addAll(
+                new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Instruction", ev -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", Instruction.getEmptyInstruction(), this);
+                    endSelection();
+                })
+        );
+        /*
+        instructionDao.getInstructionById(instructionContext.getId())
+            instruction -> {
+                PlatesListVBox.getChildren().add(
+                        new Card(
+                                new ImageView(new Image("/img/icon/instruction.png")),
+                                instruction.getInstructionText(),
+                                ev -> {
+                                    if (origin instanceof InstructionDependantNavigable instructionDependantNavigable) {
+                                        instructionDependantNavigable.setInstructionContext(instruction);
+                                        endSelection();
+                                    }
+                                }
+                        )
+                );
+
+         */
     }
 }
