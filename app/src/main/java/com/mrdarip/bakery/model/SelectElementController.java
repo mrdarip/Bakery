@@ -54,7 +54,7 @@ public class SelectElementController implements Initializable, PlateDependantNav
         this.plateContext = plateContext;
         PlatesListVBox.getChildren().addAll(
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Plate", ev -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", Plate.getEmptyPlate(), this);
+                    NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", Plate.getEmptyPlate(), origin);
                     endSelection();
                 }),
 

@@ -13,7 +13,10 @@ import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -37,8 +40,6 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
     @FXML
     private Button requiredPlateButton;
 
-    @FXML
-    private TreeTableView<Instruction> instructionTTV;
 
     @FXML
     private StackPane previewStackPane;
@@ -81,6 +82,7 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
 
     @FXML
     void AddInstructionToPlate(ActionEvent event) {
+        NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", (Instruction) null, this);
     }
 
     @FXML
@@ -181,10 +183,16 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
     @Override
     public void setStage(Stage stage) {
         this.stage = stage;
+
+        stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                System.out.println("Hello World from " + this.getScreenTitle() + " new value " + newValue);
+            }
+        });
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        instructionTTV.getRoot().getChildren().forEach((rootInstruction) -> {
+        /*instructionTTV.getRoot().getChildren().forEach((rootInstruction) -> {
             instructionDao.upsert(rootInstruction.getValue());
 
             //for each except last
@@ -196,7 +204,7 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
             ).forEach((leafInstruction) -> {
                 instructionDao.upsert(leafInstruction.getValue());
             });
-        });
+        });*/
 
         this.plateContext = plateDao.upsert(plateContext);
 

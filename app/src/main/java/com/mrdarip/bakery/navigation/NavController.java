@@ -30,7 +30,7 @@ public class NavController {
         Parent root = loadLoader(loader, route);
         Navigable controller = loader.getController();
 
-        if (instructionContext != null && controller instanceof InstructionDependantNavigable instructionDependantNavigable) {
+        if (controller instanceof InstructionDependantNavigable instructionDependantNavigable) {
             instructionDependantNavigable.setInstructionContext(instructionContext);
             instructionDependantNavigable.setOrigin(origin);
         }
