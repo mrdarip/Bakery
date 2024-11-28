@@ -10,7 +10,7 @@
     <center>
         <ScrollPane BorderPane.alignment="CENTER">
             <content>
-                <VBox fx:id="PlatesListVBox"/>
+                <VBox fx:id="ElementsListVBox"/>
             </content>
         </ScrollPane>
     </center>

@@ -10,6 +10,7 @@ import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
+import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class EditPlateController implements Initializable, PlateDependantNavigable {
+public class EditPlateController implements Initializable, PlateInstructionDependantNavigable {
     private Plate plateContext;
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
@@ -82,7 +83,7 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
 
     @FXML
     void AddInstructionToPlate(ActionEvent event) {
-        NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", (Instruction) null, this);
+        NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", this.plateContext, null, this);
     }
 
     @FXML
@@ -224,5 +225,15 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
     @FXML
     void OnClickEditRequirePlate(ActionEvent event) {
         NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", plateContext, this);
+    }
+
+    @Override
+    public void setInstructionContext(Instruction instructionContext) {
+
+    }
+
+    @Override
+    public void setPlateInstructionContext(Plate plateContext, Instruction instructionContext) {
+
     }
 }

@@ -38,6 +38,20 @@ public class NavController {
         CreateScene(controller, root);
     }
 
+    public static void navigateTo(String route, Plate plateContext, Instruction instructionContext, Navigable origin) {
+        System.out.println("Navigating to " + route + " with instruction context " + instructionContext);
+        FXMLLoader loader = loadFXML(route);
+        Parent root = loadLoader(loader, route);
+        Navigable controller = loader.getController();
+
+        if (controller instanceof PlateInstructionDependantNavigable plateInstructionDependantNavigable) {
+            plateInstructionDependantNavigable.setPlateInstructionContext(plateContext, instructionContext);
+            plateInstructionDependantNavigable.setOrigin(origin);
+        }
+
+        CreateScene(controller, root);
+    }
+
     public static void navigateTo(String route, Navigable origin) {
         System.out.println("Navigating to " + route + " without context");
         FXMLLoader loader = loadFXML(route);

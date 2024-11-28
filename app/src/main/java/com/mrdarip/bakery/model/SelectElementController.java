@@ -8,13 +8,15 @@ import com.mrdarip.bakery.components.Card;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
+import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateInstructionCRDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
+import com.mrdarip.bakery.data.DAO.PlateInstructionCRDAO;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
-import com.mrdarip.bakery.navigation.InstructionDependantNavigable;
 import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
+import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -30,10 +32,11 @@ import java.util.ResourceBundle;
  *
  * @author mrdarip
  */
-public class SelectElementController implements Initializable, PlateDependantNavigable, InstructionDependantNavigable {
+public class SelectElementController implements Initializable, PlateInstructionDependantNavigable {
 
     private final PlateDao plateDao = new MariaDBPlateDAO();
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
+    private final PlateInstructionCRDAO plateInstructionCRDAO = new MariaDBPlateInstructionCRDAO();
 
     private Plate plateContext;
     private Instruction instructionContext;
@@ -42,7 +45,7 @@ public class SelectElementController implements Initializable, PlateDependantNav
     private Stage stage;
 
     @FXML
-    private VBox PlatesListVBox;
+    private VBox ElementsListVBox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,7 +55,7 @@ public class SelectElementController implements Initializable, PlateDependantNav
     @Override
     public void setPlateContext(Plate plateContext) {
         this.plateContext = plateContext;
-        PlatesListVBox.getChildren().addAll(
+        ElementsListVBox.getChildren().addAll(
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Plate", ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", Plate.getEmptyPlate(), origin);
                     endSelection();
@@ -67,7 +70,7 @@ public class SelectElementController implements Initializable, PlateDependantNav
         );
 
         plateDao.getPlatesPage(0, 99999).forEach(plate -> { //TODO: set custom query to remove cycles and itself
-            PlatesListVBox.getChildren().add(
+            ElementsListVBox.getChildren().add(
                     new Card(
                             new Image(plate.getPreviewURI()),
                             plate.getName(),
@@ -129,7 +132,7 @@ public class SelectElementController implements Initializable, PlateDependantNav
     public void setInstructionContext(Instruction instructionContext) {
         this.instructionContext = instructionContext;
 
-        PlatesListVBox.getChildren().addAll(
+        ElementsListVBox.getChildren().addAll(
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Instruction", ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", Instruction.getEmptyInstruction(), this);
                     endSelection();
@@ -137,7 +140,7 @@ public class SelectElementController implements Initializable, PlateDependantNav
         );
 
         instructionDao.getAll().forEach(instruction -> {
-            PlatesListVBox.getChildren().add(
+            ElementsListVBox.getChildren().add(
                     new Card(
                             instruction.getInstructionText(),
                             ev -> {
@@ -148,6 +151,32 @@ public class SelectElementController implements Initializable, PlateDependantNav
             );
         });
 
+
+    }
+
+    @Override
+    public void setPlateInstructionContext(Plate plateContext, Instruction instructionContext) {
+        this.instructionContext = instructionContext;
+        this.plateContext = plateContext;
+
+        ElementsListVBox.getChildren().addAll(
+                new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Instruction", ev -> {
+                    NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", Instruction.getEmptyInstruction(), origin);
+                    endSelection();
+                })
+        );
+
+        instructionDao.getAll().forEach(instruction -> {
+            ElementsListVBox.getChildren().add(
+                    new Card(
+                            instruction.getInstructionText(),
+                            ev -> {
+                                plateInstructionCRDAO.bind(plateContext, instruction, 0);
+                                endSelection();
+                            }
+                    )
+            );
+        });
 
     }
 }
