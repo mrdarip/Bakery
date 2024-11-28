@@ -1,5 +1,6 @@
 package com.mrdarip.bakery.model;
 
+import com.mrdarip.bakery.components.LIitem;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
@@ -18,6 +19,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
@@ -56,6 +58,9 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
 
     @FXML
     private BorderPane borderPane;
+
+    @FXML
+    private VBox scrollVBox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -140,6 +145,8 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
         for (Instruction instruction : plateInstructions) {
             TreeItem<Instruction> item = createTreeBranch(instruction);
             root.getChildren().add(item);
+
+            scrollVBox.getChildren().add(new LIitem(instruction, 0));
         }
         TreeItem<Instruction> insertNewTI = new TreeItem<>(new Instruction(-2, null, -1, -1, "Add"));
         root.getChildren().add(insertNewTI);
@@ -175,7 +182,9 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
                     private final Button btn = new Button("+");
 
                     {
+
                         btn.setOnAction((ActionEvent event) -> {
+                            btn.setText("ID " + getIndex());
                             Instruction data = getTreeTableView().getTreeItem(getIndex()).getValue();
                             NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", data, EditPlateController.this);
                         });
@@ -217,10 +226,6 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
             parentTI.getChildren().add(childTI);
 
         }
-
-        Instruction addInstruction = new Instruction(-1, null, -1, -1, "Add");
-        TreeItem<Instruction> addTI = new TreeItem<>(addInstruction);
-        parentTI.getChildren().add(addTI);
 
         return parentTI;
     }
