@@ -13,10 +13,7 @@ import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.DAO.PlateInstructionCRDAO;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
-import com.mrdarip.bakery.navigation.NavController;
-import com.mrdarip.bakery.navigation.Navigable;
-import com.mrdarip.bakery.navigation.PlateDependantNavigable;
-import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
+import com.mrdarip.bakery.navigation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -171,7 +168,9 @@ public class SelectElementController implements Initializable, PlateInstructionD
                     new Card(
                             instruction.getInstructionText(),
                             ev -> {
-                                plateInstructionCRDAO.bind(plateContext, instruction, 0);
+                                if (origin instanceof InstructionDependantNavigable instructionDependantNavigable) {
+                                    instructionDependantNavigable.setInstructionContext(instruction);
+                                }
                                 endSelection();
                             }
                     )

@@ -4,7 +4,9 @@ import com.mrdarip.bakery.components.LIitem;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
+import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateInstructionCRDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
+import com.mrdarip.bakery.data.DAO.PlateInstructionCRDAO;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.NavController;
@@ -32,9 +34,12 @@ import java.util.ResourceBundle;
 
 public class EditPlateController implements Initializable, PlateInstructionDependantNavigable {
     private Plate plateContext;
+    private final PlateInstructionCRDAO plateInstructionCRDAO = new MariaDBPlateInstructionCRDAO();
+
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
-    private List<Instruction> plateInstructions = new ArrayList<>();
+    private final List<Instruction> plateInstructions = new ArrayList<>();
+
     private Navigable origin;
     private Stage stage;
 
@@ -145,12 +150,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     private void fillTable() {
         if (plateContext != null) {
-            plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
-        }
-
-        //database instructions
-        for (Instruction instruction : plateInstructions) {
-            instructionsVBox.getChildren().add(new LIitem(instruction, 0));
+            instructionDao.getInstructionsByPlateId(plateContext.getId()).forEach(this::addInstructionToPlate);
         }
     }
     @Override
@@ -225,7 +225,12 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     @Override
     public void setInstructionContext(Instruction instructionContext) {
+        addInstructionToPlate(instructionContext);
+    }
 
+    private void addInstructionToPlate(Instruction instruction) {
+        plateInstructions.addLast(instruction);
+        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0));
     }
 
     @Override
