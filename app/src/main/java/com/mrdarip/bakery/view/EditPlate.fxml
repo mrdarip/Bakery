@@ -40,7 +40,7 @@
                                             <children>
                                                 <Label text="Required:"/>
                                                 <Button fx:id="requiredPlateButton" mnemonicParsing="false"
-                                                        onAction="#NavigateToRequiredPlate" text="Required Plate"/>
+                                                        text="Required Plate"/>
                                                 <Button mnemonicParsing="false" onAction="#OnClickEditRequirePlate"
                                                         text="✎"/>
                                             </children>

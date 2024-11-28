@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.model;
 
-import com.mrdarip.bakery.composables.Card;
+import com.mrdarip.bakery.components.Card;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;

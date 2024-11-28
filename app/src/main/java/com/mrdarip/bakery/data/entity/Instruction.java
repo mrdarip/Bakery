@@ -1,8 +1,8 @@
 package com.mrdarip.bakery.data.entity;
 
 public class Instruction {
-    private final int idInstruction;
-    private final Instruction sharperInstruction;
+    private int idInstruction;
+    private Instruction sharperInstruction;
     private int difficulty;
     private int duration;
     private String instructionText;
@@ -56,11 +56,15 @@ public class Instruction {
     }
 
     public void setIdInstruction(int anInt) {
-
+        this.idInstruction = anInt;
     }
 
     @Override
     public String toString() {
         return "Instruction: " + instructionText + " with duration: " + duration + " and difficulty: " + difficulty;
+    }
+
+    public void setSharperInstruction(Instruction instruction) {
+        this.sharperInstruction = instruction;
     }
 }

@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.data.entity;
 
-import com.mrdarip.bakery.composables.Card;
+import com.mrdarip.bakery.components.Card;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.navigation.NavController;
 import javafx.beans.InvalidationListener;

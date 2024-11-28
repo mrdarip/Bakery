@@ -23,4 +23,6 @@ public abstract class InstructionDao {
     public List<Instruction> getInstructionsByPlate(Plate plate) {
         return getInstructionsByPlateId(plate.getId());
     }
+
+    public abstract List<Instruction> getAll();
 }

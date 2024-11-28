@@ -168,6 +168,28 @@ public class MariaDBInstructionDAO extends InstructionDao {
         return null;
     }
 
+    @Override
+    public List<Instruction> getAll() {
+        List<Instruction> output = new ArrayList<>();
+        ResultSet rs;
+        if (connection != null) {
+            String query = "SELECT * FROM Instruction";
+            try {
+                Instruction instruction;
+                PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+
+                rs = preparedStatement.executeQuery();
+                while (rs.next()) {
+                    instruction = instructionFromResultSet(rs);
+                    output.add(instruction);
+                }
+            } catch (SQLException e) {
+                System.out.println("SQL exception when trying to getAll instructions: " + e.getMessage());
+            }
+        }
+        return output;
+    }
+
     private Instruction instructionFromResultSet(ResultSet rs) throws SQLException {
         return new Instruction(rs.getInt("idInstruction"), getInstructionById(rs.getInt("idSharperInstruction")), rs.getInt("difficulty"), rs.getInt("duration"), rs.getString("instructionText"));
     }

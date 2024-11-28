@@ -68,10 +68,6 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
     }
 
     @FXML
-    private void NavigateToRequiredPlate(ActionEvent event) {
-    }
-
-    @FXML
     private void DeleteThisPlate(ActionEvent event) {
         plateDao.delete(plateContext);
 

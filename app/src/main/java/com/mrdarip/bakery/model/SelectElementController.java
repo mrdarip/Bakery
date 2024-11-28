@@ -4,7 +4,7 @@
  */
 package com.mrdarip.bakery.model;
 
-import com.mrdarip.bakery.composables.Card;
+import com.mrdarip.bakery.components.Card;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
@@ -135,22 +135,19 @@ public class SelectElementController implements Initializable, PlateDependantNav
                     endSelection();
                 })
         );
-        /*
-        instructionDao.getInstructionById(instructionContext.getId())
-            instruction -> {
-                PlatesListVBox.getChildren().add(
-                        new Card(
-                                new ImageView(new Image("/img/icon/instruction.png")),
-                                instruction.getInstructionText(),
-                                ev -> {
-                                    if (origin instanceof InstructionDependantNavigable instructionDependantNavigable) {
-                                        instructionDependantNavigable.setInstructionContext(instruction);
-                                        endSelection();
-                                    }
-                                }
-                        )
-                );
 
-         */
+        instructionDao.getAll().forEach(instruction -> {
+            PlatesListVBox.getChildren().add(
+                    new Card(
+                            instruction.getInstructionText(),
+                            ev -> {
+                                instructionContext.setSharperInstruction(instruction);
+                                instructionDao.upsert(instructionContext);
+                            }
+                    )
+            );
+        });
+
+
     }
 }

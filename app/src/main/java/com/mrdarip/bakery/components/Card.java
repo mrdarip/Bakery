@@ -1,4 +1,4 @@
-package com.mrdarip.bakery.composables;
+package com.mrdarip.bakery.components;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -53,19 +53,16 @@ public class Card extends StackPane {
     }
 
     public Card(Image image, String title, String subtitle, String primaryLabel, String secondaryLabel, EventHandler<ActionEvent> onPrimary, EventHandler<ActionEvent> onSecondary, EventHandler<MouseEvent> onCardCLick) {
-        int cardWidth = Card.CARD_WIDTH;
-        int cardHeight = Card.CARD_HEIGHT;
-
         int TextBoxHeight = 50;
-        int textBoxWidth = cardWidth;
+        int textBoxWidth = CARD_WIDTH;
 
-        int previewHeight = cardHeight - TextBoxHeight;
-        int previewWidth = cardWidth;
+        int previewHeight = CARD_HEIGHT - TextBoxHeight;
+        int previewWidth = CARD_WIDTH;
 
         ImageView preview = getImageViewCovering(image, previewWidth, previewHeight);
 
         Pane card = new Pane();
-        card.setPrefSize(cardWidth, cardHeight);
+        card.setPrefSize(CARD_WIDTH, CARD_HEIGHT);
         card.setStyle("-fx-background-color: #c7BEFA;");
 
         Label titleLbl = new Label(title);
@@ -132,5 +129,12 @@ public class Card extends StackPane {
             centerViewport = new Rectangle2D(0, image.getHeight() / 2 - (image.getWidth() * imgpxPerfxpx) / 2, image.getWidth(), image.getWidth() * imgpxPerfxpx);
         }
         return centerViewport;
+    }
+
+    //Text card
+    public Card(String content, EventHandler<MouseEvent> onClick) {
+        setPrefSize(CARD_WIDTH, CARD_HEIGHT);
+        setOnMouseClicked(onClick);
+        getChildren().add(new Label(content));
     }
 }
