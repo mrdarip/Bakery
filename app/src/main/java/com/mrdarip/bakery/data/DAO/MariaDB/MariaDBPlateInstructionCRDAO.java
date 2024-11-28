@@ -67,7 +67,7 @@ public class MariaDBPlateInstructionCRDAO extends PlateInstructionCRDAO {
     @Override
     public void shift(Plate plate, int positions, int from) {
         negate(plate);
-        String query = "UPDATE PlateInstructionCR SET position = position + ? WHERE IdPlate = ? AND position >= ?";
+        String query = "UPDATE PlateInstructionCR SET position = position - ? WHERE IdPlate = ? AND position <= ?";
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setInt(1, positions);
