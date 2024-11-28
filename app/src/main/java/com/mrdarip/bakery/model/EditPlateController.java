@@ -88,7 +88,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     @FXML
     void AddInstructionToPlate(ActionEvent event) {
-        addInstructionToPlate(Instruction.getEmptyInstruction());
+        NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", this.plateContext, null, this);
     }
 
     @FXML
