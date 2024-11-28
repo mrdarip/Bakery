@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class MariaDBPlateInstructionCRDAO extends PlateInstructionCRDAO {
 
@@ -96,6 +97,51 @@ public class MariaDBPlateInstructionCRDAO extends PlateInstructionCRDAO {
             System.out.println("PlateInstructionCR negated: " + plate.getId());
         } catch (SQLException e) {
             System.out.println("SQL exception when trying to negate CR: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void bind(Plate plate, List<Instruction> instructions) {
+        removeAll(plate);
+
+        instructions = instructions.reversed();
+
+        for (int i = 0; i < instructions.size(); i++) {
+            bind(plate, instructions.get(i), 1);
+        }
+    }
+
+    @Override
+    public void overwrite(Plate plate, Instruction instruction, int position) {
+        String query = "UPDATE PlateInstructionCR SET idInstruction = ? WHERE IdPlate = ? AND position = ?";
+
+        try {
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setInt(1, instruction.getId());
+            preparedStatement.setInt(2, plate.getId());
+            preparedStatement.setInt(3, position);
+
+            preparedStatement.executeUpdate();
+
+            System.out.println("PlateInstructionCR overwritten: " + plate.getId() + " " + instruction.getId() + " " + position);
+        } catch (SQLException e) {
+            System.out.println("SQL exception when trying to overwrite CR: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void removeAll(Plate plate) {
+        String query = "DELETE FROM PlateInstructionCR WHERE IdPlate = ?";
+
+        try {
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setInt(1, plate.getId());
+
+            preparedStatement.executeUpdate();
+
+            System.out.println("PlateInstructionCR removed all: " + plate.getId());
+        } catch (SQLException e) {
+            System.out.println("SQL exception when trying to remove all CR: " + e.getMessage());
         }
     }
 }

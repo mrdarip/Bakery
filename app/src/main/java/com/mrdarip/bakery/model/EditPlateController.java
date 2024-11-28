@@ -195,6 +195,8 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
         this.plateContext = plateDao.upsert(plateContext);
 
+        plateInstructionCRDAO.bind(plateContext, plateInstructions);
+
         if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
             plateDependantNavigable.setPlateRequiredPlate(this.plateContext);
         }

@@ -3,6 +3,8 @@ package com.mrdarip.bakery.data.DAO;
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.data.entity.Plate;
 
+import java.util.List;
+
 public abstract class PlateInstructionCRDAO {
     public abstract void bind(Plate plate, Instruction instruction, int position);
 
@@ -13,4 +15,10 @@ public abstract class PlateInstructionCRDAO {
     public abstract void shift(Plate plate, int positions, int from);
 
     public abstract void negate(Plate plate);
+
+    public abstract void bind(Plate plate, List<Instruction> instructions);
+
+    public abstract void overwrite(Plate plate, Instruction instruction, int position);
+
+    public abstract void removeAll(Plate plate);
 }
