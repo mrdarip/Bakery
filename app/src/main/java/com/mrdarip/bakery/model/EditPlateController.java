@@ -13,6 +13,8 @@ import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,8 +29,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -38,7 +38,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
-    private final List<Instruction> plateInstructions = new ArrayList<>();
+    private final ObservableList<Instruction> plateInstructions = FXCollections.observableArrayList();
 
     private Navigable origin;
     private Stage stage;
@@ -189,19 +189,9 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        /*instructionTTV.getRoot().getChildren().forEach((rootInstruction) -> {
-            instructionDao.upsert(rootInstruction.getValue());
-
-            //for each except last
-            rootInstruction.getChildren().subList(
-                    0,
-                    rootInstruction.getChildren() != null ?
-                            Math.max(rootInstruction.getChildren().size() - 1, 0) :
-                            0
-            ).forEach((leafInstruction) -> {
-                instructionDao.upsert(leafInstruction.getValue());
-            });
-        });*/
+        for (int i = plateInstructions.size() - 1; i >= 0; i--) {
+            plateInstructions.set(i, saveInstructionBranch(plateInstructions.get(i)));
+        }
 
         this.plateContext = plateDao.upsert(plateContext);
 
@@ -210,6 +200,15 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         }
 
         this.stage.close();
+    }
+
+    private Instruction saveInstructionBranch(Instruction instruction) {
+        if (instruction.hasSharperInstruction()) {
+            instruction.setSharperInstruction(
+                    saveInstructionBranch(instruction.getSharperInstruction())
+            );
+        }
+        return instructionDao.upsert(instruction);
     }
 
     public void OnExit(ActionEvent actionEvent) {
@@ -229,8 +228,17 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     private void addInstructionToPlate(Instruction instruction) {
-        plateInstructions.addLast(instruction);
-        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0));
+        //add to plateInstructions, if it is already there, add it pointing to the same object
+        if (!plateInstructions.contains(instruction)) {
+            plateInstructions.add(instruction);
+        } else {
+            Instruction finalInstruction = instruction;
+            instruction = plateInstructions.stream()
+                    .filter(i -> i.equals(finalInstruction))
+                    .findFirst()
+                    .orElseThrow();
+        }
+        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0, plateInstructions));
     }
 
     @Override

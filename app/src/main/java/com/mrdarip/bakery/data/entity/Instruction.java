@@ -67,4 +67,12 @@ public class Instruction {
     public void setSharperInstruction(Instruction instruction) {
         this.sharperInstruction = instruction;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Instruction instruction) {
+            return this.idInstruction == instruction.idInstruction;
+        }
+        return false;
+    }
 }

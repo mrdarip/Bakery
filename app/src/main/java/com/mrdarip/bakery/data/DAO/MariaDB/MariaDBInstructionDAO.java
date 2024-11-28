@@ -76,7 +76,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
                     instruction = instructionFromResultSet(rs);
                 }
             } catch (SQLException e) {
-                System.out.println("SQL exception when trying to upsert instruction: " + e.getMessage());
+                System.out.println("SQL exception when trying to insert instruction: " + e.getMessage());
             }
         }
         return instruction;
@@ -120,7 +120,7 @@ public class MariaDBInstructionDAO extends InstructionDao {
                         instructionText = VALUES(instructionText);
                     """;
             try {
-                PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+                PreparedStatement preparedStatement = this.connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
                 preparedStatement.setInt(1, instruction.getId());
                 if (instruction.getSharperInstruction() != null) {
                     preparedStatement.setInt(2, instruction.getSharperInstruction().getId());
