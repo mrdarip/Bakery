@@ -13,8 +13,6 @@ import com.mrdarip.bakery.navigation.NavController;
 import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,6 +27,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -38,7 +38,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
-    private final ObservableList<Instruction> plateInstructions = FXCollections.observableArrayList();
+    private final List<Instruction> plateInstructions = new ArrayList<>();
 
     private Navigable origin;
     private Stage stage;
@@ -238,7 +238,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                     .findFirst()
                     .orElseThrow();
         }
-        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0, plateInstructions));
+        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0));
     }
 
     @Override

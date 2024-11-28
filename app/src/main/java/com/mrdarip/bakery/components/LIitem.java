@@ -3,6 +3,7 @@ package com.mrdarip.bakery.components;
 import com.mrdarip.bakery.data.entity.Instruction;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -20,35 +21,39 @@ public class LIitem extends VBox {
 
 
         TextField instructionName = new TextField(instruction.getInstructionText());
-        instructionName.textProperty().addListener((observable, oldValue, newValue) -> {
-            instruction.setInstructionText(newValue);
+        instructionName.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                instructionName.setText(instruction.getInstructionText());
+            } else {
+                instruction.setInstructionText(instructionName.getText());
+            }
         });
         VBox nameTitle = new VBox(instructionName);
 
-        TextField instructionDuration = new TextField(String.valueOf(instruction.getDuration()));
-        instructionDuration.textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                instruction.setDuration(Integer.parseInt(newValue));
-                instructionDuration.styleProperty().setValue("-fx-text-fill: black;");
-            } catch (NumberFormatException e) {
-                instruction.setDuration(0);
-                instructionDuration.styleProperty().setValue("-fx-text-fill: red;");
+        Spinner<Integer> instructionDuration = new Spinner<>(0, Integer.MAX_VALUE, instruction.getDuration());
+        instructionDuration.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                instructionDuration.getValueFactory().setValue(instruction.getDuration());
+            } else {
+                try {
+                    instruction.setDuration(instructionDuration.getValue());
+                    instructionDuration.styleProperty().setValue("-fx-text-fill: black;");
+                } catch (NumberFormatException e) {
+                    instruction.setDuration(0);
+                    instructionDuration.styleProperty().setValue("-fx-text-fill: red;");
+                }
             }
         });
         VBox durationTitle = new VBox(instructionDuration);
 
-        TextField instructionDifficulty = new TextField(String.valueOf(instruction.getDifficulty()));
-        //on end of interaction with the textfield, when is no longer focused
+        Spinner<Integer> instructionDifficulty = new Spinner<>(0, 3, instruction.getDifficulty());
         instructionDifficulty.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("focusedProperty" + newValue);
-            try {
-                instruction.setDifficulty(Integer.parseInt(instructionDifficulty.getText()));
+            if (newValue) {
+                instructionDifficulty.getValueFactory().setValue(instruction.getDifficulty());
+            } else {
+                instruction.setDifficulty(instructionDifficulty.getValue());
                 instructionDifficulty.styleProperty().setValue("-fx-text-fill: black;");
-            } catch (NumberFormatException e) {
-                instruction.setDifficulty(0);
-                instructionDifficulty.styleProperty().setValue("-fx-text-fill: red;");
             }
-
         });
 
 
