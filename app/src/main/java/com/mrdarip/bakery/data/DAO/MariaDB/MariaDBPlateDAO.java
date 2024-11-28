@@ -130,7 +130,6 @@ public class MariaDBPlateDAO extends PlateDao {
     }
 
     private Plate plateFromResultSet(ResultSet rs) throws SQLException {
-        System.out.println(rs.getString("plateName") + rs.getInt("idPlate"));
         return new Plate(rs.getInt("idPlate"), rs.getString("plateName"), rs.getInt("valoration"), this.getPlate(rs.getInt("idRequiredPlate")), rs.getString("uri_preview"));
     }
 

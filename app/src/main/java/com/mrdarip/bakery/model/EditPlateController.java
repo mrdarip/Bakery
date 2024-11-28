@@ -96,11 +96,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         this.plateContext = plateContext;
 
         if (plateContext != null) {
-            System.out.println("Setting plate context: " + plateContext);
-
-
             updateRequiredPlateButton();
-
 
             //borderpane width x 100
             previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
