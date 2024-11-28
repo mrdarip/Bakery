@@ -121,7 +121,11 @@ public class MariaDBInstructionDAO extends InstructionDao {
                     """;
             try {
                 PreparedStatement preparedStatement = this.connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-                preparedStatement.setInt(1, instruction.getId());
+                if (instruction.getId() < 0) {
+                    preparedStatement.setNull(1, java.sql.Types.INTEGER);
+                } else {
+                    preparedStatement.setInt(1, instruction.getId());
+                }
                 if (instruction.getSharperInstruction() != null) {
                     preparedStatement.setInt(2, instruction.getSharperInstruction().getId());
                 } else {
@@ -131,11 +135,13 @@ public class MariaDBInstructionDAO extends InstructionDao {
                 preparedStatement.setInt(4, instruction.getDuration());
                 preparedStatement.setString(5, instruction.getInstructionText());
 
-                preparedStatement.executeUpdate();
+                rs = preparedStatement.executeQuery();
 
-                rs = preparedStatement.getGeneratedKeys();
-                if (rs.next()) {
-                    instruction = instructionFromResultSet(rs);
+
+                ResultSet a = preparedStatement.getGeneratedKeys();
+
+                while (a.next()) {
+                    instruction.setIdInstruction(a.getInt(1));
                 }
             } catch (SQLException e) {
                 System.out.println("SQL exception when trying to upsert instruction: " + e.getMessage());
