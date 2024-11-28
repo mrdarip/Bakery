@@ -38,13 +38,20 @@ public class LIitem extends VBox {
         VBox durationTitle = new VBox(instructionDuration);
 
         TextField instructionDifficulty = new TextField(String.valueOf(instruction.getDifficulty()));
-        instructionDifficulty.textProperty().addListener((observable, oldValue, newValue) -> {
+        //on end of interaction with the textfield, when is no longer focused
+        instructionDifficulty.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("focusedProperty" + newValue);
             try {
-                instruction.setDifficulty(Integer.parseInt(newValue));
+                instruction.setDifficulty(Integer.parseInt(instructionDifficulty.getText()));
+                instructionDifficulty.styleProperty().setValue("-fx-text-fill: black;");
             } catch (NumberFormatException e) {
                 instruction.setDifficulty(0);
+                instructionDifficulty.styleProperty().setValue("-fx-text-fill: red;");
             }
+
         });
+
+
         VBox difficultyTitle = new VBox(instructionDifficulty);
 
         if (level == 0) {

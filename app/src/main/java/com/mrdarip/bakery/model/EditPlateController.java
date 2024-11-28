@@ -14,15 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,6 +58,9 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
     @FXML
     private VBox scrollVBox;
 
+    @FXML
+    private VBox instructionsVBox;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //on text change, update plateContext.
@@ -77,6 +76,16 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
         plateDao.delete(plateContext);
 
         this.stage.close();
+    }
+
+
+    @FXML
+    void AddInstructionToPlate(ActionEvent event) {
+    }
+
+    @FXML
+    void ChangePreviewImage(ActionEvent event) {
+
     }
 
     @Override
@@ -139,97 +148,12 @@ public class EditPlateController implements Initializable, PlateDependantNavigab
         if (plateContext != null) {
             plateInstructions = instructionDao.getInstructionsByPlateId(plateContext.getId());
         }
-        TreeItem<Instruction> root = new TreeItem<>(new Instruction(0, null, 0, 0, "Root"));
 
         //database instructions
         for (Instruction instruction : plateInstructions) {
-            TreeItem<Instruction> item = createTreeBranch(instruction);
-            root.getChildren().add(item);
-
-            scrollVBox.getChildren().add(new LIitem(instruction, 0));
+            instructionsVBox.getChildren().add(new LIitem(instruction, 0));
         }
-        TreeItem<Instruction> insertNewTI = new TreeItem<>(new Instruction(-2, null, -1, -1, "Add"));
-        root.getChildren().add(insertNewTI);
-
-        TreeTableColumn<Instruction, String> instructionTitleColumn = new TreeTableColumn<>("Instruction");
-        instructionTitleColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("instructionText"));
-        instructionTitleColumn.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn());
-        instructionTitleColumn.setOnEditCommit(event -> {
-            event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setInstructionText(event.getNewValue());
-        });
-
-        TreeTableColumn<Instruction, Integer> instructionDurationColumn = new TreeTableColumn<>("Duration");
-        instructionDurationColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("duration"));
-        instructionDurationColumn.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn(new IntegerStringConverter()));
-        instructionDurationColumn.setOnEditCommit(event -> {
-            event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setDuration(event.getNewValue());
-        });
-
-        TreeTableColumn<Instruction, Integer> instructionDifficultyColumn = new TreeTableColumn<>("Difficulty");
-        instructionDifficultyColumn.setCellValueFactory(new TreeItemPropertyValueFactory<>("difficulty"));
-        instructionDifficultyColumn.setCellFactory(TextFieldTreeTableCell.forTreeTableColumn(new IntegerStringConverter()));
-        instructionDifficultyColumn.setOnEditCommit(event -> {
-            event.getTreeTableView().getTreeItem(event.getTreeTablePosition().getRow()).getValue().setDifficulty(event.getNewValue());
-        });
-
-        TreeTableColumn<Instruction, Void> colBtn = new TreeTableColumn<>("Button Column");
-
-        Callback<TreeTableColumn<Instruction, Void>, TreeTableCell<Instruction, Void>> cellFactory = new Callback<TreeTableColumn<Instruction, Void>, TreeTableCell<Instruction, Void>>() {
-            @Override
-            public TreeTableCell<Instruction, Void> call(final TreeTableColumn<Instruction, Void> param) {
-                final TreeTableCell<Instruction, Void> cell = new TreeTableCell<Instruction, Void>() {
-
-                    private final Button btn = new Button("+");
-
-                    {
-
-                        btn.setOnAction((ActionEvent event) -> {
-                            btn.setText("ID " + getIndex());
-                            Instruction data = getTreeTableView().getTreeItem(getIndex()).getValue();
-                            NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", data, EditPlateController.this);
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-
-
-
-
-        instructionTTV.getColumns().clear();
-        instructionTTV.getColumns().addAll(instructionTitleColumn, instructionDurationColumn, instructionDifficultyColumn, colBtn);
-        instructionTTV.setRoot(root);
-        instructionTTV.setShowRoot(false);
-        instructionTTV.setEditable(true);
     }
-
-    private TreeItem<Instruction> createTreeBranch(Instruction instruction) {
-        TreeItem<Instruction> parentTI = new TreeItem<>(instruction);
-        Instruction currentInstruction = instruction;
-        while (currentInstruction.hasSharperInstruction()) {
-            currentInstruction = currentInstruction.getSharperInstruction();
-            TreeItem<Instruction> childTI = new TreeItem<>(currentInstruction);
-
-            parentTI.getChildren().add(childTI);
-
-        }
-
-        return parentTI;
-    }
-
     @Override
     public String getScreenTitle() {
         if (plateContext == null) {

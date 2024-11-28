@@ -10,7 +10,7 @@
     <top>
         <StackPane fx:id="previewStackPane" alignment="BOTTOM_RIGHT" prefHeight="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" text="Edit Image">
+                <Button mnemonicParsing="false" onAction="#ChangePreviewImage" text="Edit Image">
                     <StackPane.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </StackPane.margin>
@@ -55,25 +55,27 @@
                                         </Label>
                                     </children>
                                 </GridPane>
-                                <TreeTableView fx:id="instructionTTV"/>
+                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                        mnemonicParsing="false" onAction="#AddInstructionToPlate"
+                                        text="Add Instruction"/>
+                                <VBox fx:id="instructionsVBox" spacing="8.0"/>
                             </children>
+                            <padding>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </padding>
                         </VBox>
                     </content>
                 </ScrollPane>
-                <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                      StackPane.alignment="BOTTOM_RIGHT">
+                <HBox alignment="BOTTOM_RIGHT" depthTest="DISABLE" fillHeight="false" maxHeight="-Infinity"
+                      maxWidth="-Infinity" spacing="8.0" StackPane.alignment="BOTTOM_RIGHT">
                     <children>
-                        <HBox alignment="BOTTOM_RIGHT" depthTest="DISABLE" fillHeight="false" spacing="8.0">
-                            <children>
-                                <Button mnemonicParsing="false" onAction="#OnExit" text="Exit"/>
-                                <Button mnemonicParsing="false" onAction="#OnSave" text="Save"/>
-                            </children>
-                        </HBox>
+                        <Button mnemonicParsing="false" onAction="#OnExit" text="Exit"/>
+                        <Button mnemonicParsing="false" onAction="#OnSave" text="Save"/>
                     </children>
-                    <StackPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="24.0" top="8.0"/>
-                    </StackPane.margin>
-                </Pane>
+                    <padding>
+                        <Insets bottom="8.0" right="24.0"/>
+                    </padding>
+                </HBox>
             </children>
         </StackPane>
     </center>
