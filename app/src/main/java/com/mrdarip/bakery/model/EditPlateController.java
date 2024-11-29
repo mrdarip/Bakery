@@ -242,16 +242,16 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     private void addInstructionToPlate(Instruction instruction) {
         //add to plateInstructions, if it is already there, add it pointing to the same object
-        if (!plateInstructions.contains(instruction)) {
-            plateInstructions.add(instruction);
-        } else {
+        if (plateInstructions.contains(instruction)) {
             Instruction finalInstruction = instruction;
             instruction = plateInstructions.stream()
                     .filter(i -> i.equals(finalInstruction))
                     .findFirst()
                     .orElseThrow();
         }
-        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0, this));
+        plateInstructions.add(instruction);
+
+        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0, this, plateInstructions));
     }
 
     @Override
