@@ -2,11 +2,13 @@ package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class LIitem extends VBox {
     public static final int CARD_HEIGHT = 75;
@@ -18,6 +20,8 @@ public class LIitem extends VBox {
         setMargin(this, new Insets(0, 0, 0, level == 1 ? 16 : 0));
         setPrefHeight(CARD_HEIGHT);
         setStyle(CARD_STYLE);
+        //from 128 to 255
+        styleProperty().setValue("-fx-background-color: #" + Color.gray(1 - ((level + 2) * 0.1)).toString().substring(2, 8) + ";");
 
 
         TextField instructionName = new TextField(instruction.getInstructionText());
@@ -55,8 +59,6 @@ public class LIitem extends VBox {
                 instructionDifficulty.styleProperty().setValue("-fx-text-fill: black;");
             }
         });
-
-
         VBox difficultyTitle = new VBox(instructionDifficulty);
 
         if (level == 0) {
@@ -67,7 +69,7 @@ public class LIitem extends VBox {
 
 
         getChildren().add(
-                new HBox(nameTitle, durationTitle, difficultyTitle)
+                new HBox(new Button(), nameTitle, durationTitle, difficultyTitle)
         );
 
         if (instruction.hasSharperInstruction()) {
