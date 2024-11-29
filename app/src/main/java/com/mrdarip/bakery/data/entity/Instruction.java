@@ -1,5 +1,6 @@
 package com.mrdarip.bakery.data.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Instruction {
@@ -8,8 +9,8 @@ public class Instruction {
     private int difficulty;
     private int duration;
     private String instructionText;
-    private List<Runnable> OnSharperInstructionChange;
-    private List<Runnable> OnChange;
+    private final List<Runnable> OnSharperInstructionChange;
+    private final List<Runnable> OnChange;
 
     public Instruction(int idInstruction, Instruction sharperInstruction, int difficulty, int duration, String instructionText) {
         this.idInstruction = idInstruction;
@@ -17,6 +18,8 @@ public class Instruction {
         this.difficulty = difficulty;
         this.duration = duration;
         this.instructionText = instructionText;
+        this.OnSharperInstructionChange = new ArrayList<>();
+        this.OnChange = new ArrayList<>();
     }
 
     public static int created = 0;

@@ -78,5 +78,18 @@ public class LIitem extends VBox {
         if (instruction.hasSharperInstruction()) {
             getChildren().add(new LIitem(instruction.getSharperInstruction(), level + 1, origin));
         }
+
+        instruction.addOnChange(() -> {
+            instructionName.setText(instruction.getInstructionText());
+            instructionDuration.getValueFactory().setValue(instruction.getDuration());
+            instructionDifficulty.getValueFactory().setValue(instruction.getDifficulty());
+        });
+
+        instruction.addOnSharperInstructionChange(() -> {
+            getChildren().removeLast();
+            if (instruction.hasSharperInstruction()) {
+                getChildren().add(new LIitem(instruction.getSharperInstruction(), level + 1, origin));
+            }
+        });
     }
 }
