@@ -121,6 +121,11 @@ public class SelectElementController implements Initializable, PlateInstructionD
         this.stage = stage;
     }
 
+    @Override
+    public void rebuildUI() {
+
+    }
+
     private void endSelection() {
         stage.close();
     }
@@ -129,7 +134,7 @@ public class SelectElementController implements Initializable, PlateInstructionD
     public void setInstructionContext(Instruction instructionContext) {
         this.instructionContext = instructionContext;
 
-        ElementsListVBox.getChildren().addAll(
+        ElementsListVBox.getChildren().add(
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Instruction", ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", Instruction.getEmptyInstruction(), this);
                     endSelection();
@@ -142,6 +147,7 @@ public class SelectElementController implements Initializable, PlateInstructionD
                             instruction.getInstructionText(),
                             ev -> {
                                 instructionContext.setSharperInstruction(instruction);
+                                endSelection();
                             }
                     )
             );

@@ -1,11 +1,15 @@
 package com.mrdarip.bakery.data.entity;
 
+import java.util.List;
+
 public class Instruction {
     private int idInstruction;
     private Instruction sharperInstruction;
     private int difficulty;
     private int duration;
     private String instructionText;
+    private List<Runnable> OnSharperInstructionChange;
+    private List<Runnable> OnChange;
 
     public Instruction(int idInstruction, Instruction sharperInstruction, int difficulty, int duration, String instructionText) {
         this.idInstruction = idInstruction;
@@ -47,18 +51,22 @@ public class Instruction {
 
     public void setInstructionText(String newValue) {
         this.instructionText = newValue;
+        executeOnChange();
     }
 
     public void setDuration(int newValue) {
         this.duration = newValue;
+        executeOnChange();
     }
 
     public void setDifficulty(int newValue) {
         this.difficulty = newValue;
+        executeOnChange();
     }
 
     public void setIdInstruction(int anInt) {
         this.idInstruction = anInt;
+        executeOnChange();
     }
 
     @Override
@@ -68,6 +76,8 @@ public class Instruction {
 
     public void setSharperInstruction(Instruction instruction) {
         this.sharperInstruction = instruction;
+        this.executeOnSharperInstructionChange();
+        this.executeOnChange();
     }
 
     @Override
@@ -77,4 +87,22 @@ public class Instruction {
         }
         return false;
     }
+
+    public void addOnSharperInstructionChange(Runnable lambda) {
+        this.OnSharperInstructionChange.add(lambda);
+    }
+
+    private void executeOnSharperInstructionChange() {
+        this.OnSharperInstructionChange.forEach(Runnable::run);
+    }
+
+    public void addOnChange(Runnable lambda) {
+        this.OnChange.add(lambda);
+    }
+
+    private void executeOnChange() {
+        this.OnChange.forEach(Runnable::run);
+    }
+
+
 }

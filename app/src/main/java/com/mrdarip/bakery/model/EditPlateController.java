@@ -33,13 +33,11 @@ import java.util.ResourceBundle;
 
 
 public class EditPlateController implements Initializable, PlateInstructionDependantNavigable {
-    private Plate plateContext;
     private final PlateInstructionCRDAO plateInstructionCRDAO = new MariaDBPlateInstructionCRDAO();
-
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
     private final List<Instruction> plateInstructions = new ArrayList<>();
-
+    private Plate plateContext;
     private Navigable origin;
     private Stage stage;
 
@@ -100,19 +98,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     public void setPlateContext(Plate plateContext) {
         this.plateContext = plateContext;
 
-        if (plateContext != null) {
-            updateRequiredPlateButton();
-
-            //borderpane width x 100
-            previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
-            previewStackPane.getChildren().addFirst(previewIV);
-
-        }
-
-
-        fillTable();
-
-        fillPlateInfo();
+        rebuildUI();
     }
 
     @Override
@@ -150,9 +136,17 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     private void fillTable() {
         if (plateContext != null) {
+            clearPlateInstructions();
             instructionDao.getInstructionsByPlateId(plateContext.getId()).forEach(this::addInstructionToPlate);
         }
     }
+
+    private void clearPlateInstructions() {
+        plateInstructions.clear();
+
+        instructionsVBox.getChildren().clear();
+    }
+
     @Override
     public String getScreenTitle() {
         if (plateContext == null) {
@@ -186,6 +180,23 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                 System.out.println("Hello World from " + this.getScreenTitle() + " new value " + newValue);
             }
         });
+    }
+
+    @Override
+    public void rebuildUI() {
+        if (plateContext != null) {
+            updateRequiredPlateButton();
+
+            //borderpane width x 100
+            previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
+            if (previewStackPane.getChildren().size() > 1) {
+                previewStackPane.getChildren().addFirst(previewIV);
+            } else {
+                previewStackPane.getChildren().set(0, previewIV);
+            }
+        }
+        fillTable();
+        fillPlateInfo();
     }
 
     public void OnSave(ActionEvent actionEvent) {

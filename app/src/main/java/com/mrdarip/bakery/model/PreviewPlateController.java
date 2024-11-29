@@ -79,4 +79,9 @@ public class PreviewPlateController implements Initializable, PlateDependantNavi
     public void setStage(Stage stage) {
         this.scene = stage;
     }
+
+    @Override
+    public void rebuildUI() {
+
+    }
 }

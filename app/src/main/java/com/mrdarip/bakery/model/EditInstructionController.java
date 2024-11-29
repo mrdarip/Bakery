@@ -66,4 +66,9 @@ public class EditInstructionController implements Initializable, InstructionDepe
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    @Override
+    public void rebuildUI() {
+
+    }
 }

@@ -11,4 +11,6 @@ public interface Navigable {
 
     void setStage(Stage stage);
 
+    void rebuildUI();
+
 }
