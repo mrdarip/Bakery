@@ -21,7 +21,7 @@ public class Plate {
     private String name;
     private final int valoration;
     private Plate requiredPlate;
-    private final String previewURI;
+    private String previewURI;
 
     public Plate(int id, String name, int valoration, Plate requiredPlate, String previewURI) {
         this.id = id;
@@ -215,5 +215,9 @@ public class Plate {
             return plate.getId() == this.getId();
         }
         return false;
+    }
+
+    public void setPreviewURI(String encodedString) {
+        this.previewURI = encodedString;
     }
 }

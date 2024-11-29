@@ -24,10 +24,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -90,7 +95,23 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     @FXML
-    void ChangePreviewImage(ActionEvent event) {
+    void ChangePreviewImage(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg")
+        );
+
+        fileChooser.setTitle("Select an image for the plate");
+        fileChooser.setInitialDirectory(new java.io.File(System.getProperty("user.home")));
+        File file = fileChooser.showOpenDialog(stage);
+
+        //convert it to Base64
+        byte[] fileContent = FileUtils.readFileToByteArray(file);
+
+        // Encode the byte array to a Base64 string
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
+        plateContext.setPreviewURI("data:image/png;base64," + encodedString);
 
     }
 
@@ -177,7 +198,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
         stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                System.out.println("Hello World from " + this.getScreenTitle() + " new value " + newValue);
+                System.out.println("Focused " + getScreenTitle());
             }
         });
     }
