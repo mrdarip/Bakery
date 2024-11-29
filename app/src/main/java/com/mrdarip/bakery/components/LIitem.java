@@ -1,7 +1,10 @@
 package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
+import com.mrdarip.bakery.navigation.NavController;
+import com.mrdarip.bakery.navigation.Navigable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -14,12 +17,13 @@ public class LIitem extends VBox {
     public static final int CARD_HEIGHT = 75;
     private static final String CARD_STYLE = "-fx-background-color: gray;";
 
-    public LIitem(Instruction instruction, int level) {
+    public LIitem(Instruction instruction, int level, Navigable origin) {
         super();
 
         setMargin(this, new Insets(0, 0, 0, level == 1 ? 16 : 0));
-        setPrefHeight(CARD_HEIGHT);
+        setPrefHeight(VBox.USE_COMPUTED_SIZE);
         setStyle(CARD_STYLE);
+
         //from 128 to 255
         styleProperty().setValue("-fx-background-color: #" + Color.gray(1 - ((level + 2) * 0.1)).toString().substring(2, 8) + ";");
 
@@ -39,13 +43,7 @@ public class LIitem extends VBox {
             if (newValue) {
                 instructionDuration.getValueFactory().setValue(instruction.getDuration());
             } else {
-                try {
-                    instruction.setDuration(instructionDuration.getValue());
-                    instructionDuration.styleProperty().setValue("-fx-text-fill: black;");
-                } catch (NumberFormatException e) {
-                    instruction.setDuration(0);
-                    instructionDuration.styleProperty().setValue("-fx-text-fill: red;");
-                }
+                instruction.setDuration(instructionDuration.getValue());
             }
         });
         VBox durationTitle = new VBox(instructionDuration);
@@ -56,10 +54,14 @@ public class LIitem extends VBox {
                 instructionDifficulty.getValueFactory().setValue(instruction.getDifficulty());
             } else {
                 instruction.setDifficulty(instructionDifficulty.getValue());
-                instructionDifficulty.styleProperty().setValue("-fx-text-fill: black;");
             }
         });
         VBox difficultyTitle = new VBox(instructionDifficulty);
+
+        Button addSubInstructionButton = new Button("+");
+        addSubInstructionButton.setOnAction((ev) -> {
+            NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", instruction, origin);
+        });
 
         if (level == 0) {
             nameTitle.getChildren().addFirst(new Label("Name"));
@@ -67,13 +69,14 @@ public class LIitem extends VBox {
             difficultyTitle.getChildren().addFirst(new Label("Difficulty"));
         }
 
-
+        HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle, addSubInstructionButton);
+        fields.setAlignment(Pos.BOTTOM_LEFT);
         getChildren().add(
-                new HBox(new Button(), nameTitle, durationTitle, difficultyTitle)
+                fields
         );
 
         if (instruction.hasSharperInstruction()) {
-            getChildren().add(new LIitem(instruction.getSharperInstruction(), level + 1));
+            getChildren().add(new LIitem(instruction.getSharperInstruction(), level + 1, origin));
         }
     }
 }

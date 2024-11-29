@@ -240,7 +240,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                     .findFirst()
                     .orElseThrow();
         }
-        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0));
+        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0, this));
     }
 
     @Override
