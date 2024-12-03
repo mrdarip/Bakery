@@ -11,23 +11,31 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class LIitem extends VBox {
+public class InstructionLI extends VBox {
     public static final int CARD_HEIGHT = 75;
     private static final String CARD_STYLE = "-fx-background-color: gray;";
 
-    public LIitem(Instruction instruction, int level, Navigable origin, List<Instruction> instructionList) {
+
+    int level;
+    int index;
+    InstructionLI parent;
+    InstructionLI child;
+
+    public InstructionLI(Instruction instruction, InstructionLI parent, int index, Navigable origin, List<Instruction> instructionList) {
         super();
+        this.parent = parent;
+        this.level = parent == null ? 0 : parent.level + 1;
+        this.index = index;
 
         setMargin(this, new Insets(0, 0, 0, level == 1 ? 16 : 0));
         setPrefHeight(VBox.USE_COMPUTED_SIZE);
         setStyle(CARD_STYLE);
 
         //from 128 to 255
-        styleProperty().setValue("-fx-background-color: #" + Color.gray(1 - ((level + 2) * 0.1)).toString().substring(2, 8) + ";");
+        //styleProperty().setValue("-fx-background-color: #" + Color.gray(1 - ((level + 2) * 0.1)).toString().substring(2, 8) + ";");
 
 
         TextField instructionName = new TextField(instruction.getInstructionText());
@@ -72,15 +80,41 @@ public class LIitem extends VBox {
         }
 
         HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle, addSubInstructionButton);
-        int index = instructionList.size();
 
         Button moveDownB = new Button("↓");
         moveDownB.setOnAction((ev) -> {
             if (level == 0) {
-                instructionList.set(index, instruction.getSharperInstruction());
-                Instruction temp = instruction.getSharperInstruction().getSharperInstruction();
-                instruction.getSharperInstruction().setSharperInstruction(instruction);
-                instruction.setSharperInstruction(temp);
+                for (Instruction i : instructionList) {
+                    Instruction ins = i;
+                    do {
+                        System.out.print(ins.getId() + "->");
+                        ins = ins.getSharperInstruction();
+                    } while (ins != null);
+                    System.out.println();
+                }
+                System.out.println("-----------------");
+
+
+                Instruction newRoot = instruction.getSharperInstruction();
+                instruction.setSharperInstruction(newRoot.getSharperInstruction());
+                newRoot.setSharperInstruction(instruction);
+
+                instructionList.set(this.index, newRoot);
+
+                //remove this InstructionLI from parent and add add newRoot as InstructionLI
+                VBox instructionsVBox = (VBox) this.getParent();
+                instructionsVBox.getChildren().remove(this);
+                InstructionLI newRootLI = new InstructionLI(newRoot, null, this.index, origin, instructionList);
+                instructionsVBox.getChildren().add(this.index, newRootLI);
+
+                for (Instruction i : instructionList) {
+                    Instruction ins = i;
+                    do {
+                        System.out.print(ins.getId() + "->");
+                        ins = ins.getSharperInstruction();
+                    } while (ins != null);
+                    System.out.println();
+                }
                 //this wont work as the instructionList is not updated nor the level
             } else {
                 // instruction is A, A.s is B, B.s is C
@@ -99,15 +133,15 @@ public class LIitem extends VBox {
             }
         });
 
-        fields.getChildren().add(moveDownB);
+        fields.getChildren().addAll(moveDownB, new Label(instruction.getId() + ""));
 
 
         Button moveUpRootB = new Button("↑");
 
         moveUpRootB.setOnAction((ev) -> {
-            Instruction temp = instructionList.get(index - 1);
-            instructionList.set(index - 1, instruction);
-            instructionList.set(index, temp);
+            Instruction temp = instructionList.get(this.index - 1);
+            instructionList.set(this.index - 1, instruction);
+            instructionList.set(this.index, temp);
             //this wont work as the instructionList is not updated nor the index
         });
 
@@ -120,21 +154,25 @@ public class LIitem extends VBox {
                 fields
         );
 
-        if (instruction.hasSharperInstruction()) {
-            getChildren().add(new LIitem(instruction.getSharperInstruction(), level + 1, origin, instructionList));
-        }
+        setChildIfExists(instruction, origin, instructionList);
 
         instruction.addOnChange(() -> {
             instructionName.setText(instruction.getInstructionText());
             instructionDuration.getValueFactory().setValue(instruction.getDuration());
             instructionDifficulty.getValueFactory().setValue(instruction.getDifficulty());
         });
+    }
 
-        instruction.addOnSharperInstructionChange(() -> {
-            getChildren().removeLast();
-            if (instruction.hasSharperInstruction()) {
-                getChildren().add(new LIitem(instruction.getSharperInstruction(), level + 1, origin, instructionList));
-            }
-        });
+
+    private void setChildIfExists(Instruction instruction, Navigable origin, List<Instruction> instructionList) {
+        if (this.getChildren().removeIf(node -> node instanceof InstructionLI)) {
+            this.child = null;
+        }
+
+        if (instruction.getSharperInstruction() != null) {
+            InstructionLI child = new InstructionLI(instruction.getSharperInstruction(), this, this.index, origin, instructionList);
+            this.child = child;
+            getChildren().add(child);
+        }
     }
 }

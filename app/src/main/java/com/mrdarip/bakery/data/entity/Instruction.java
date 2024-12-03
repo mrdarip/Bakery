@@ -9,7 +9,6 @@ public class Instruction {
     private int difficulty;
     private int duration;
     private String instructionText;
-    private final List<Runnable> OnSharperInstructionChange;
     private final List<Runnable> OnChange;
 
     public Instruction(int idInstruction, Instruction sharperInstruction, int difficulty, int duration, String instructionText) {
@@ -18,7 +17,6 @@ public class Instruction {
         this.difficulty = difficulty;
         this.duration = duration;
         this.instructionText = instructionText;
-        this.OnSharperInstructionChange = new ArrayList<>();
         this.OnChange = new ArrayList<>();
     }
 
@@ -79,7 +77,6 @@ public class Instruction {
 
     public void setSharperInstruction(Instruction instruction) {
         this.sharperInstruction = instruction;
-        this.executeOnSharperInstructionChange();
         this.executeOnChange();
     }
 
@@ -89,14 +86,6 @@ public class Instruction {
             return this.idInstruction == instruction.idInstruction;
         }
         return false;
-    }
-
-    public void addOnSharperInstructionChange(Runnable lambda) {
-        this.OnSharperInstructionChange.add(lambda);
-    }
-
-    private void executeOnSharperInstructionChange() {
-        this.OnSharperInstructionChange.forEach(Runnable::run);
     }
 
     public void addOnChange(Runnable lambda) {

@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.model;
 
-import com.mrdarip.bakery.components.LIitem;
+import com.mrdarip.bakery.components.InstructionLI;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
@@ -272,7 +272,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         }
         plateInstructions.add(instruction);
 
-        instructionsVBox.getChildren().addLast(new LIitem(instruction, 0, this, plateInstructions));
+        instructionsVBox.getChildren().addLast(new InstructionLI(instruction, null, instructionsVBox.getChildren().size(), this, plateInstructions));
     }
 
     @Override
