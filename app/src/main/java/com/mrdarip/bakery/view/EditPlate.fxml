@@ -3,7 +3,6 @@
 <?import com.mrdarip.bakery.components.LIitemContainer?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="borderPane" prefHeight="450.0" prefWidth="700.0"
@@ -16,7 +15,6 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </StackPane.margin>
                 </Button>
-                <ImageView fx:id="previewIV" pickOnBounds="true" preserveRatio="true"/>
             </children>
         </StackPane>
     </top>

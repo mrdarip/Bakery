@@ -147,6 +147,7 @@ public class SelectElementController implements Initializable, PlateInstructionD
                             instruction.getInstructionText(),
                             ev -> {
                                 instructionContext.setSharperInstruction(instruction);
+                                origin.rebuildUI();
                                 endSelection();
                             }
                     )

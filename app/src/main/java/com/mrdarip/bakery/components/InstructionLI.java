@@ -1,6 +1,7 @@
 package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
+import com.mrdarip.bakery.navigation.NavController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -74,7 +75,7 @@ public class InstructionLI extends VBox {
 
         Button addSubInstructionButton = new Button("+");
         addSubInstructionButton.setOnAction((ev) -> {
-            //---NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", this.instruction, origin);
+            NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", this.instruction, container.getOrigin());
         });
 
         if (level == 0) {
@@ -95,7 +96,6 @@ public class InstructionLI extends VBox {
         });
 
         if (level == 0 && this.index > 0) {
-            System.out.println("Adding move up button for instruction " + this.instruction.getInstructionText() + " at index " + this.index);
             fields.getChildren().add(moveUpRootB);
         }
 
@@ -111,6 +111,7 @@ public class InstructionLI extends VBox {
             instructionDuration.getValueFactory().setValue(this.instruction.getDuration());
             instructionDifficulty.getValueFactory().setValue(this.instruction.getDifficulty());
         });
+
 
         if (this.child != null) {
             Button moveDownB = new Button("↓");
@@ -131,7 +132,7 @@ public class InstructionLI extends VBox {
         }
 
         if (this.instruction.getSharperInstruction() != null) {
-            InstructionLI child = new InstructionLI(this.instruction.getSharperInstruction(), this, container);
+            InstructionLI child = new InstructionLI(container.searchInTreeFor(this.instruction.getSharperInstruction()), this, container);
             this.child = child;
             getChildren().add(child);
         }

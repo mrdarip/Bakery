@@ -54,9 +54,6 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     private StackPane previewStackPane;
 
     @FXML
-    private ImageView previewIV;
-
-    @FXML
     private TextField plateNameTF;
 
     @FXML
@@ -79,6 +76,8 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                 plateContext.setName(newValue);
             }
         });
+
+        instructionsVBox.setOrigin(this);
     }
 
     @FXML
@@ -208,13 +207,13 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         if (plateContext != null) {
             updateRequiredPlateButton();
 
+            //remove all nodes of type imageview
+            previewStackPane.getChildren().removeIf(node -> node instanceof ImageView);
+
             //borderpane width x 100
-            previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
-            if (previewStackPane.getChildren().size() > 1) {
-                previewStackPane.getChildren().addFirst(previewIV);
-            } else {
-                previewStackPane.getChildren().set(0, previewIV);
-            }
+            ImageView previewIV = plateContext.getPreviewImageViewCovering(borderPane.widthProperty(), 100);
+            previewStackPane.getChildren().addFirst(previewIV);
+
         }
         fillTable();
         fillPlateInfo();
