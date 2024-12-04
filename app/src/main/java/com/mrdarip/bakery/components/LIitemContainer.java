@@ -8,31 +8,53 @@ import java.util.List;
 
 public class LIitemContainer extends VBox {
 
-    public List<InstructionLI> instructionLIs = new ArrayList<>();
+    public List<Instruction> instructions = new ArrayList<>();
 
     public void addNewInstruction(Instruction i) {
-        instructionLIs.addFirst(new InstructionLI(i, null, this));
+        instructions.addFirst(i);
         rebuild();
     }
 
     private void rebuild() {
         getChildren().clear();
-        for (InstructionLI instructionLI : instructionLIs) {
-            getChildren().addLast(instructionLI.rebuit(this));
+        for (Instruction i : instructions) {
+            getChildren().add(new InstructionLI(i, null, this));
         }
     }
 
-    public void moveUp(InstructionLI instructionLI) {
-        int index = instructionLIs.indexOf(instructionLI);
+    public void moveUp(Instruction instruction) {
+        int index = instructions.indexOf(instruction);
         if (index > 0) {
-            InstructionLI temp = instructionLIs.get(index - 1).rebuit(this);
-            instructionLIs.set(index - 1, instructionLI.rebuit(this));
-            instructionLIs.set(index, temp);
+            Instruction temp = instructions.get(index - 1);
+            instructions.set(index - 1, instruction);
+            instructions.set(index, temp);
             rebuild();
         }
     }
 
     public int positionOf(InstructionLI instructionLI) {
-        return instructionLIs.indexOf(instructionLI);
+        return instructions.indexOf(instructionLI);
+    }
+
+    public void moveDownInTree(Instruction mvI) {
+        Instruction mvC = mvI.getSharperInstruction();
+        Instruction mvCC = mvC.getSharperInstruction();
+        mvC.setSharperInstruction(mvI);
+        mvI.setSharperInstruction(mvCC);
+
+
+        for (Instruction branch : instructions) {
+            Instruction possibleParent = branch;
+            int level = 0;
+
+            do {
+                if (possibleParent.isParentOf(mvI)) {
+                    possibleParent.setSharperInstruction(mvC);
+                }
+                possibleParent = possibleParent.getSharperInstruction();
+                level++;
+            } while (possibleParent != null && !possibleParent.isParentOf(mvI));
+        }
+        rebuild();
     }
 }

@@ -221,8 +221,8 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        for (int i = instructionsVBox.instructionLIs.size() - 1; i >= 0; i--) {
-            plateInstructions.set(i, saveInstructionBranch(instructionsVBox.instructionLIs.get(i).instruction));
+        for (int i = instructionsVBox.instructions.size() - 1; i >= 0; i--) {
+            plateInstructions.set(i, saveInstructionBranch(instructionsVBox.instructions.get(i)));
         }
 
         this.plateContext = plateDao.upsert(plateContext);

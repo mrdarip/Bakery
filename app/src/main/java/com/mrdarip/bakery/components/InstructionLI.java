@@ -26,7 +26,13 @@ public class InstructionLI extends VBox {
         this.instruction = instruction;
         this.parent = parent;
         this.level = parent == null ? 0 : parent.level + 1;
-        this.index = container.positionOf(this) < 0 ? container.instructionLIs.size() : container.positionOf(this);
+        this.index = container.instructions.size();
+
+        InstructionLI topLi = this.parent;
+        while (topLi != null) {
+            this.index = topLi.index;
+            topLi = topLi.parent;
+        }
 
         setMargin(this, new Insets(0, 0, 0, level == 1 ? 16 : 0));
         setPrefHeight(VBox.USE_COMPUTED_SIZE);
@@ -85,7 +91,7 @@ public class InstructionLI extends VBox {
         Button moveUpRootB = new Button("↑");
 
         moveUpRootB.setOnAction((ev) -> {
-            container.moveUp(this);
+            container.moveUp(this.instruction);
         });
 
         if (level == 0 && this.index > 0) {
@@ -110,7 +116,8 @@ public class InstructionLI extends VBox {
             Button moveDownB = new Button("↓");
             moveDownB.styleProperty().setValue("-fx-background-color: #ff0000;");
             moveDownB.setOnAction((ev) -> {
-
+                System.out.println("Moving down " + this.instruction.getInstructionText() + " hasCHild " + this.instruction.hasSharperInstruction());
+                container.moveDownInTree(this.instruction);
             });
 
             fields.getChildren().addAll(moveDownB, new Label(this.instruction.getId() + ""));

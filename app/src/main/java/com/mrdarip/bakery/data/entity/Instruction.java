@@ -96,5 +96,9 @@ public class Instruction {
         this.OnChange.forEach(Runnable::run);
     }
 
+    public boolean isParentOf(Instruction instruction) {
+        return this.hasSharperInstruction() && this.sharperInstruction.equals(instruction);
+    }
+
 
 }
