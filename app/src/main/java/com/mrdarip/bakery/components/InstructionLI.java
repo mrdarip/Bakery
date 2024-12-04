@@ -1,8 +1,6 @@
 package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
-import com.mrdarip.bakery.navigation.NavController;
-import com.mrdarip.bakery.navigation.Navigable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.util.List;
-
 public class InstructionLI extends VBox {
     public static final int CARD_HEIGHT = 75;
     private static final String CARD_STYLE = "-fx-background-color: gray;";
@@ -21,14 +17,16 @@ public class InstructionLI extends VBox {
 
     int level;
     int index;
+    Instruction instruction;
     InstructionLI parent;
     InstructionLI child;
 
-    public InstructionLI(Instruction instruction, InstructionLI parent, int index, Navigable origin, List<Instruction> instructionList) {
+    public InstructionLI(Instruction instruction, InstructionLI parent, LIitemContainer container) {
         super();
+        this.instruction = instruction;
         this.parent = parent;
         this.level = parent == null ? 0 : parent.level + 1;
-        this.index = index;
+        this.index = container.positionOf(this) < 0 ? container.instructionLIs.size() : container.positionOf(this);
 
         setMargin(this, new Insets(0, 0, 0, level == 1 ? 16 : 0));
         setPrefHeight(VBox.USE_COMPUTED_SIZE);
@@ -38,39 +36,39 @@ public class InstructionLI extends VBox {
         //styleProperty().setValue("-fx-background-color: #" + Color.gray(1 - ((level + 2) * 0.1)).toString().substring(2, 8) + ";");
 
 
-        TextField instructionName = new TextField(instruction.getInstructionText());
+        TextField instructionName = new TextField(this.instruction.getInstructionText());
         instructionName.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                instructionName.setText(instruction.getInstructionText());
+                instructionName.setText(this.instruction.getInstructionText());
             } else {
-                instruction.setInstructionText(instructionName.getText());
+                this.instruction.setInstructionText(instructionName.getText());
             }
         });
         VBox nameTitle = new VBox(instructionName);
 
-        Spinner<Integer> instructionDuration = new Spinner<>(0, Integer.MAX_VALUE, instruction.getDuration());
+        Spinner<Integer> instructionDuration = new Spinner<>(0, Integer.MAX_VALUE, this.instruction.getDuration());
         instructionDuration.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                instructionDuration.getValueFactory().setValue(instruction.getDuration());
+                instructionDuration.getValueFactory().setValue(this.instruction.getDuration());
             } else {
-                instruction.setDuration(instructionDuration.getValue());
+                this.instruction.setDuration(instructionDuration.getValue());
             }
         });
         VBox durationTitle = new VBox(instructionDuration);
 
-        Spinner<Integer> instructionDifficulty = new Spinner<>(0, 3, instruction.getDifficulty());
+        Spinner<Integer> instructionDifficulty = new Spinner<>(0, 3, this.instruction.getDifficulty());
         instructionDifficulty.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                instructionDifficulty.getValueFactory().setValue(instruction.getDifficulty());
+                instructionDifficulty.getValueFactory().setValue(this.instruction.getDifficulty());
             } else {
-                instruction.setDifficulty(instructionDifficulty.getValue());
+                this.instruction.setDifficulty(instructionDifficulty.getValue());
             }
         });
         VBox difficultyTitle = new VBox(instructionDifficulty);
 
         Button addSubInstructionButton = new Button("+");
         addSubInstructionButton.setOnAction((ev) -> {
-            NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", instruction, origin);
+            //---NavController.navigateTo("/com/mrdarip/bakery/view/SelectElement.fxml", this.instruction, origin);
         });
 
         if (level == 0) {
@@ -81,71 +79,17 @@ public class InstructionLI extends VBox {
 
         HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle, addSubInstructionButton);
 
-        Button moveDownB = new Button("↓");
-        moveDownB.setOnAction((ev) -> {
-            if (level == 0) {
-                for (Instruction i : instructionList) {
-                    Instruction ins = i;
-                    do {
-                        System.out.print(ins.getId() + "->");
-                        ins = ins.getSharperInstruction();
-                    } while (ins != null);
-                    System.out.println();
-                }
-                System.out.println("-----------------");
 
-
-                Instruction newRoot = instruction.getSharperInstruction();
-                instruction.setSharperInstruction(newRoot.getSharperInstruction());
-                newRoot.setSharperInstruction(instruction);
-
-                instructionList.set(this.index, newRoot);
-
-                //remove this InstructionLI from parent and add add newRoot as InstructionLI
-                VBox instructionsVBox = (VBox) this.getParent();
-                instructionsVBox.getChildren().remove(this);
-                InstructionLI newRootLI = new InstructionLI(newRoot, null, this.index, origin, instructionList);
-                instructionsVBox.getChildren().add(this.index, newRootLI);
-
-                for (Instruction i : instructionList) {
-                    Instruction ins = i;
-                    do {
-                        System.out.print(ins.getId() + "->");
-                        ins = ins.getSharperInstruction();
-                    } while (ins != null);
-                    System.out.println();
-                }
-                //this wont work as the instructionList is not updated nor the level
-            } else {
-                // instruction is A, A.s is B, B.s is C
-
-
-                Instruction temp = instruction.getSharperInstruction(); // B
-                // A.s = C
-                instruction.setSharperInstruction(instruction.getSharperInstruction().getSharperInstruction());
-
-                // B.s = A
-                temp.setSharperInstruction(instruction);
-
-                //now we need to get the instruction before A and set its s to B, we need to get the instruction before A
-
-                //not implemented
-            }
-        });
-
-        fields.getChildren().addAll(moveDownB, new Label(instruction.getId() + ""));
 
 
         Button moveUpRootB = new Button("↑");
 
         moveUpRootB.setOnAction((ev) -> {
-            Instruction temp = instructionList.get(this.index - 1);
-            instructionList.set(this.index - 1, instruction);
-            instructionList.set(this.index, temp);
-            //this wont work as the instructionList is not updated nor the index
+            container.moveUp(this);
         });
 
-        if (level == 0 && instructionList.size() != 1) {
+        if (level == 0 && this.index > 0) {
+            System.out.println("Adding move up button for instruction " + this.instruction.getInstructionText() + " at index " + this.index);
             fields.getChildren().add(moveUpRootB);
         }
 
@@ -154,25 +98,47 @@ public class InstructionLI extends VBox {
                 fields
         );
 
-        setChildIfExists(instruction, origin, instructionList);
+        setChildIfExists(container);
 
-        instruction.addOnChange(() -> {
-            instructionName.setText(instruction.getInstructionText());
-            instructionDuration.getValueFactory().setValue(instruction.getDuration());
-            instructionDifficulty.getValueFactory().setValue(instruction.getDifficulty());
+        this.instruction.addOnChange(() -> {
+            instructionName.setText(this.instruction.getInstructionText());
+            instructionDuration.getValueFactory().setValue(this.instruction.getDuration());
+            instructionDifficulty.getValueFactory().setValue(this.instruction.getDifficulty());
         });
+
+        if (this.child != null) {
+            Button moveDownB = new Button("↓");
+            moveDownB.styleProperty().setValue("-fx-background-color: #ff0000;");
+            moveDownB.setOnAction((ev) -> {
+
+            });
+
+            fields.getChildren().addAll(moveDownB, new Label(this.instruction.getId() + ""));
+        }
     }
 
 
-    private void setChildIfExists(Instruction instruction, Navigable origin, List<Instruction> instructionList) {
+    private void setChildIfExists(LIitemContainer container) {
         if (this.getChildren().removeIf(node -> node instanceof InstructionLI)) {
             this.child = null;
         }
 
-        if (instruction.getSharperInstruction() != null) {
-            InstructionLI child = new InstructionLI(instruction.getSharperInstruction(), this, this.index, origin, instructionList);
+        if (this.instruction.getSharperInstruction() != null) {
+            InstructionLI child = new InstructionLI(this.instruction.getSharperInstruction(), this, container);
             this.child = child;
             getChildren().add(child);
         }
+    }
+
+    public InstructionLI rebuit(LIitemContainer container) {
+        return new InstructionLI(this.instruction, parent, container);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof InstructionLI li) {
+            return li.instruction.equals(this.instruction) && li.level == this.level;
+        }
+        return false;
     }
 }

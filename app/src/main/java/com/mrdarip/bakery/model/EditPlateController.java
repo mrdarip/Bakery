@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.model;
 
-import com.mrdarip.bakery.components.InstructionLI;
+import com.mrdarip.bakery.components.LIitemContainer;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
@@ -69,7 +69,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     private VBox scrollVBox;
 
     @FXML
-    private VBox instructionsVBox;
+    private LIitemContainer instructionsVBox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -272,7 +272,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         }
         plateInstructions.add(instruction);
 
-        instructionsVBox.getChildren().addLast(new InstructionLI(instruction, null, instructionsVBox.getChildren().size(), this, plateInstructions));
+        instructionsVBox.addNewInstruction(instruction);
     }
 
     @Override
