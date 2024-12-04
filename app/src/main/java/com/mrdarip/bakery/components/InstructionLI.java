@@ -17,7 +17,7 @@ public class InstructionLI extends VBox {
 
     int level;
     int index;
-    Instruction instruction;
+    public Instruction instruction;
     InstructionLI parent;
     InstructionLI child;
 

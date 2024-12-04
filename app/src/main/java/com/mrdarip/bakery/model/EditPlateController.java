@@ -221,13 +221,13 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        for (int i = plateInstructions.size() - 1; i >= 0; i--) {
-            plateInstructions.set(i, saveInstructionBranch(plateInstructions.get(i)));
+        for (int i = instructionsVBox.instructionLIs.size() - 1; i >= 0; i--) {
+            plateInstructions.set(i, saveInstructionBranch(instructionsVBox.instructionLIs.get(i).instruction));
         }
 
         this.plateContext = plateDao.upsert(plateContext);
 
-        plateInstructionCRDAO.bind(plateContext, plateInstructions);
+        plateInstructionCRDAO.bind(plateContext, plateInstructions, false);
 
         if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
             plateDependantNavigable.setPlateRequiredPlate(this.plateContext);

@@ -16,7 +16,7 @@ public abstract class PlateInstructionCRDAO {
 
     public abstract void negate(Plate plate);
 
-    public abstract void bind(Plate plate, List<Instruction> instructions);
+    public abstract void bind(Plate plate, List<Instruction> instructions, boolean reverse);
 
     public abstract void overwrite(Plate plate, Instruction instruction, int position);
 

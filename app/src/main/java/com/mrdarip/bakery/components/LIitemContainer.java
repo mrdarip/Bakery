@@ -8,7 +8,7 @@ import java.util.List;
 
 public class LIitemContainer extends VBox {
 
-    List<InstructionLI> instructionLIs = new ArrayList<>();
+    public List<InstructionLI> instructionLIs = new ArrayList<>();
 
     public void addNewInstruction(Instruction i) {
         instructionLIs.addFirst(new InstructionLI(i, null, this));

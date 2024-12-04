@@ -101,10 +101,12 @@ public class MariaDBPlateInstructionCRDAO extends PlateInstructionCRDAO {
     }
 
     @Override
-    public void bind(Plate plate, List<Instruction> instructions) {
+    public void bind(Plate plate, List<Instruction> instructions, boolean reverse) {
         removeAll(plate);
 
-        instructions = instructions.reversed();
+        if (reverse) {
+            instructions = instructions.reversed();
+        }
 
         for (int i = 0; i < instructions.size(); i++) {
             bind(plate, instructions.get(i), 1);
