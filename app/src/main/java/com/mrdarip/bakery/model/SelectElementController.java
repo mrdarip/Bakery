@@ -141,7 +141,8 @@ public class SelectElementController implements Initializable, PlateInstructionD
 
         ElementsListVBox.getChildren().add(
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Instruction", ev -> {
-                    NavController.navigateTo("/com/mrdarip/bakery/view/EditInstruction.fxml", Instruction.getEmptyInstruction(), this);
+                    instructionContext.setSharperInstruction(Instruction.getEmptyInstruction());
+                    origin.rebuildUI();
                     endSelection();
                 })
         );
