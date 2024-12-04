@@ -109,6 +109,8 @@ public class Plate {
         width.addListener(listener);
         height.addListener(listener);
 
+        listener.changed(null, null, null);
+
         return preview;
     }
 
