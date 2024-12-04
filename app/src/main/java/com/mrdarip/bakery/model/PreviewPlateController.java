@@ -84,4 +84,9 @@ public class PreviewPlateController implements Initializable, PlateDependantNavi
     public void rebuildUI() {
 
     }
+
+    @Override
+    public void close() {
+        scene.close();
+    }
 }

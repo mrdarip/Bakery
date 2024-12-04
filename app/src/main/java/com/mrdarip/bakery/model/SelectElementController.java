@@ -126,6 +126,11 @@ public class SelectElementController implements Initializable, PlateInstructionD
 
     }
 
+    @Override
+    public void close() {
+        stage.close();
+    }
+
     private void endSelection() {
         stage.close();
     }

@@ -113,4 +113,9 @@ public class MainScreenController implements Initializable, Navigable {
     public void rebuildUI() {
 
     }
+
+    @Override
+    public void close() {
+        stage.close();
+    }
 }

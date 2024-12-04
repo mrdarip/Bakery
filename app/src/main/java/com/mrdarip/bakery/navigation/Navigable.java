@@ -13,4 +13,6 @@ public interface Navigable {
 
     void rebuildUI();
 
+    void close();
+
 }

@@ -2,6 +2,7 @@ package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.navigation.Navigable;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -78,6 +79,16 @@ public class LIitemContainer extends VBox {
                 }
                 possibleParent = possibleParent.getSharperInstruction();
                 level++;
+
+                if (level > 1000000) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Infinite loop detected");
+                    alert.setContentText("An infinite loop was detected in the instructions. Please check the instructions and try again.");
+                    alert.showAndWait();
+                    this.origin.close();
+                    break;
+                }
             } while (possibleParent != null && !possibleParent.isParentOf(mvI));
         }
         rebuild();

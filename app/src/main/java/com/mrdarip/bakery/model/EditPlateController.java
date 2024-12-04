@@ -219,6 +219,11 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         fillPlateInfo();
     }
 
+    @Override
+    public void close() {
+        stage.close();
+    }
+
     public void OnSave(ActionEvent actionEvent) {
         for (int i = instructionsVBox.instructions.size() - 1; i >= 0; i--) {
             plateInstructions.set(i, saveInstructionBranch(instructionsVBox.instructions.get(i)));

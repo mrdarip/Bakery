@@ -71,4 +71,9 @@ public class EditInstructionController implements Initializable, InstructionDepe
     public void rebuildUI() {
 
     }
+
+    @Override
+    public void close() {
+        stage.close();
+    }
 }
