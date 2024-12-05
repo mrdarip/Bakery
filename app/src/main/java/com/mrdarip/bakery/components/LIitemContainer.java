@@ -63,21 +63,37 @@ public class LIitemContainer extends VBox {
     }
 
     public void moveDownInTree(Instruction mvI) {
+        List<Instruction> seenInstructions = new ArrayList<>();
+
         Instruction mvC = mvI.getSharperInstruction();
         Instruction mvCC = mvC.getSharperInstruction();
         mvC.setSharperInstruction(mvI);
         mvI.setSharperInstruction(mvCC);
 
+        if (instructions.contains(mvI)) {
+            instructions.replaceAll(instruction -> {
+                //replace mvI with mvC
+                if (instruction.equals(mvI)) {
+                    return mvC;
+                } else {
+                    return instruction;
+                }
+            });
+        }
 
         for (Instruction branch : instructions) {
-            Instruction possibleParent = branch;
+            Instruction branchInstruction = branch;
             int level = 0;
 
             do {
-                if (possibleParent.isParentOf(mvI)) {
-                    possibleParent.setSharperInstruction(mvC);
+                if (branchInstruction.isParentOf(mvI) && !seenInstructions.contains(branchInstruction)) {
+                    branchInstruction.setSharperInstruction(mvC);
                 }
-                possibleParent = possibleParent.getSharperInstruction();
+
+                seenInstructions.add(branchInstruction);
+
+
+                branchInstruction = branchInstruction.getSharperInstruction();
                 level++;
 
                 if (level > 1000000) {
@@ -89,7 +105,7 @@ public class LIitemContainer extends VBox {
                     this.origin.close();
                     break;
                 }
-            } while (possibleParent != null && !possibleParent.isParentOf(mvI));
+            } while (branchInstruction != null && !branchInstruction.isParentOf(mvI));
         }
         rebuild();
     }
