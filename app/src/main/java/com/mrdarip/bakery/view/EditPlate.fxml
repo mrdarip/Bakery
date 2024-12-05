@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.mrdarip.bakery.components.LIitemContainer?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -58,7 +57,7 @@
                                 <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                         mnemonicParsing="false" onAction="#AddInstructionToPlate"
                                         text="Add Instruction"/>
-                                <com.mrdarip.bakery.components.LIitemContainer fx:id="instructionsVBox" spacing="8.0"/>
+                                <VBox fx:id="instructionsVBox" spacing="8.0"/>
                             </children>
                             <padding>
                                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>

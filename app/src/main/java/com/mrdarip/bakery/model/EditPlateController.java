@@ -1,6 +1,6 @@
 package com.mrdarip.bakery.model;
 
-import com.mrdarip.bakery.components.LIitemContainer;
+import com.mrdarip.bakery.components.InstructionLI;
 import com.mrdarip.bakery.data.DAO.InstructionDao;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
@@ -35,13 +35,14 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 
 public class EditPlateController implements Initializable, PlateInstructionDependantNavigable {
     private final PlateInstructionCRDAO plateInstructionCRDAO = new MariaDBPlateInstructionCRDAO();
     private final InstructionDao instructionDao = new MariaDBInstructionDAO();
     private final PlateDao plateDao = new MariaDBPlateDAO();
-    private final List<Instruction> plateInstructions = new ArrayList<>();
+    private List<Instruction> plateInstructions = new ArrayList<>();
     private Plate plateContext;
     private Navigable origin;
     private Stage stage;
@@ -66,7 +67,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     private VBox scrollVBox;
 
     @FXML
-    private LIitemContainer instructionsVBox;
+    private VBox instructionsVBox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -76,8 +77,6 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                 plateContext.setName(newValue);
             }
         });
-
-        instructionsVBox.setOrigin(this);
     }
 
     @FXML
@@ -225,12 +224,9 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     public void OnSave(ActionEvent actionEvent) {
-        for (int i = instructionsVBox.instructions.size() - 1; i >= 0; i--) {
-            plateInstructions.set(
-                    i,
-                    instructionDao.upsert(instructionsVBox.instructions.get(i))
-            );
-        }
+        plateInstructions = plateInstructions.stream()
+                .map(instructionDao::upsert)
+                .collect(Collectors.toList());
 
         this.plateContext = plateDao.upsert(plateContext);
 
@@ -270,7 +266,14 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         }
         plateInstructions.add(instruction);
 
-        instructionsVBox.addNewInstruction(instruction);
+        instructionsVBox.getChildren().add(
+                new InstructionLI(instruction,
+                        (ev) -> {
+
+                        },
+                        (ev) -> {
+
+                        }));
     }
 
     @Override
