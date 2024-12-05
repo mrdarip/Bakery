@@ -2,7 +2,6 @@ package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
 import com.mrdarip.bakery.navigation.Navigable;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class LIitemContainer extends VBox {
     private Navigable origin;
 
     public void addNewInstruction(Instruction i) {
-        instructions.addFirst(searchInTreeFor(i));
+        instructions.addFirst(searchDuplicate(i));
         rebuild();
     }
 
@@ -26,18 +25,12 @@ public class LIitemContainer extends VBox {
         this.origin = origin;
     }
 
-    public Instruction searchInTreeFor(Instruction i) {
+    public Instruction searchDuplicate(Instruction i) {
         for (Instruction branch : instructions) {
-            Instruction item = branch;
-            do {
-                if (item.equals(i)) {
-                    System.out.println("Instruction found in tree");
-                    return item;
-                }
-                item = item.getSharperInstruction();
-            } while (item != null);
+            if (branch.equals(i)) {
+                return branch;
+            }
         }
-        System.out.println("Instruction not found in tree");
         return i;
     }
 
@@ -60,37 +53,5 @@ public class LIitemContainer extends VBox {
 
     public int positionOf(InstructionLI instructionLI) {
         return instructions.indexOf(instructionLI);
-    }
-
-    public void moveDownInTree(Instruction mvI) {
-        Instruction mvC = mvI.getSharperInstruction();
-        Instruction mvCC = mvC.getSharperInstruction();
-        mvC.setSharperInstruction(mvI);
-        mvI.setSharperInstruction(mvCC);
-
-
-        for (Instruction branch : instructions) {
-            Instruction possibleParent = branch;
-            int level = 0;
-
-            do {
-                if (possibleParent.isParentOf(mvI)) {
-                    possibleParent.setSharperInstruction(mvC);
-                }
-                possibleParent = possibleParent.getSharperInstruction();
-                level++;
-
-                if (level > 1000000) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Infinite loop detected");
-                    alert.setContentText("An infinite loop was detected in the instructions. Please check the instructions and try again.");
-                    alert.showAndWait();
-                    this.origin.close();
-                    break;
-                }
-            } while (possibleParent != null && !possibleParent.isParentOf(mvI));
-        }
-        rebuild();
     }
 }

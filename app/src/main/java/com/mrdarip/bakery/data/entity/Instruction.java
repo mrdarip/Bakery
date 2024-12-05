@@ -5,15 +5,13 @@ import java.util.List;
 
 public class Instruction {
     private int idInstruction;
-    private Instruction sharperInstruction;
     private int difficulty;
     private int duration;
     private String instructionText;
     private final List<Runnable> OnChange;
 
-    public Instruction(int idInstruction, Instruction sharperInstruction, int difficulty, int duration, String instructionText) {
+    public Instruction(int idInstruction, int difficulty, int duration, String instructionText) {
         this.idInstruction = idInstruction;
-        this.sharperInstruction = sharperInstruction;
         this.difficulty = difficulty;
         this.duration = duration;
         this.instructionText = instructionText;
@@ -23,15 +21,11 @@ public class Instruction {
     public static int created = 0;
     public static Instruction getEmptyInstruction() {
         created++;
-        return new Instruction(-created, null, 0, 0, "New Instruction");
+        return new Instruction(-created, 0, 0, "New Instruction");
     }
 
     public String getInstructionText() {
         return instructionText;
-    }
-
-    public Instruction getSharperInstruction() {
-        return sharperInstruction;
     }
 
     public int getDuration() {
@@ -40,10 +34,6 @@ public class Instruction {
 
     public int getDifficulty() {
         return difficulty;
-    }
-
-    public boolean hasSharperInstruction() {
-        return this.sharperInstruction != null;
     }
 
     public int getId() {
@@ -75,11 +65,6 @@ public class Instruction {
         return "Instruction: " + instructionText + " with duration: " + duration + " and difficulty: " + difficulty;
     }
 
-    public void setSharperInstruction(Instruction instruction) {
-        this.sharperInstruction = instruction;
-        this.executeOnChange();
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Instruction instruction) {
@@ -95,10 +80,4 @@ public class Instruction {
     private void executeOnChange() {
         this.OnChange.forEach(Runnable::run);
     }
-
-    public boolean isParentOf(Instruction instruction) {
-        return this.hasSharperInstruction() && this.sharperInstruction.equals(instruction);
-    }
-
-
 }

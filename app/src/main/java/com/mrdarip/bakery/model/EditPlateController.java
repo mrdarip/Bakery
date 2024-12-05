@@ -226,7 +226,10 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
     public void OnSave(ActionEvent actionEvent) {
         for (int i = instructionsVBox.instructions.size() - 1; i >= 0; i--) {
-            plateInstructions.set(i, saveInstructionBranch(instructionsVBox.instructions.get(i)));
+            plateInstructions.set(
+                    i,
+                    instructionDao.upsert(instructionsVBox.instructions.get(i))
+            );
         }
 
         this.plateContext = plateDao.upsert(plateContext);
@@ -238,15 +241,6 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         }
 
         this.stage.close();
-    }
-
-    private Instruction saveInstructionBranch(Instruction instruction) {
-        if (instruction.hasSharperInstruction()) {
-            instruction.setSharperInstruction(
-                    saveInstructionBranch(instruction.getSharperInstruction())
-            );
-        }
-        return instructionDao.upsert(instruction);
     }
 
     public void OnExit(ActionEvent actionEvent) {

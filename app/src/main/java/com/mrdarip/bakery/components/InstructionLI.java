@@ -104,8 +104,6 @@ public class InstructionLI extends VBox {
                 fields
         );
 
-        setChildIfExists(container);
-
         this.instruction.addOnChange(() -> {
             instructionName.setText(this.instruction.getInstructionText());
             instructionDuration.getValueFactory().setValue(this.instruction.getDuration());
@@ -117,24 +115,10 @@ public class InstructionLI extends VBox {
             Button moveDownB = new Button("↓");
             moveDownB.styleProperty().setValue("-fx-background-color: #ff0000;");
             moveDownB.setOnAction((ev) -> {
-                System.out.println("Moving down " + this.instruction.getInstructionText() + " hasCHild " + this.instruction.hasSharperInstruction());
-                container.moveDownInTree(this.instruction);
+
             });
 
             fields.getChildren().addAll(moveDownB, new Label(this.instruction.getId() + ""));
-        }
-    }
-
-
-    private void setChildIfExists(LIitemContainer container) {
-        if (this.getChildren().removeIf(node -> node instanceof InstructionLI)) {
-            this.child = null;
-        }
-
-        if (this.instruction.getSharperInstruction() != null) {
-            InstructionLI child = new InstructionLI(container.searchInTreeFor(this.instruction.getSharperInstruction()), this, container);
-            this.child = child;
-            getChildren().add(child);
         }
     }
 

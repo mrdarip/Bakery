@@ -16,6 +16,7 @@ import com.mrdarip.bakery.data.entity.Plate;
 import com.mrdarip.bakery.navigation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -139,9 +140,11 @@ public class SelectElementController implements Initializable, PlateInstructionD
     public void setInstructionContext(Instruction instructionContext) {
         this.instructionContext = instructionContext;
 
-        ElementsListVBox.getChildren().add(
+        ElementsListVBox.getChildren().addAll(
+                new Label("TODO: Implement this"), //TODO: delete setInstructionContext if not accessible from the UI
+
                 new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Instruction", ev -> {
-                    instructionContext.setSharperInstruction(Instruction.getEmptyInstruction());
+                    System.out.println("No use case for this");
                     origin.rebuildUI();
                     endSelection();
                 })
@@ -152,7 +155,7 @@ public class SelectElementController implements Initializable, PlateInstructionD
                     new Card(
                             instruction.getInstructionText(),
                             ev -> {
-                                instructionContext.setSharperInstruction(instruction);
+                                System.out.println("No use case for this!!");
                                 origin.rebuildUI();
                                 endSelection();
                             }

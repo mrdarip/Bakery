@@ -15,7 +15,6 @@ CREATE TABLE `Plate`
 CREATE TABLE `Instruction`
 (
     `idInstruction`        INTEGER AUTO_INCREMENT,
-    `idSharperInstruction` INTEGER,
     `difficulty`           INTEGER CHECK (`difficulty` BETWEEN 1 AND 5),
     `duration`             INTEGER,
     `instructionText`      TEXT,
