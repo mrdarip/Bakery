@@ -52,7 +52,15 @@ public class MariaDBInstructionDAO extends InstructionDao {
 
     @Override
     public void deleteById(int id) {
-
+        System.out.println("deleting instruction with id: " + id);
+        String query = "DELETE FROM Instruction WHERE idInstruction = ?";
+        try {
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("SQL exception when trying to delete instruction: " + e.getMessage());
+        }
     }
 
     @Override

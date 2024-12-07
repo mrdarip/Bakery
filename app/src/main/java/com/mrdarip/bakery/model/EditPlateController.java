@@ -16,10 +16,7 @@ import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -266,10 +263,22 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
         }
         plateInstructions.add(instruction);
 
+        Instruction finalInstruction1 = instruction;
         instructionsVBox.getChildren().add(
                 new InstructionLI(instruction,
-                        (ev) -> {
+                        (onDeleteEv) -> {
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Delete instruction");
+                            alert.setHeaderText("Are you sure you want to delete this instruction?");
+                            alert.setContentText("This action cannot be undone.");
 
+                            alert.showAndWait()
+                                    .filter(response -> response == ButtonType.OK)
+                                    .ifPresent(response -> {
+                                        plateInstructions.removeIf(i -> i.equals(finalInstruction1));
+                                        instructionDao.delete(finalInstruction1);
+                                        instructionsVBox.getChildren().removeIf(node -> node instanceof InstructionLI && ((InstructionLI) node).instruction.equals(finalInstruction1));
+                                    });
                         },
                         (ev) -> {
 
