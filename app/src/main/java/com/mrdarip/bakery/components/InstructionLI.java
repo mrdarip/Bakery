@@ -11,13 +11,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.function.Consumer;
+
 public class InstructionLI extends VBox {
     public static final int CARD_HEIGHT = 75;
     private static final String CARD_STYLE = "-fx-background-color: gray;";
 
     public Instruction instruction;
 
-    public InstructionLI(Instruction instruction, EventHandler<ActionEvent> onDeleteClick, EventHandler<ActionEvent> onMoveDown) {
+    public InstructionLI(Instruction instruction, EventHandler<ActionEvent> onDeleteClick, Consumer<InstructionLI> onMoveUp) {
         super();
         this.instruction = instruction;
 
@@ -61,8 +63,10 @@ public class InstructionLI extends VBox {
         Button addSubInstructionButton = new Button("❌");
         addSubInstructionButton.setOnAction(onDeleteClick);
 
-        Button moveDownB = new Button("↓");
-        moveDownB.setOnAction(onMoveDown);
+        Button moveUpB = new Button("↑");
+        moveUpB.setOnAction(ev -> {
+            onMoveUp.accept(this);
+        });
 
         nameTitle.getChildren().addFirst(new Label("Name"));
         durationTitle.getChildren().addFirst(new Label("Duration"));
@@ -71,7 +75,7 @@ public class InstructionLI extends VBox {
         HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle,
                 new VBox(
                         addSubInstructionButton,
-                        moveDownB)
+                        moveUpB)
         );
 
         fields.setAlignment(Pos.BOTTOM_LEFT);

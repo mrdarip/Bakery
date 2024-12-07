@@ -227,7 +227,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
         this.plateContext = plateDao.upsert(plateContext);
 
-        plateInstructionCRDAO.bind(plateContext, plateInstructions, false);
+        plateInstructionCRDAO.bind(plateContext, plateInstructions, true);
 
         if (origin instanceof PlateDependantNavigable plateDependantNavigable) {
             plateDependantNavigable.setPlateRequiredPlate(this.plateContext);
@@ -274,14 +274,21 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
 
                             alert.showAndWait()
                                     .filter(response -> response == ButtonType.OK)
-                                    .ifPresent(response -> {
+                                    .ifPresent(responise -> {
                                         plateInstructions.removeIf(i -> i.equals(finalInstruction1));
                                         instructionDao.delete(finalInstruction1);
                                         instructionsVBox.getChildren().removeIf(node -> node instanceof InstructionLI && ((InstructionLI) node).instruction.equals(finalInstruction1));
                                     });
                         },
-                        (ev) -> {
+                        (instructionLI) -> {
+                            int liIndex = instructionsVBox.getChildren().indexOf(instructionLI);
+                            if (liIndex > 0) {
+                                instructionsVBox.getChildren().remove(liIndex);
+                                instructionsVBox.getChildren().add(liIndex - 1, instructionLI);
 
+                                plateInstructions.remove(liIndex);
+                                plateInstructions.add(liIndex - 1, finalInstruction1);
+                            }
                         }));
     }
 
