@@ -1,0 +1,50 @@
+/*
+FFdfd785
+FFebc275
+FFf39949
+FFff7831
+FFca5a2e
+FF963c3c
+FF3a2802
+FF202215
+as variables
+ */
+
+.root {
+    color100: #dfd785;
+    color200: #ebc275;
+    color300: #f39949;
+    color400: #ff7831;
+    color500: #ca5a2e;
+    color600: #963c3c;
+    color700: #3a2802;
+    color800: #202215;
+}
+
+.card {
+    -fx-background-color: color500;
+    -fx-background-radius: 10;
+
+    -fx-padding: 10;
+}
+
+
+.bg {
+    -fx-background-color: color800;
+    /*-fx-padding: 0;*/
+}
+
+#top {
+    /*border bottom*/
+    -fx-border-color: color700;
+    -fx-border-width: 0 0 1 0;
+
+
+}
+
+
+.fireBg {
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, color800 0%, color600 95%, color500 98%, color100 100%);
+
+}
+

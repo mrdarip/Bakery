@@ -63,7 +63,8 @@ public class Card extends StackPane {
 
         Pane card = new Pane();
         card.setPrefSize(CARD_WIDTH, CARD_HEIGHT);
-        card.setStyle("-fx-background-color: #c7BEFA;");
+        //set style class
+        card.getStyleClass().add("card");
 
         Label titleLbl = new Label(title);
         Label subtitleLbl = new Label(subtitle);

@@ -3,9 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mrdarip.bakery.model.MainScreenController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="366.0"
+            prefWidth="732.0" xmlns="http://javafx.com/javafx/23"
+            fx:controller="com.mrdarip.bakery.model.MainScreenController">
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="0.0" spacing="16.0" BorderPane.alignment="CENTER">
+      <HBox id="top" alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="0.0" spacing="16.0" styleClass="bg"
+            BorderPane.alignment="CENTER">
          <children>
             <HBox>
                <children>
@@ -23,11 +26,17 @@
          </padding></HBox>
    </top>
    <center>
-      <StackPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="bgStackPane" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" styleClass="fireBg"
+                 BorderPane.alignment="CENTER">
          <children>
-             <ScrollPane fx:id="flowPaneScroll" fitToWidth="true" hbarPolicy="NEVER" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0">
+            <ScrollPane fx:id="flowPaneScroll" cache="true" fitToWidth="true" hbarPolicy="NEVER" minHeight="0.0"
+                        minWidth="0.0" prefHeight="0.0" prefWidth="0.0"
+                        style="-fx-background: transparent; -fx-background-color: transparent;" styleClass="bg">
                  <content>
-                     <FlowPane fx:id="platesFlowPane" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="16.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" rowValignment="BOTTOM" vgap="16.0">
+                    <FlowPane fx:id="platesFlowPane" alignment="TOP_CENTER" columnHalignment="CENTER" hgap="16.0"
+                              maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+                              minWidth="0.0" rowValignment="BOTTOM" style="-fx-background-color: transparent;"
+                              vgap="16.0">
                      <padding>
                         <Insets bottom="10.0" left="16.0" right="16.0" top="10.0" />
                      </padding>

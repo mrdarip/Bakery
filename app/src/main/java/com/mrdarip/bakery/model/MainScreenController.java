@@ -16,6 +16,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -41,6 +42,8 @@ public class MainScreenController implements Initializable, Navigable {
     @FXML
     private ScrollPane flowPaneScroll;
     private Stage stage;
+    @FXML
+    private StackPane bgStackPane;
 
     @FXML
     void onOrderToggleChange(ActionEvent event) {
@@ -61,6 +64,12 @@ public class MainScreenController implements Initializable, Navigable {
         initializeOrderCombo();
         updatePlatesFlowPane();
         updateOrderToggleIcon();
+
+        flowPaneScroll.onScrollProperty().set(ev -> {
+            double v = flowPaneScroll.getVvalue();
+
+            bgStackPane.setStyle("-fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #202215 0%, #963c3c " + (95 - (v * 15.)) + "%, #ca5a2e " + (98 - (v * 3.)) + "%, #dfd785 100%);");
+        });
     }
 
     protected void initializeOrderCombo() {

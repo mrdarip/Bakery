@@ -79,6 +79,8 @@ public class NavController {
         Scene newScene = new Scene(root);
         Stage newStage = new Stage();
 
+        root.getStylesheets().add("/css/style.css");
+
         controller.setStage(newStage);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.setScene(newScene);
