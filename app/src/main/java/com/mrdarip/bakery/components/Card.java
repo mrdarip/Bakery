@@ -74,7 +74,6 @@ public class Card extends StackPane {
 
         HBox textBox = new HBox(titleLbl, subtitleLbl);
         textBox.setSpacing(8);
-        textBox.setPadding(new Insets(0, 0, 0, 5));
         textBox.setMaxSize(textBoxWidth, TextBoxHeight);
 
         HBox actionsBox = new HBox();
@@ -97,6 +96,7 @@ public class Card extends StackPane {
 
 
         VBox detailsBox = new VBox(textBox, actionsBox);
+        detailsBox.setPadding(new Insets(3, 7, 6, 8));
 
         VBox cardBox = new VBox(preview, detailsBox);
 

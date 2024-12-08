@@ -77,7 +77,7 @@ public class Plate {
         return new Card(
                 new Image(this.getPreviewURI()),
                 this.name,
-                "Valoration: " + this.valoration + "★",
+                this.valoration + "★",
                 "Edit",
                 "View",
                 ev -> {
