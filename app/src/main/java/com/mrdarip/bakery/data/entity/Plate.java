@@ -78,8 +78,8 @@ public class Plate {
                 new Image(this.getPreviewURI()),
                 this.name,
                 this.valoration + "★",
-                "Edit",
-                "View",
+                "✎",
+                "👁",
                 ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", this, null);
                 },
