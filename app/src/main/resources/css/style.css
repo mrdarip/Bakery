@@ -25,7 +25,8 @@ as variables
     -fx-background-color: color500;
     -fx-background-radius: 10;
 
-    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
+
 }
 
 

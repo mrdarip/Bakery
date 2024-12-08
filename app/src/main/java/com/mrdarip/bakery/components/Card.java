@@ -22,6 +22,8 @@ public class Card extends StackPane {
 
     public Card(ImageView icon, String title, String description, EventHandler<MouseEvent> eventHandler) {
         super();
+
+        getStyleClass().add("card");
         if (icon == null || title == null || description == null || eventHandler == null) {
             throw new IllegalArgumentException("Parameters cannot be null");
         }
@@ -59,12 +61,13 @@ public class Card extends StackPane {
         int previewHeight = CARD_HEIGHT - TextBoxHeight;
         int previewWidth = CARD_WIDTH;
 
+        getStyleClass().add("card");
+
         ImageView preview = getImageViewCovering(image, previewWidth, previewHeight);
 
         Pane card = new Pane();
         card.setPrefSize(CARD_WIDTH, CARD_HEIGHT);
-        //set style class
-        card.getStyleClass().add("card");
+
 
         Label titleLbl = new Label(title);
         Label subtitleLbl = new Label(subtitle);
