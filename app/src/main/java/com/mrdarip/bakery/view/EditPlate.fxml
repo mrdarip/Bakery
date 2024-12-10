@@ -35,9 +35,9 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                        <FlowPane hgap="8.0" prefHeight="200.0" prefWidth="200.0"
+                                                  GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                                             <children>
-                                                <Label text="Required:"/>
                                                 <Button fx:id="requiredPlateButton" mnemonicParsing="false"
                                                         text="Required Plate"/>
                                                 <Button mnemonicParsing="false" onAction="#OnClickEditRequirePlate"

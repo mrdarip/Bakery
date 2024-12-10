@@ -49,3 +49,22 @@ as variables
 
 }
 
+
+.button {
+    -fx-background-color: color100;
+    -fx-text-fill: color800;
+    -fx-background-radius: 10;
+}
+
+.button:hover {
+    -fx-background-color: color200;
+}
+
+.button:pressed {
+    -fx-background-color: color300;
+}
+
+.button:disabled {
+    -fx-background-color: color700;
+}
+
