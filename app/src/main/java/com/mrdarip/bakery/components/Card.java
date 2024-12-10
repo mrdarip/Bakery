@@ -10,10 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class Card extends StackPane {
     public static final int CARD_WIDTH = 200;
@@ -72,11 +69,8 @@ public class Card extends StackPane {
         Label titleLbl = new Label(title);
         Label subtitleLbl = new Label(subtitle);
 
-        HBox textBox = new HBox(titleLbl, subtitleLbl);
-        textBox.setSpacing(8);
-        textBox.setMaxSize(textBoxWidth, TextBoxHeight);
-
         HBox actionsBox = new HBox();
+        actionsBox.setAlignment(Pos.CENTER_RIGHT);
 
         Button viewBtn;
         if (primaryLabel != null) {
@@ -95,7 +89,14 @@ public class Card extends StackPane {
         }
 
 
-        VBox detailsBox = new VBox(textBox, actionsBox);
+        GridPane detailsBox = new GridPane(2, 2);
+        detailsBox.gridLinesVisibleProperty().setValue(true);
+        //each column is 50% of the width
+        detailsBox.getColumnConstraints().add(new ColumnConstraints(textBoxWidth / 2));
+
+        detailsBox.add(titleLbl, 0, 0, 2, 1);
+        detailsBox.add(subtitleLbl, 0, 1);
+        detailsBox.add(actionsBox, 1, 1);
         detailsBox.setPadding(new Insets(3, 7, 6, 8));
 
         VBox cardBox = new VBox(preview, detailsBox);

@@ -35,15 +35,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <FlowPane hgap="8.0" prefHeight="200.0" prefWidth="200.0"
-                                                  GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                                        <HBox spacing="8.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                                             <children>
                                                 <Button fx:id="requiredPlateButton" mnemonicParsing="false"
                                                         text="Required Plate"/>
                                                 <Button mnemonicParsing="false" onAction="#OnClickEditRequirePlate"
                                                         text="✎"/>
                                             </children>
-                                        </FlowPane>
+                                        </HBox>
                                         <TextField fx:id="plateNameTF"/>
                                         <Button mnemonicParsing="false" onAction="#DeleteThisPlate" text="🗑"
                                                 textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
