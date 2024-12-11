@@ -68,8 +68,15 @@ as variables
     -fx-background-color: color700;
 }
 
-.rTo {
+.rToggle {
     -fx-background-color: color100;
     -fx-text-fill: color800;
-    -fx-background-radius: 10;
+    -fx-background-radius: 0 10 10 0;
+}
+
+.combo-box {
+    -fx-background-color: color100;
+    -fx-text-fill: color800;
+    -fx-background-radius: 10 0 0 10;
+    -fx-border-width: 0;
 }

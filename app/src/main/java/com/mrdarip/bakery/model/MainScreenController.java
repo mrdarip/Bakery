@@ -68,7 +68,7 @@ public class MainScreenController implements Initializable, Navigable {
         flowPaneScroll.onScrollProperty().set(ev -> {
             double v = flowPaneScroll.getVvalue();
 
-            bgStackPane.setStyle("-fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #202215 0%, #963c3c " + (95 - (v * 15.)) + "%, #ca5a2e " + (98 - (v * 3.)) + "%, #dfd785 100%);");
+            bgStackPane.setStyle("-fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #202215 0%, #202215 " + (90 - (v * 45.)) + "%, #963c3c " + (95 - (v * 15.)) + "%, #ca5a2e " + (98 - (v * 3.)) + "%, #dfd785 100%);");
         });
     }
 
