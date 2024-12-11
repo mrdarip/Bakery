@@ -45,7 +45,7 @@ as variables
 
 
 .fireBg {
-    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, color800 0%, color600 95%, color500 98%, color100 100%);
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, color800 0%, color800 90%, color600 95%, color500 98%, color100 100%);
 
 }
 
@@ -68,3 +68,8 @@ as variables
     -fx-background-color: color700;
 }
 
+.rTo {
+    -fx-background-color: color100;
+    -fx-text-fill: color800;
+    -fx-background-radius: 10;
+}

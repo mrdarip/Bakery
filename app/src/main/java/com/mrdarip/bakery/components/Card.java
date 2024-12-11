@@ -71,6 +71,7 @@ public class Card extends StackPane {
 
         HBox actionsBox = new HBox();
         actionsBox.setAlignment(Pos.CENTER_RIGHT);
+        actionsBox.setSpacing(4);
 
         Button viewBtn;
         if (primaryLabel != null) {
@@ -90,9 +91,12 @@ public class Card extends StackPane {
 
 
         GridPane detailsBox = new GridPane(2, 2);
-        detailsBox.gridLinesVisibleProperty().setValue(true);
-        //each column is 50% of the width
-        detailsBox.getColumnConstraints().add(new ColumnConstraints(textBoxWidth / 2));
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHgrow(Priority.ALWAYS);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(Priority.ALWAYS);
+
+        detailsBox.getColumnConstraints().addAll(col1, col2);
 
         detailsBox.add(titleLbl, 0, 0, 2, 1);
         detailsBox.add(subtitleLbl, 0, 1);
