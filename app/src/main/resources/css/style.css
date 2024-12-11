@@ -16,6 +16,11 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
 }
 
+.accent {
+    -fx-background-color: color300;
+    -fx-background-radius: 10;
+}
+
 
 .bg {
     -fx-background-color: color800;
@@ -67,4 +72,25 @@
     -fx-padding: 8 16;
 
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12; /* Ajusta el ancho del ScrollBar si es necesario */
+    -fx-margin-right: 10; /* Añade un margen a la derecha */
+}
+
+.scroll-bar .track {
+    -fx-background-insets: 0; /* Elimina márgenes internos */
+}
+
+.scroll-bar .thumb {
+    -fx-background-insets: 0; /* Sin márgenes internos */
+    -fx-background-radius: 10; /* Elimina bordes redondeados */
+
+    -fx-background-color: color300; /* Color del thumb */
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-opacity: 0; /* Oculta los botones de incremento y decremento */
 }
