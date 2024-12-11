@@ -16,7 +16,10 @@ import com.mrdarip.bakery.navigation.PlateInstructionDependantNavigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -24,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
+import org.controlsfx.control.Rating;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +59,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     private TextField plateNameTF;
 
     @FXML
-    private Label starsLbl;
+    private Rating ratingStars;
 
     @FXML
     private BorderPane borderPane;
@@ -143,11 +147,17 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     private void fillPlateInfo() {
         //fill stars
         if (plateContext != null) {
-            starsLbl.setText("★".repeat(Math.max(0, plateContext.getValoration())));
+            ratingStars.setRating(plateContext.getValoration());
 
             //fill name
             plateNameTF.setText(plateContext.getName());
         }
+
+        ratingStars.ratingProperty().addListener((observable, oldValue, newValue) -> {
+            if (plateContext != null) {
+                plateContext.setValoration(newValue.intValue());
+            }
+        });
     }
 
     private void fillTable() {

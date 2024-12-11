@@ -19,7 +19,7 @@ public class Plate {
 
     private int id;
     private String name;
-    private final int valoration;
+    private int valoration;
     private Plate requiredPlate;
     private String previewURI;
 
@@ -221,5 +221,9 @@ public class Plate {
 
     public void setPreviewURI(String encodedString) {
         this.previewURI = encodedString;
+    }
+
+    public void setValoration(int i) {
+        this.valoration = i;
     }
 }

@@ -48,10 +48,6 @@
     -fx-background-color: color300;
 }
 
-.button:disabled {
-    -fx-background-color: color700;
-}
-
 .rToggle {
     -fx-background-color: color100;
     -fx-text-fill: color800;
@@ -69,7 +65,6 @@
     -fx-background-color: color500;
     -fx-background-radius: 8 32;
     -fx-padding: 8 16;
-
 
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
 }
