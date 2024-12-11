@@ -1,15 +1,3 @@
-/*
-FFdfd785
-FFebc275
-FFf39949
-FFff7831
-FFca5a2e
-FF963c3c
-FF3a2802
-FF202215
-as variables
- */
-
 .root {
     color100: #dfd785;
     color200: #ebc275;
@@ -26,7 +14,6 @@ as variables
     -fx-background-radius: 10;
 
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
-
 }
 
 
@@ -39,14 +26,11 @@ as variables
     /*border bottom*/
     -fx-border-color: color700;
     -fx-border-width: 0 0 1 0;
-
-
 }
 
 
 .fireBg {
     -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, color800 0%, color800 90%, color600 95%, color500 98%, color100 100%);
-
 }
 
 
@@ -79,4 +63,13 @@ as variables
     -fx-text-fill: color800;
     -fx-background-radius: 10 0 0 10;
     -fx-border-width: 0;
+}
+
+.instruction-li {
+    -fx-background-color: color500;
+    -fx-background-radius: 8 32;
+    -fx-padding: 8 16;
+
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
 }

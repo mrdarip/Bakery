@@ -14,8 +14,6 @@ import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 public class InstructionLI extends VBox {
-    public static final int CARD_HEIGHT = 75;
-    private static final String CARD_STYLE = "-fx-background-color: gray;";
 
     public Instruction instruction;
 
@@ -24,11 +22,7 @@ public class InstructionLI extends VBox {
         this.instruction = instruction;
 
         setPrefHeight(VBox.USE_COMPUTED_SIZE);
-        setStyle(CARD_STYLE);
-
-        //from 128 to 255
-        //styleProperty().setValue("-fx-background-color: #" + Color.gray(1 - ((level + 2) * 0.1)).toString().substring(2, 8) + ";");
-
+        getStyleClass().add("instruction-li");
 
         TextField instructionName = new TextField(this.instruction.getInstructionText());
         instructionName.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -38,9 +32,11 @@ public class InstructionLI extends VBox {
                 this.instruction.setInstructionText(instructionName.getText());
             }
         });
-        VBox nameTitle = new VBox(instructionName);
+        VBox nameTitle = new VBox(new Label("Name"), instructionName);
 
         Spinner<Integer> instructionDuration = new Spinner<>(0, Integer.MAX_VALUE, this.instruction.getDuration());
+        instructionDuration.prefWidth(Spinner.USE_COMPUTED_SIZE);
+        instructionDuration.minWidth(Spinner.USE_COMPUTED_SIZE);
         instructionDuration.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 instructionDuration.getValueFactory().setValue(this.instruction.getDuration());
@@ -48,7 +44,7 @@ public class InstructionLI extends VBox {
                 this.instruction.setDuration(instructionDuration.getValue());
             }
         });
-        VBox durationTitle = new VBox(instructionDuration);
+        VBox durationTitle = new VBox(new Label("Duration"), instructionDuration);
 
         Spinner<Integer> instructionDifficulty = new Spinner<>(0, 3, this.instruction.getDifficulty());
         instructionDifficulty.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -58,7 +54,14 @@ public class InstructionLI extends VBox {
                 this.instruction.setDifficulty(instructionDifficulty.getValue());
             }
         });
-        VBox difficultyTitle = new VBox(instructionDifficulty);
+        VBox difficultyTitle = new VBox(new Label("Difficulty"), instructionDifficulty);
+
+        instructionDuration.setPrefWidth(80); // Ancho preferido explícito
+        instructionDuration.setMinWidth(50);  // Ancho mínimo explícito
+        instructionDifficulty.setPrefWidth(60);
+        instructionDifficulty.setMinWidth(50);
+        instructionName.setPrefWidth(500); // Ancho preferido automático
+
 
         Button deleteInstructionButton = new Button("\uD83D\uDDD1");
         deleteInstructionButton.setOnAction(onDeleteClick);
@@ -73,20 +76,20 @@ public class InstructionLI extends VBox {
             onMoveUp.accept(this);
         });
 
-        nameTitle.getChildren().addFirst(new Label("Name"));
-        durationTitle.getChildren().addFirst(new Label("Duration"));
-        difficultyTitle.getChildren().addFirst(new Label("Difficulty"));
+        HBox deleteUnassign = new HBox(deleteInstructionButton, unAssignInstructionButton);
+        deleteUnassign.setAlignment(Pos.CENTER_RIGHT);
+        deleteUnassign.setSpacing(4);
 
-        HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle,
-                new VBox(
-                        deleteInstructionButton,
-                        moveUpB,
-                        unAssignInstructionButton)
-        );
+        HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle);
+        fields.setSpacing(4);
 
-        fields.setAlignment(Pos.BOTTOM_LEFT);
+        HBox HSegments = new HBox(moveUpB, fields, deleteUnassign);
+
+        HSegments.setAlignment(Pos.CENTER_LEFT);
+        HSegments.setSpacing(16);
+
         getChildren().add(
-                fields
+                HSegments
         );
 
         this.instruction.addOnChange(() -> {
