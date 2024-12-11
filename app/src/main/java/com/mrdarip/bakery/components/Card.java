@@ -69,6 +69,10 @@ public class Card extends StackPane {
         Label titleLbl = new Label(title);
         Label subtitleLbl = new Label(subtitle);
 
+        titleLbl.setMaxWidth(textBoxWidth - 7 - 8);
+        titleLbl.setEllipsisString("..."); // Recorta el texto con "..."
+        titleLbl.setWrapText(false); // Evita el salto de línea
+
         HBox actionsBox = new HBox();
         actionsBox.setAlignment(Pos.CENTER_RIGHT);
         actionsBox.setSpacing(4);
