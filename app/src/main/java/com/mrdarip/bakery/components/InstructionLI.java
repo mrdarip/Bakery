@@ -19,7 +19,7 @@ public class InstructionLI extends VBox {
 
     public Instruction instruction;
 
-    public InstructionLI(Instruction instruction, EventHandler<ActionEvent> onDeleteClick, Consumer<InstructionLI> onMoveUp) {
+    public InstructionLI(Instruction instruction, EventHandler<ActionEvent> onDeleteClick, Consumer<InstructionLI> onUnassignClick, Consumer<InstructionLI> onMoveUp) {
         super();
         this.instruction = instruction;
 
@@ -60,8 +60,13 @@ public class InstructionLI extends VBox {
         });
         VBox difficultyTitle = new VBox(instructionDifficulty);
 
-        Button addSubInstructionButton = new Button("❌");
-        addSubInstructionButton.setOnAction(onDeleteClick);
+        Button deleteInstructionButton = new Button("\uD83D\uDDD1");
+        deleteInstructionButton.setOnAction(onDeleteClick);
+
+        Button unAssignInstructionButton = new Button("❌");
+        unAssignInstructionButton.setOnAction(ev -> {
+            onUnassignClick.accept(this);
+        });
 
         Button moveUpB = new Button("↑");
         moveUpB.setOnAction(ev -> {
@@ -74,8 +79,9 @@ public class InstructionLI extends VBox {
 
         HBox fields = new HBox(nameTitle, durationTitle, difficultyTitle,
                 new VBox(
-                        addSubInstructionButton,
-                        moveUpB)
+                        deleteInstructionButton,
+                        moveUpB,
+                        unAssignInstructionButton)
         );
 
         fields.setAlignment(Pos.BOTTOM_LEFT);

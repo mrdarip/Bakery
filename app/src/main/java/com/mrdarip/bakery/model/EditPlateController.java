@@ -280,6 +280,14 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                                         instructionsVBox.getChildren().removeIf(node -> node instanceof InstructionLI && ((InstructionLI) node).instruction.equals(finalInstruction1));
                                     });
                         },
+                        (onUnnasign) -> {
+                            int liIndex = instructionsVBox.getChildren().indexOf(onUnnasign);
+                            if (liIndex > 0) {
+                                instructionsVBox.getChildren().remove(liIndex);
+
+                                plateInstructions.remove(liIndex);
+                            }
+                        },
                         (instructionLI) -> {
                             int liIndex = instructionsVBox.getChildren().indexOf(instructionLI);
                             if (liIndex > 0) {
