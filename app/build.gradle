@@ -12,7 +12,6 @@ plugins {
 }
 
 repositories {
-	jcenter()
 	google()
 	mavenCentral()
 }
@@ -25,7 +24,7 @@ javafx {
 dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
     //commons io
-    implementation 'commons-io:commons-io:2.6'
+    implementation 'commons-io:commons-io:2.14.0'
     implementation("org.controlsfx:controlsfx:11.2.1")
 
 }
