@@ -94,3 +94,9 @@
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-opacity: 0; /* Oculta los botones de incremento y decremento */
 }
+
+
+.bg-invisible {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
