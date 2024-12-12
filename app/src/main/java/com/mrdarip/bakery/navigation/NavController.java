@@ -80,6 +80,7 @@ public class NavController {
         Stage newStage = new Stage();
 
         root.getStylesheets().add("/css/style.css");
+        newStage.getIcons().add(controller.getScreenIcon());
 
         controller.setStage(newStage);
         newStage.initModality(Modality.WINDOW_MODAL);

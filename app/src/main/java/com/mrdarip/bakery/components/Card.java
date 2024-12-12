@@ -15,7 +15,6 @@ import javafx.scene.layout.*;
 public class Card extends StackPane {
     public static final int CARD_WIDTH = 200;
     public static final int CARD_HEIGHT = 150;
-    private static final String CARD_STYLE = "-fx-background-color: gray;";
 
     public Card(ImageView icon, String title, String description, EventHandler<MouseEvent> eventHandler) {
         super();
@@ -40,7 +39,7 @@ public class Card extends StackPane {
 
         setPrefWidth(CARD_WIDTH);
         setPrefHeight(CARD_HEIGHT);
-        setStyle(CARD_STYLE);
+        getStyleClass().add("accent");
         addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         getChildren().add(cardContent);
     }
@@ -70,8 +69,8 @@ public class Card extends StackPane {
         Label subtitleLbl = new Label(subtitle);
 
         titleLbl.setMaxWidth(textBoxWidth - 7 - 8);
-        titleLbl.setEllipsisString("..."); // Recorta el texto con "..."
-        titleLbl.setWrapText(false); // Evita el salto de línea
+        titleLbl.setEllipsisString("...");
+        titleLbl.setWrapText(false);
 
         HBox actionsBox = new HBox();
         actionsBox.setAlignment(Pos.CENTER_RIGHT);
@@ -146,8 +145,13 @@ public class Card extends StackPane {
 
     //Text card
     public Card(String content, EventHandler<MouseEvent> onClick) {
-        setPrefSize(CARD_WIDTH, CARD_HEIGHT);
+        setPrefSize(CARD_WIDTH, StackPane.USE_COMPUTED_SIZE);
+        setPadding(new Insets(8));
         setOnMouseClicked(onClick);
-        getChildren().add(new Label(content));
+        Label label = new Label(content);
+        label.setWrapText(true);
+        label.setMaxWidth(CARD_WIDTH - 16);
+        getChildren().add(label);
+        getStyleClass().add("card");
     }
 }

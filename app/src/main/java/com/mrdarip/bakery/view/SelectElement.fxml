@@ -7,10 +7,12 @@
             prefHeight="500.0" prefWidth="300.0" styleClass="fireBg"
             xmlns="http://javafx.com/javafx/23" fx:controller="com.mrdarip.bakery.model.SelectElementController">
     <center>
-        <ScrollPane style="-fx-background: transparent; -fx-background-color: transparent;"
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background: transparent; -fx-background-color: transparent;"
                     BorderPane.alignment="CENTER">
             <content>
-                <VBox fx:id="ElementsListVBox" style="-fx-background-color: transparent; -fx-background: transparent;"/>
+                <VBox fx:id="ElementsListVBox" alignment="TOP_CENTER" fillWidth="false" spacing="8.0"
+                      style="-fx-background-color: transparent; -fx-background: transparent;"/>
             </content>
         </ScrollPane>
     </center>

@@ -99,6 +99,11 @@ public class MainScreenController implements Initializable, Navigable {
     }
 
     @Override
+    public Image getScreenIcon() {
+        return new Image("/img/icon/bread.png");
+    }
+
+    @Override
     public int getMinWidth() {
         return 400;
     }

@@ -11,6 +11,7 @@ import com.mrdarip.bakery.navigation.Navigable;
 import com.mrdarip.bakery.navigation.PlateDependantNavigable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -59,6 +60,14 @@ public class PreviewPlateController implements Initializable, PlateDependantNavi
     @Override
     public String getScreenTitle() {
         return plateContext.getName() + " recipe preview";
+    }
+
+    @Override
+    public Image getScreenIcon() {
+        if (plateContext != null) {
+            return new Image(plateContext.getPreviewURI());
+        }
+        return new Image("/img/icon/preview.png");
     }
 
     @Override

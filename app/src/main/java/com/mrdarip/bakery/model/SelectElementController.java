@@ -103,6 +103,14 @@ public class SelectElementController implements Initializable, PlateInstructionD
     }
 
     @Override
+    public Image getScreenIcon() {
+        if (plateContext != null) {
+            return new Image(plateContext.getPreviewURI());
+        }
+        return new Image("/img/icon/select.png");
+    }
+
+    @Override
     public int getMinWidth() {
         return 300;
     }

@@ -10,6 +10,7 @@ import com.mrdarip.bakery.navigation.Navigable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -45,6 +46,11 @@ public class EditInstructionController implements Initializable, InstructionDepe
     @Override
     public String getScreenTitle() {
         return "Edit Instruction " + instructionContext.getInstructionText();
+    }
+
+    @Override
+    public Image getScreenIcon() {
+        return new Image("/img/icon/select.png");
     }
 
     @Override
