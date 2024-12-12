@@ -1,6 +1,8 @@
 package com.mrdarip.bakery.model;
 
 import com.mrdarip.bakery.components.Card;
+import com.mrdarip.bakery.data.DAO.InstructionDao;
+import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBInstructionDAO;
 import com.mrdarip.bakery.data.DAO.MariaDB.MariaDBPlateDAO;
 import com.mrdarip.bakery.data.DAO.PlateDao;
 import com.mrdarip.bakery.data.entity.Plate;
@@ -30,6 +32,7 @@ import java.util.ResourceBundle;
 public class MainScreenController implements Initializable, Navigable {
 
     PlateDao dao = new MariaDBPlateDAO();
+    InstructionDao instructionDao = new MariaDBInstructionDAO();
 
     @FXML
     private ComboBox<String> orderCombo;
@@ -90,7 +93,7 @@ public class MainScreenController implements Initializable, Navigable {
         platesFlowPane.getChildren().add(new Card(new ImageView(new Image("/img/icon/plus.png")), "New", "Plate", ev -> {
             NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", Plate.getEmptyPlate(), this);
         }));
-        platesFlowPane.getChildren().addAll(dao.getPlatesPage(0, 0).stream().map(Plate::getAsCard).toList());
+        platesFlowPane.getChildren().addAll(dao.getPlatesPage(0, 0).stream().map(plate -> plate.getAsCard(stage, instructionDao)).toList());
     }
 
     @Override

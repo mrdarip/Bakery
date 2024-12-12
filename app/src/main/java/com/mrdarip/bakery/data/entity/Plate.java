@@ -6,6 +6,7 @@ import com.mrdarip.bakery.navigation.NavController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -14,6 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 public class Plate {
 
@@ -72,7 +81,7 @@ public class Plate {
         return this.id != -1;
     }
 
-    public Pane getAsCard() {
+    public Pane getAsCard(Window window, InstructionDao instructionDao) {
 
         return new Card(
                 new Image(this.getPreviewURI()),
@@ -80,11 +89,40 @@ public class Plate {
                 this.valoration + "★",
                 "✎",
                 "👁",
+                "⤓",
                 ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/EditPlate.fxml", this, null);
                 },
                 ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this, null);
+                },
+                ev ->{
+                    FileChooser directoryChooser = new FileChooser();
+                    directoryChooser.setTitle("Selecciona una carpeta");
+
+                    // Mostrar el selector de directorios
+                    File selectedDirectory = directoryChooser.showSaveDialog(window);
+
+                    if (selectedDirectory != null) {
+                        // Ruta donde se guardará el archivo
+
+                        try (FileWriter writer = new FileWriter(selectedDirectory)) {
+                            // Escribir "HOLA" en el archivo
+                            String output = this.name + "\n" + this.valoration + "★\n";
+                            List<Instruction> instructions = instructionDao.getInstructionsByPlateId(this.id);
+                            for (Instruction instruction : instructions) {
+                                output += "- " + instruction.getInstructionText() + "\n";
+                            }
+
+                            writer.write(output);
+                            System.out.println("Archivo guardado en: " + selectedDirectory.getAbsolutePath());
+                        } catch (IOException e) {
+                            // Manejar errores de escritura
+                            System.err.println("Error al guardar el archivo: " + e.getMessage());
+                        }
+                    } else {
+                        System.out.println("No se seleccionó ninguna carpeta.");
+                    }
                 },
                 ev -> {
                     NavController.navigateTo("/com/mrdarip/bakery/view/PreviewPlate.fxml", this, null);
@@ -170,21 +208,34 @@ public class Plate {
 
     public Node getAsScrollableArticle(InstructionDao instructionDao) {
         VBox article = new VBox();
-        article.setPrefWidth(VBox.USE_COMPUTED_SIZE);
         article.setSpacing(8);
+        article.setPadding(new Insets(8));
+
+        article.getStyleClass().add("bg-transparent");
 
         ImageView preview = Card.getImageViewCovering(new Image(this.previewURI), 300, 200);
         article.getChildren().add(preview);
-        article.getChildren().add(new Label(this.name));
+
+        Label name = new Label(this.name);
+        name.wrapTextProperty().setValue(true);
+        name.setPrefWidth(250);
+        article.getChildren().add(name);
+
         article.getChildren().add(new Label("Valoration: " + this.valoration + "★"));
+
         article.getChildren().add(new Label("Instructions:"));
+
         instructionDao.getInstructionsByPlateId(this.id).forEach(instruction -> {
-            article.getChildren().add(new Label("- " + instruction.getInstructionText()));
-            //TODO: add sharper instructions as subInstructions
-            //TODO: implement TreeView
+            Label ins = new Label("- " + instruction.getInstructionText());
+            ins.setPrefWidth(250);
+            ins.wrapTextProperty().setValue(true);
+            article.getChildren().add(ins);
         });
 
         ScrollPane scrollPane = new ScrollPane(article);
+
+        scrollPane.setStyle("-fx-background-color: transparent;-fx-background: transparent;");
+
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setFitToWidth(true);

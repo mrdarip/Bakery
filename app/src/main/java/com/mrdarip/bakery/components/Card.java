@@ -45,12 +45,12 @@ public class Card extends StackPane {
     }
 
     public Card(Image image, String title, EventHandler<MouseEvent> onCrdClick) {
-        this(image, title, null, null, null, ev -> {
+        this(image, title, null, null, null,null, ev -> {
         }, ev -> {
-        }, onCrdClick);
+        },ev->{}, onCrdClick);
     }
 
-    public Card(Image image, String title, String subtitle, String primaryLabel, String secondaryLabel, EventHandler<ActionEvent> onPrimary, EventHandler<ActionEvent> onSecondary, EventHandler<MouseEvent> onCardCLick) {
+    public Card(Image image, String title, String subtitle, String primaryLabel, String secondaryLabel, String tertiaryLabel, EventHandler<ActionEvent> onPrimary, EventHandler<ActionEvent> onSecondary, EventHandler<ActionEvent> onTertiary, EventHandler<MouseEvent> onCardCLick) {
         int TextBoxHeight = 50;
         int textBoxWidth = CARD_WIDTH;
 
@@ -90,6 +90,14 @@ public class Card extends StackPane {
             editBtn.setOnAction(onSecondary);
 
             actionsBox.getChildren().add(editBtn);
+        }
+
+        Button downloadBtn;
+        if (tertiaryLabel != null) {
+            downloadBtn = new Button(tertiaryLabel);
+            downloadBtn.setOnAction(onTertiary);
+
+            actionsBox.getChildren().add(downloadBtn);
         }
 
 
