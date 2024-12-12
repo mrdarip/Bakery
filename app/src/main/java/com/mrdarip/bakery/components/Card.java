@@ -1,5 +1,8 @@
 package com.mrdarip.bakery.components;
 
+import javafx.animation.Animation;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 public class Card extends StackPane {
     public static final int CARD_WIDTH = 200;
@@ -42,12 +46,66 @@ public class Card extends StackPane {
         getStyleClass().add("accent");
         addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         getChildren().add(cardContent);
+
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.1), this);
+
+        final double[] posX = {0};
+        final double[] posY = {0};
+        final double[] scale = {0};
+        final int[] tick = {0};
+
+        setOnMouseEntered(ev -> {
+            tick[0] = 0;
+            System.out.println("Mouse entered");
+        });
+
+        setOnMouseMoved(ev -> {
+            if (tick[0] != 0) {
+                double dx = ev.getSceneX() - posX[0];
+                double dy = ev.getSceneY() - posY[0];
+
+                if (tick[0] == 1) {
+                    scaleTransition.setToX(1 + Math.abs(dx / 100));
+                    scaleTransition.setToY(1 + Math.abs(dy / 100));
+                    scaleTransition.play();
+
+                    scale[0] = 0;
+                }
+
+                double distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+                if(distance > scale[0] && tick[0] != -1) {
+                    scale[0] = distance;
+                }else {
+                        tick[0] = -1;
+                        if(scaleTransition.getStatus() == ScaleTransition.Status.STOPPED) {
+                            scaleTransition.stop();
+                            scaleTransition.setToX(1);
+                            scaleTransition.setToY(1);
+                            scaleTransition.play();
+                        }
+                }
+            }
+
+            posX[0] = ev.getSceneX();
+            posY[0] = ev.getSceneY();
+            if (tick[0] != -1) {
+                tick[0]++;
+            }
+        });
+
+        setOnMouseExited(ev -> {
+            scaleTransition.stop();
+            scaleTransition.setToX(1);
+            scaleTransition.setToY(1);
+            scaleTransition.play();
+        });
     }
 
     public Card(Image image, String title, EventHandler<MouseEvent> onCrdClick) {
-        this(image, title, null, null, null,null, ev -> {
+        this(image, title, null, null, null, null, ev -> {
         }, ev -> {
-        },ev->{}, onCrdClick);
+        }, ev -> {
+        }, onCrdClick);
     }
 
     public Card(Image image, String title, String subtitle, String primaryLabel, String secondaryLabel, String tertiaryLabel, EventHandler<ActionEvent> onPrimary, EventHandler<ActionEvent> onSecondary, EventHandler<ActionEvent> onTertiary, EventHandler<MouseEvent> onCardCLick) {
@@ -121,8 +179,31 @@ public class Card extends StackPane {
         card.setOnMouseClicked(onCardCLick);
 
         getChildren().add(card);
+
+
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(0.2), this);
+        rotateTransition.setByAngle(5);
+        rotateTransition.setCycleCount(2);
+        rotateTransition.setAutoReverse(true);
+
+
+        setOnMouseEntered(ev -> {
+            rotateTransition.play();
+        });
     }
 
+
+    //Text card
+    public Card(String content, EventHandler<MouseEvent> onClick) {
+        setPrefSize(CARD_WIDTH, StackPane.USE_COMPUTED_SIZE);
+        setPadding(new Insets(8));
+        setOnMouseClicked(onClick);
+        Label label = new Label(content);
+        label.setWrapText(true);
+        label.setMaxWidth(CARD_WIDTH - 16);
+        getChildren().add(label);
+        getStyleClass().add("card");
+    }
 
     public static ImageView getImageViewCovering(Image image, double previewWidth, double previewHeight) {
         ImageView preview = new ImageView(image);
@@ -149,17 +230,5 @@ public class Card extends StackPane {
             centerViewport = new Rectangle2D(0, image.getHeight() / 2 - (image.getWidth() * imgpxPerfxpx) / 2, image.getWidth(), image.getWidth() * imgpxPerfxpx);
         }
         return centerViewport;
-    }
-
-    //Text card
-    public Card(String content, EventHandler<MouseEvent> onClick) {
-        setPrefSize(CARD_WIDTH, StackPane.USE_COMPUTED_SIZE);
-        setPadding(new Insets(8));
-        setOnMouseClicked(onClick);
-        Label label = new Label(content);
-        label.setWrapText(true);
-        label.setMaxWidth(CARD_WIDTH - 16);
-        getChildren().add(label);
-        getStyleClass().add("card");
     }
 }
