@@ -267,9 +267,7 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
     }
 
     public void OnExit(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Not implemented");
-        alert.showAndWait();
+        this.stage.close();
     }
 
     @FXML
