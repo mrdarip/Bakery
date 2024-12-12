@@ -3,6 +3,7 @@ package com.mrdarip.bakery.components;
 import javafx.animation.Animation;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -203,6 +204,17 @@ public class Card extends StackPane {
         label.setMaxWidth(CARD_WIDTH - 16);
         getChildren().add(label);
         getStyleClass().add("card");
+
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2), this);
+        translateTransition.setByX(10);
+        translateTransition.setCycleCount(2);
+        translateTransition.setAutoReverse(true);
+
+
+        setOnMouseEntered(ev -> {
+            translateTransition.play();
+        });
     }
 
     public static ImageView getImageViewCovering(Image image, double previewWidth, double previewHeight) {

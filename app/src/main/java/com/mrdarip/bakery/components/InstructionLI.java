@@ -1,6 +1,8 @@
 package com.mrdarip.bakery.components;
 
 import com.mrdarip.bakery.data.entity.Instruction;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -10,6 +12,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.function.Consumer;
 
@@ -98,6 +101,14 @@ public class InstructionLI extends VBox {
             instructionDifficulty.getValueFactory().setValue(this.instruction.getDifficulty());
         });
 
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2), this);
+        translateTransition.setByX(10);
+        translateTransition.setCycleCount(2);
+        translateTransition.setAutoReverse(true);
 
+
+        setOnMouseEntered(ev -> {
+            translateTransition.play();
+        });
     }
 }
