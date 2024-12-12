@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.openjfx:javafx-swing:linux:23" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.openjfx" artifactId="javafx-swing" version="23" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-swing/23/4cd66e86e93150fd5654a938af291b0f677ada87/javafx-swing-23-linux.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
