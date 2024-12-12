@@ -79,6 +79,16 @@ public class EditPlateController implements Initializable, PlateInstructionDepen
                 plateContext.setName(newValue);
             }
         });
+
+        borderPane.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case S -> {
+                    if (event.isControlDown()) {
+                        OnSave(null);
+                    }
+                }
+            }
+        });
     }
 
     @FXML
