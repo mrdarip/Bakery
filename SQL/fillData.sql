@@ -29,11 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Instruction`
 (
-    `idInstruction`        int(11) NOT NULL,
-    `idSharperInstruction` int(11) DEFAULT NULL,
-    `difficulty`           int(11) DEFAULT NULL,
-    `duration`             int(11) DEFAULT NULL,
-    `instructionText`      text
+    `idInstruction`   int(11) NOT NULL,
+    `difficulty`      int(11) DEFAULT NULL,
+    `duration`        int(11) DEFAULT NULL,
+    `instructionText` text
 ) ENGINE = InnoDB
   DEFAULT CHARSET = latin1;
 
@@ -41,27 +40,27 @@ CREATE TABLE `Instruction`
 -- Volcado de datos para la tabla `Instruction`
 --
 
-INSERT INTO `Instruction` (`idInstruction`, `idSharperInstruction`, `difficulty`, `duration`, `instructionText`)
-VALUES (6, 7, 0, 1, 'poner agua a hervir'),
-       (7, NULL, 0, 1, 'echar agua en una olla y ponerlo a hervir en la vitro'),
-       (8, 10, 1, 1, 'poner la pasta a hervir'),
-       (9, 10, 1, 2, 'poner el arroz a hervir'),
-       (10, 11, 1, 1, 'ponerlo para cocinar cuando el agua está hirviendo'),
-       (11, NULL, 1, 1, 'ponerlo cuando el agua está burbujeando por el calor'),
-       (12, 13, 2, 9, 'sacar cuando se termine de hacer'),
-       (13, 14, 3, 8, 'sacar de hervir cuando esté en su punto'),
-       (14, NULL, 1, 10, 'sacar de hervir cuando no esté ni muy blando ni muy duro'),
-       (15, 16, 1, 2, 'apartar'),
-       (16, NULL, 1, 2, 'servir en un plato pero sin mucha presentación'),
-       (17, NULL, 1, 2, 'añadir queso'),
-       (18, NULL, 0, 1, 'añadir oregano'),
-       (19, 20, 1, 1, 'meter al microondas para fundir el queso'),
-       (20, NULL, 0, 1, 'meter 1 min al microondas para fundir el queso'),
-       (21, NULL, 1, 1, 'añadir tomate frito'),
-       (22, NULL, 2, 2, 'añadir pollo asado'),
-       (23, NULL, 2, 2, 'añadir azafrán a la paella'),
-       (24, 25, 3, 3, 'añadir media piña'),
-       (25, NULL, 2, 4, 'añadir piñña partida por la mitad horizontal, sin pasar por las hojas el corte');
+INSERT INTO `Instruction` (`idInstruction`, `difficulty`, `duration`, `instructionText`)
+VALUES (6, 0, 1, 'poner agua a hervir'),
+       (7, 0, 1, 'echar agua en una olla y ponerlo a hervir en la vitro'),
+       (8, 1, 1, 'poner la pasta a hervir'),
+       (9, 1, 2, 'poner el arroz a hervir'),
+       (10, 1, 1, 'ponerlo para cocinar cuando el agua está hirviendo'),
+       (11, 1, 1, 'ponerlo cuando el agua está burbujeando por el calor'),
+       (12, 2, 9, 'sacar cuando se termine de hacer'),
+       (13, 3, 8, 'sacar de hervir cuando esté en su punto'),
+       (14, 1, 10, 'sacar de hervir cuando no esté ni muy blando ni muy duro'),
+       (15, 1, 2, 'apartar'),
+       (16, 1, 2, 'servir en un plato pero sin mucha presentación'),
+       (17, 1, 2, 'añadir queso'),
+       (18, 0, 1, 'añadir oregano'),
+       (19, 1, 1, 'meter al microondas para fundir el queso'),
+       (20, 0, 1, 'meter 1 min al microondas para fundir el queso'),
+       (21, 1, 1, 'añadir tomate frito'),
+       (22, 2, 2, 'añadir pollo asado'),
+       (23, 2, 2, 'añadir azafrán a la paella'),
+       (24, 3, 3, 'añadir media piña'),
+       (25, 2, 4, 'añadir piñña partida por la mitad horizontal, sin pasar por las hojas el corte');
 
 -- --------------------------------------------------------
 
