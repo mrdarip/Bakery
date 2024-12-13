@@ -73,6 +73,14 @@ public class MainScreenController implements Initializable, Navigable {
 
             bgStackPane.setStyle("-fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #202215 0%, #202215 " + (90 - (v * 45.)) + "%, #963c3c " + (95 - (v * 15.)) + "%, #ca5a2e " + (98 - (v * 3.)) + "%, #dfd785 100%);");
         });
+
+        bgStackPane.onKeyPressedProperty().set(event -> {
+            switch (event.getCode()) {
+                case F5 -> {
+                   rebuildUI();
+                }
+            }
+        });
     }
 
     protected void initializeOrderCombo() {
@@ -128,7 +136,8 @@ public class MainScreenController implements Initializable, Navigable {
 
     @Override
     public void rebuildUI() {
-
+        NavController.navigateTo("/com/mrdarip/bakery/view/MainScreen.fxml", null);
+        stage.close();
     }
 
     @Override
